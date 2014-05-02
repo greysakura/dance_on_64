@@ -34,12 +34,9 @@ print 'total_des_count: ', total_des_count
 index_file.close()
 image_count = len(result_img_dir)
 ## 14/04/28 change the way of making des_mat
-## gc.collect()??
-gc.collect()
 
 ## time it
 read_csv_start = clock()
-
 
 des_mat = np.zeros((total_des_count, des_dimension), np.int32)
 des_count_present = 0
@@ -135,7 +132,11 @@ VW_max_occur = np.zeros((1,len(result_img_dir)),np.int32)
 VW_showing_up = np.zeros((1, cluster_number), np.int32)
 
 ## prepare an empty inverted_file_matrix. But the size is not (0,0)
-inverted_file_matrix = np.zeros((cluster_number,0), np.int32)
+# inverted_file_matrix = np.zeros((cluster_number,0), np.int32)
+## change 04/30 use a big one.
+inverted_file_matrix = np.zeros((cluster_number, len(result_img_dir)), np.int32)
+inverted_file_matrix[:,1] = np.ones((cluster_number,1),np.int32)
+
 ##
 
 for i in range(len(result_img_dir)):
@@ -155,9 +156,10 @@ for i in range(len(result_img_dir)):
         if (result_img_kpts>=1) & (j < (result_img_kpts[i] - 1)):
             the_file.write(',')
     the_file.write('\n')
-
     ## Extra: for inverted file
-    inverted_file_matrix = np.concatenate((inverted_file_matrix, np.int32(VW_tmp.transpose() > 0)), axis = 1)
+    inverted_file_matrix[:,i] = (np.int32(VW_tmp.transpose() > 0))
+
+    # inverted_file_matrix = np.concatenate((inverted_file_matrix, np.int32(VW_tmp.transpose() > 0)), axis = 1)
 
     for j in range(cluster_number):
         the_file.write(str(VW_tmp[0,j]))
