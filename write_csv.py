@@ -8,6 +8,7 @@ import csv
 import numpy as np
 import gc
 import re
+import cPickle
 
 
 # with open('C:/Cassandra/ground02/all_souls_000000_des.csv', 'r') as csvfile:
@@ -24,9 +25,40 @@ aaa = np.array(aaa)
 print aaa
 print bbb
 # aaa[0,:] = (np.int32(bbb > 3))
-print np.multiply(aaa,aaa)
+# print np.multiply(aaa,aaa)
+#
+# # true 0 or false -1
+# str1 = 'what the fuxk'
+# str2 = 'whats'
+# print str1.find(str2)
+# ccc = np.ones((1,15), int)
+# print ccc.shape
+# print aaa.shape
+# print aaa.sum()
+# print ccc.sum(axis = 1)[0]
 
-# true 0 or false -1
-str1 = 'what the fuxk'
-str2 = 'whats'
-print str1.find(str2)
+aaa = [0,4]
+aaa = np.array(aaa)
+bbb = np.zeros((2,6), np.int32)
+bbb[:,0] = (np.int32(aaa > 3).transpose())
+print type(bbb[:,0])
+ccc = np.reshape(np.int32(aaa > 3), [-1,1])
+ccc = np.ones((2,6),np.int32)
+# print bbb[:,0]
+print ccc
+# a = np.array([[1, 2, 3], [4, 5, -2],[6, 7, 9]])
+# print a.shape
+# print a[:,1].shape
+# print (np.int32(a[:,1]>0).flatten()).shape
+f_write = open('C:/Cassandra/python_oxford/ccc.pkl','wb')
+# f_write_go_on = open('C:/Cassandra/python_oxford/ccc.pkl','ab')
+# cPickle.dump(ccc,f_write)
+# cPickle.dump(ccc,open('C:/Cassandra/python_oxford/ccc.pkl','w'))
+cPickle.dump(aaa,f_write)
+f_write.close()
+f_read = open('C:/Cassandra/python_oxford/ccc.pkl','rb')
+ccc = cPickle.load(f_read)
+f_read.close()
+print ccc
+# aaa = cPickle.load(f_read)
+# print ccc

@@ -177,7 +177,7 @@ if __name__ == "__main__":
         index_file.close()
         image_count = len(result_img_dir)
         distance_between_image = np.zeros((1,image_count), np.float64)
-
+        target_image_VW_norm = target_image_VW / target_image_VW.sum()
         ## Use the right tf-idf Matrix!!!!!!!!  14/04/28
         for i in range(len(result_img_dir)):
             the_file = open((result_img_dir[i].split('.'))[0] + '_VW.txt','r')
@@ -197,8 +197,14 @@ if __name__ == "__main__":
             # calculate distance.
             # distance_between_image[0, i] = np.dot((np.dot(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)),
             #                                       np.transpose(np.float64(target_image_VW - VW_tmp)))
-            distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)),
-                                                  np.transpose(np.float64(target_image_VW - VW_tmp)))
+
+            ##14/05/05  normalize the VW, and then calculate distance.
+
+            VW_tmp_norm = VW_tmp / VW_tmp.sum()
+            distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW_norm - VW_tmp_norm), TF_IDF_eye)),
+                                                  np.transpose(np.float64(target_image_VW_norm - VW_tmp_norm)))
+            # distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)),
+            #                                       np.transpose(np.float64(target_image_VW - VW_tmp)))
         distance_ranking = np.argsort(distance_between_image, axis=1)
         # # print distance_ranking
         #
