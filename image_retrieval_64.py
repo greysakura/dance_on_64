@@ -7,11 +7,15 @@ import sys
 from time import clock
 
 if __name__ == "__main__":
-    top_dir = 'C:/Cassandra/here/'
+    top_dir = 'C:/Cassandra/python_oxford/'
+    database_image_dir = top_dir + 'database/'
+    database_desc_dir = top_dir + 'database_desc/'
+    database_kpts_dir = top_dir + 'database_kpts/'
+    database_VW_dir = top_dir + 'database_VW/'
     query_goto_dir = 'C:/Cassandra/query_object/'
     ground_truth_dir = top_dir + 'ground_truth_file/'
     # Number of clusters: 128 at present
-    cluster_number = 8192
+    cluster_number = 1024
     # Using SIFT here
     des_dimension = 128
     first_retrieval_num = 100
@@ -71,7 +75,7 @@ if __name__ == "__main__":
         ## import target image
         img = cv2.imread(target_img_dir_list[target_i])
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        sift = cv2.SIFT(nfeatures=250)
+        sift = cv2.SIFT(nfeatures=3000)
         kpts_target, des_target = sift.detectAndCompute(img_gray, None)
         target_image_keypoint_num = len(kpts_target)
         print 'kpts numbers of ', target_img_dir_list[target_i], ' : ', len(kpts_target)
@@ -98,7 +102,7 @@ if __name__ == "__main__":
         target_image_VW = np.zeros((1, cluster_number), np.int32)
         for i in range(target_image_keypoint_labels.shape[1]):
             target_image_VW[0, target_image_keypoint_labels[0,i]] += 1
-
+        target_image_VW = np.float64(target_image_VW)/np.float64(target_image_VW.sum(axis=1)[0])
         print target_image_VW
         part_2_end = clock()
 
@@ -108,58 +112,58 @@ if __name__ == "__main__":
 
 
         # ## new image's descriptor file output
-        # part_3_start = clock()
-        # # target_image_des_dir = target_img_dir_list[target_i][:-4] + '_des.csv'
-        #
-        # that_file = open(target_img_dir_list[target_i][:-4] + '_des.csv', 'w')
-        # for i in range(des_target.shape[0]):
-        #     for j in range(des_target.shape[1]):
-        #         that_file.write(str(des_target[i, j]))
-        #         if j < (des_target.shape[1]-1):
-        #             that_file.write(',')
-        #     that_file.write('\n')
-        # that_file.close()
-        # part_3_end = clock()
-        #
-        # print 'part 3 : ', part_3_end - part_3_start
-        #
-        ## new image's kpts file output
+        part_3_start = clock()
+        # target_image_des_dir = target_img_dir_list[target_i][:-4] + '_des.csv'
 
-        # that_file = open(target_img_dir_list[target_i][:-4] + '_kpts.csv', 'w')
-        # for i in range(len(kpts_target)):
-        #     that_file.write(str(kpts_target[i].pt[0]))
-        #     that_file.write(str(','))
-        #     that_file.write(str(kpts_target[i].pt[1]))
-        #     that_file.write(str(','))
-        #     that_file.write(str(kpts_target[i].size))
-        #     that_file.write(str(','))
-        #     that_file.write(str(kpts_target[i].angle))
-        #     that_file.write(str(','))
-        #     that_file.write(str(kpts_target[i].response))
-        #     that_file.write(str(','))
-        #     that_file.write(str(kpts_target[i].octave))
-        #     that_file.write(str(','))
-        #     that_file.write(str(kpts_target[i].class_id))
-        #     that_file.write('\n')
-        # that_file.close()
+        that_file = open(target_img_dir_list[target_i][:-4] + '_des.csv', 'w')
+        for i in range(des_target.shape[0]):
+            for j in range(des_target.shape[1]):
+                that_file.write(str(des_target[i, j]))
+                if j < (des_target.shape[1]-1):
+                    that_file.write(',')
+            that_file.write('\n')
+        that_file.close()
+        part_3_end = clock()
+
+        print 'part 3 : ', part_3_end - part_3_start
+
+        # new image's kpts file output
+
+        that_file = open(target_img_dir_list[target_i][:-4] + '_kpts.csv', 'w')
+        for i in range(len(kpts_target)):
+            that_file.write(str(kpts_target[i].pt[0]))
+            that_file.write(str(','))
+            that_file.write(str(kpts_target[i].pt[1]))
+            that_file.write(str(','))
+            that_file.write(str(kpts_target[i].size))
+            that_file.write(str(','))
+            that_file.write(str(kpts_target[i].angle))
+            that_file.write(str(','))
+            that_file.write(str(kpts_target[i].response))
+            that_file.write(str(','))
+            that_file.write(str(kpts_target[i].octave))
+            that_file.write(str(','))
+            that_file.write(str(kpts_target[i].class_id))
+            that_file.write('\n')
+        that_file.close()
         #
         ## new image's VW file output
-        # target_image_VW_file = open(target_img_dir_list[target_i][:-4] + '_VW.txt', 'w')
-        # target_image_VW_file.write(str(len(kpts_target)))
-        # target_image_VW_file.write(',')
-        # target_image_VW_file.write(str(cluster_number))
-        # target_image_VW_file.write('\n')
-        # for i in range(target_image_keypoint_labels.shape[1]):
-        #     target_image_VW_file.write(str(target_image_keypoint_labels[0,i]))
-        #     if i < (target_image_keypoint_labels.shape[1] - 1):
-        #         target_image_VW_file.write(',')
-        # target_image_VW_file.write('\n')
-        # for i in range(target_image_VW.shape[1]):
-        #     target_image_VW_file.write(str(target_image_VW[0,i]))
-        #     if i < (target_image_VW.shape[1] - 1):
-        #         target_image_VW_file.write(',')
-        # target_image_VW_file.write('\n')
-        # target_image_VW_file.close()
+        target_image_VW_file = open(target_img_dir_list[target_i][:-4] + '_VW.txt', 'w')
+        target_image_VW_file.write(str(len(kpts_target)))
+        target_image_VW_file.write(',')
+        target_image_VW_file.write(str(cluster_number))
+        target_image_VW_file.write('\n')
+        for i in range(target_image_keypoint_labels.shape[1]):
+            target_image_VW_file.write(str(target_image_keypoint_labels[0,i]))
+            if i < (target_image_keypoint_labels.shape[1] - 1):
+                target_image_VW_file.write(',')
+        target_image_VW_file.write('\n')
+        for i in range(target_image_VW.shape[1]):
+            target_image_VW_file.write(str(target_image_VW[0,i]))
+            if i < (target_image_VW.shape[1] - 1):
+                target_image_VW_file.write(',')
+        target_image_VW_file.write('\n')
+        target_image_VW_file.close()
 
         # ##########
         #
@@ -167,7 +171,7 @@ if __name__ == "__main__":
 
         result_img_dir =[]
         result_img_kpts = []
-        index_file = open('C:/Cassandra/here/image_index_python.txt','rb')
+        index_file = open(top_dir + 'image_index_python.txt','rb')
         image_count = 0
         for line in index_file:
             result_img_dir.append((line.split(','))[0])
@@ -177,21 +181,22 @@ if __name__ == "__main__":
         index_file.close()
         image_count = len(result_img_dir)
         distance_between_image = np.zeros((1,image_count), np.float64)
-        target_image_VW_norm = target_image_VW / target_image_VW.sum()
+        # target_image_VW_norm = target_image_VW / target_image_VW.sum()
         ## Use the right tf-idf Matrix!!!!!!!!  14/04/28
         for i in range(len(result_img_dir)):
-            the_file = open((result_img_dir[i].split('.'))[0] + '_VW.txt','r')
+            the_file = open(database_VW_dir + ((result_img_dir[i].split('/'))[-1]).split('.')[0] + '_VW.txt','r')
             line = the_file.readline()
             line = the_file.readline()
             # read the third line
             line = the_file.readline()
             # get the VW of database image
-            VW_tmp = np.array(map(np.int32,line.split(',')))
+            VW_tmp = np.array(map(np.float64,line.split(',')))
             # print type(VW_tmp)
             the_file.close()
             # create a eye matrix with tf-idf values.
-            TF_IDF_eye = TF_IDF_matrix[i,:]
-            aaa = np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)
+            # TF_IDF_eye = np.reshape(TF_IDF_matrix[i,:],(1,-1))
+            # TF_IDF_eye = TF_IDF_matrix[i,:]
+            # aaa = np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)
             # print type(np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye))
             # print np.multiply(aaa, np.float64(target_image_VW - VW_tmp))
             # calculate distance.
@@ -200,9 +205,9 @@ if __name__ == "__main__":
 
             ##14/05/05  normalize the VW, and then calculate distance.
 
-            VW_tmp_norm = VW_tmp / VW_tmp.sum()
-            distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW_norm - VW_tmp_norm), TF_IDF_eye)),
-                                                  np.transpose(np.float64(target_image_VW_norm - VW_tmp_norm)))
+            # VW_tmp_norm = VW_tmp / VW_tmp.sum()
+
+            distance_between_image[0, i] = np.dot((np.float64(target_image_VW - VW_tmp)), np.transpose(np.float64(target_image_VW - VW_tmp)))
             # distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)),
             #                                       np.transpose(np.float64(target_image_VW - VW_tmp)))
         distance_ranking = np.argsort(distance_between_image, axis=1)

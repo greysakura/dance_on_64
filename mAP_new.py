@@ -10,6 +10,8 @@ if __name__ == "__main__":
     top_dir = 'C:/Cassandra/python_oxford/'
     query_goto_dir = 'C:/Cassandra/query_object/'
     ground_truth_dir = top_dir + 'ground_truth_file/'
+    top_retrieval_num = 16
+
     target_img_dir_list = []
     target_img_list = open(query_goto_dir + 'target_img_list.txt', 'r')
     for line in target_img_list:
@@ -25,6 +27,7 @@ if __name__ == "__main__":
     positive_total = []
     output_file = open(query_goto_dir + 'evaluation.txt', 'w')
 
+    positive_or_not = np.zeros((len(target_img_dir_list),top_retrieval_num), np.float64)
     ## read result txt for each query
     for query_i in range(len(target_img_dir_list)):
         print target_img_dir_list[query_i].split('/')[-1][:-9]
@@ -55,17 +58,20 @@ if __name__ == "__main__":
         ## count the positives
         positive_total.append(len(tmp_good)+ len(tmp_ok))
         tmp_result_file = open(target_img_dir_list[query_i][:-4] + '.txt', 'r')
-        for line in tmp_result_file:
+        for line_i in range(top_retrieval_num):
+            line = tmp_result_file.readline()
 
             tmp_result.append(line.split('/')[:-1])
 
             is_negative = True
             for i in range(len(tmp_good)):
                 if tmp_good[i].find(line.split('/')[-1][:-5]) == 0:
+                    positive_or_not[query_i,line_i] = 1.0
                     is_negative = False
                     good_count_tmp += 1
             for i in range(len(tmp_ok)):
                 if tmp_ok[i].find(line.split('/')[-1][:-5]) == 0:
+                    positive_or_not[query_i,line_i] = 1.0
                     is_negative = False
                     ok_count_tmp += 1
             for i in range(len(tmp_junk)):
@@ -134,3 +140,11 @@ if __name__ == "__main__":
     final_score_file_recall.write(str(recall_on_query.sum(axis=1)[0]/11))
     final_score_file_recall.write('\n')
     final_score_file_recall.close()
+
+    top_some = np.reshape(positive_or_not.sum(axis=1)/top_retrieval_num,(-1,5))
+    top_mAP = np.reshape((top_some.sum(axis=1)/5),(-1,1))
+    print top_mAP.shape
+
+    top_some_bigger = np.concatenate((top_some,top_mAP),axis=1)
+    print top_some_bigger
+    print (top_some.sum(axis=1)/5).sum()/11

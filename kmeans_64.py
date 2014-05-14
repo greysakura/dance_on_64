@@ -172,6 +172,7 @@ if __name__ == "__main__":
     ##
     ## WRITE ALL VW INTO A SINGLE TXT
     big_VW_file = open(top_dir + 'total_VW.txt', 'w')
+    big_VW_norm_file = open(top_dir + 'total_VW_norm.txt', 'w')
 
 
 
@@ -211,9 +212,21 @@ if __name__ == "__main__":
         # print np.amax(VW_tmp, axis=1)[0]
 
         ## normalize the VW:
-        VW_tmp = np.float64(VW_tmp)/VW_tmp.sum(axis=1)[0]
+        ## change 14/05/13
+        VW_tmp_norm = np.float64(VW_tmp)/VW_tmp.sum(axis=1)[0]
 
         VW_max_occur[0,i] = np.amax(VW_tmp, axis=1)[0]
+        ## line 3, write the normed VW
+        for j in range(cluster_number):
+            the_file.write(str(VW_tmp_norm[0,j]))
+            big_VW_norm_file.write(str(VW_tmp_norm[0,j]))
+            if j < cluster_number - 1:
+                the_file.write(',')
+                big_VW_norm_file.write(',')
+        the_file.write('\n')
+        big_VW_norm_file.write('\n')
+
+        ## line 4, write the original VW
         for j in range(cluster_number):
             the_file.write(str(VW_tmp[0,j]))
             big_VW_file.write(str(VW_tmp[0,j]))
@@ -227,6 +240,7 @@ if __name__ == "__main__":
         big_VW_file.write('\n')
         the_file.close()
     big_VW_file.close()
+    big_VW_norm_file.close()
     VW_timing_end = clock()
     print 'VW time used: ', int((VW_timing_end-VW_timing_start)/60), ' minutes ', int((VW_timing_end-VW_timing_start)%60), ' seconds...'
 
@@ -239,21 +253,22 @@ if __name__ == "__main__":
     IDF_matrix = np.zeros((1, cluster_number), np.float64)
 
     for i in range(cluster_number):
-        IDF_matrix[0,i] = math.log10(float(len(result_img_dir)) / float(VW_showing_up[0,i]))
+        IDF_matrix[0,i] = math.log10(float(len(result_img_dir)) / float(1 + VW_showing_up[0,i]))
     # print IDF_matrix
 
     print '...starting computing tf-idf matrix...'
     tf_idf_timing_start = clock()
     TF_IDF_matrix = np.zeros((1,len(labels)), np.float64)
 
-    TF_IDF_out = np.zeros((len(result_img_dir), cluster_number), np.int32)
+    TF_IDF_out = np.zeros((len(result_img_dir), cluster_number), np.float64)
     for i in range(len(result_img_dir)):
         # img_des_tmp = database_VW_dir + ((result_img_dir[i].split('.'))[0]).split('/')[-1] + '_VW.txt'
         the_file = open(database_VW_dir + ((result_img_dir[i].split('.'))[0]).split('/')[-1] + '_VW.txt','r')
         # jump first two lines
         line = the_file.readline()
         line = the_file.readline()
-        # read third line
+        line = the_file.readline()
+        # read fourth line
         line = the_file.readline()
         TF_IDF_tmp = np.zeros((1,cluster_number), np.float64)
         for j in range(cluster_number):
@@ -285,9 +300,10 @@ if __name__ == "__main__":
     TF_IDF_file.close()
 
     tf_idf_timing_end = clock()
-    print '...tf-idf time used: ', int((tf_idf_timing_end - tf_idf_timing_start)/60), ' minutes ', int((tf_idf_timing_end - tf_idf_timing_start)%60), ' seconds...'
+    print '...tf-idf time used: ', int((tf_idf_timing_end - tf_idf_timing_start)/60), ' minutes ', \
+        int((tf_idf_timing_end - tf_idf_timing_start)%60), ' seconds...'
 
-
+    ## inverted file
     inverted_file_start = clock()
     print 'inverted file matrix: '
     print inverted_file_matrix
