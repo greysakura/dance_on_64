@@ -44,21 +44,30 @@ bbb[:,0] = (np.int32(aaa > 3).transpose())
 print type(bbb[:,0])
 ccc = np.reshape(np.int32(aaa > 3), [-1,1])
 ccc = np.ones((2,6),np.int32)
+
+ddd = np.zeros((111,222), np.int32)
 # print bbb[:,0]
 print ccc
 # a = np.array([[1, 2, 3], [4, 5, -2],[6, 7, 9]])
 # print a.shape
 # print a[:,1].shape
 # print (np.int32(a[:,1]>0).flatten()).shape
-f_write = open('C:/Cassandra/python_oxford/ccc.pkl','wb')
+
 # f_write_go_on = open('C:/Cassandra/python_oxford/ccc.pkl','ab')
 # cPickle.dump(ccc,f_write)
 # cPickle.dump(ccc,open('C:/Cassandra/python_oxford/ccc.pkl','w'))
-cPickle.dump(aaa,f_write)
-f_write.close()
-f_read = open('C:/Cassandra/python_oxford/ccc.pkl','rb')
-ccc = cPickle.load(f_read)
-f_read.close()
-print ccc
+
+# f_read = open('C:/Cassandra/python_oxford/des_mat.pkl','rb')
+# ccc = cPickle.load(f_read)
+# f_read.close()
+
+np.save('C:/Cassandra/python_oxford/ccc.npy',ddd)
+ggg = np.load('C:/Cassandra/python_oxford/ccc.npy')
+
+print ggg
 # aaa = cPickle.load(f_read)
 # print ccc
+ddd = np.array([[1,2,5],[2,5,9],[7,8,1]])
+xxx = ddd[0,np.where(ddd[0,:] > 3)]
+print xxx.shape
+print np.reshape(np.where(ddd[1,:] > 3)[0],(1,-1))

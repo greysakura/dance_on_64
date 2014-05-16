@@ -14,6 +14,10 @@ if __name__ == "__main__":
     database_VW_dir = top_dir + 'database_VW/'
     query_goto_dir = 'C:/Cassandra/query_object/'
     ground_truth_dir = top_dir + 'ground_truth_file/'
+
+    ## operation bools
+    bool_using_tf_idf = True
+
     # Number of clusters: 128 at present
     cluster_number = 1024
     # Using SIFT here
@@ -75,7 +79,8 @@ if __name__ == "__main__":
         ## import target image
         img = cv2.imread(target_img_dir_list[target_i])
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        sift = cv2.SIFT(nfeatures=3000)
+        num_feature = int(img_gray.shape[0] * img_gray.shape[1] / 238)
+        sift = cv2.SIFT(nfeatures=num_feature, edgeThreshold=0.01)
         kpts_target, des_target = sift.detectAndCompute(img_gray, None)
         target_image_keypoint_num = len(kpts_target)
         print 'kpts numbers of ', target_img_dir_list[target_i], ' : ', len(kpts_target)
@@ -103,7 +108,6 @@ if __name__ == "__main__":
         for i in range(target_image_keypoint_labels.shape[1]):
             target_image_VW[0, target_image_keypoint_labels[0,i]] += 1
         target_image_VW = np.float64(target_image_VW)/np.float64(target_image_VW.sum(axis=1)[0])
-        print target_image_VW
         part_2_end = clock()
 
         print 'part_2: ', part_2_end - part_2_start
@@ -194,7 +198,7 @@ if __name__ == "__main__":
             # print type(VW_tmp)
             the_file.close()
             # create a eye matrix with tf-idf values.
-            # TF_IDF_eye = np.reshape(TF_IDF_matrix[i,:],(1,-1))
+            TF_IDF_eye = np.reshape(TF_IDF_matrix[i,:],(1,-1))
             # TF_IDF_eye = TF_IDF_matrix[i,:]
             # aaa = np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)
             # print type(np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye))
@@ -206,8 +210,12 @@ if __name__ == "__main__":
             ##14/05/05  normalize the VW, and then calculate distance.
 
             # VW_tmp_norm = VW_tmp / VW_tmp.sum()
+            if bool_using_tf_idf:
+                distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)),
+                                                   np.transpose(np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)))
+            else:
+                distance_between_image[0, i] = np.dot((np.float64(target_image_VW - VW_tmp)), np.transpose(np.float64(target_image_VW - VW_tmp)))
 
-            distance_between_image[0, i] = np.dot((np.float64(target_image_VW - VW_tmp)), np.transpose(np.float64(target_image_VW - VW_tmp)))
             # distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)),
             #                                       np.transpose(np.float64(target_image_VW - VW_tmp)))
         distance_ranking = np.argsort(distance_between_image, axis=1)

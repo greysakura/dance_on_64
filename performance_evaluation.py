@@ -25,6 +25,8 @@ if __name__ == "__main__":
     positive_total = []
     output_file = open(query_goto_dir + 'evaluation.txt', 'w')
 
+
+
     ## read result txt for each query
     for query_i in range(len(target_img_dir_list)):
         print target_img_dir_list[query_i].split('/')[-1][:-9]

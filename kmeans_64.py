@@ -6,6 +6,7 @@ import os
 import math
 import csv
 import numpy as np
+import cPickle
 import gc
 ## timeit!!!
 from time import clock
@@ -13,6 +14,7 @@ if __name__ == "__main__":
     ## Operation bools:
     read_database_image_dirs = True
     read_desc_csv = True
+    perform_kmeans = True
 
     ## dirs
     top_dir = 'C:/Cassandra/python_oxford/'
@@ -65,29 +67,45 @@ if __name__ == "__main__":
     des_count_present = 0
 
     ## read descriptors from csv files.
+    if read_desc_csv:
+        time_read_csv_start = clock()
+        for i in range(len(result_img_dir)):
+            print '...reading des csv of image number ', i+1 , '...'
+            img_des_tmp = database_desc_dir + ((result_img_dir[i].split('.'))[0]).split('/')[-1] + '_des.csv'
+            the_file = open(img_des_tmp,'rb')
+            # des_mat_tmp = np.zeros((result_img_kpts[i], des_dimension), np.int32)
+            reader = csv.reader(the_file, delimiter=',', quoting = csv.QUOTE_NONE)
+            # reader = csv.reader(the_file, delimiter=',', quoting = csv.QUOTE_NONE)
 
-    time_read_csv_start = clock()
-    for i in range(len(result_img_dir)):
-        print '...reading des csv of image number ', i+1 , '...'
-        img_des_tmp = database_desc_dir + ((result_img_dir[i].split('.'))[0]).split('/')[-1] + '_des.csv'
-        the_file = open(img_des_tmp,'rb')
-        # des_mat_tmp = np.zeros((result_img_kpts[i], des_dimension), np.int32)
-        reader = csv.reader(the_file, delimiter=',', quoting = csv.QUOTE_NONE)
-        # reader = csv.reader(the_file, delimiter=',', quoting = csv.QUOTE_NONE)
+            for row in reader:
+                des_mat[des_count_present,:] = np.array(map(np.float32, row))
+                # des_mat[des_count_present,:] = np.array(map(np.float32, row)).copy()
+                # for j in range(len(row)):
+                #     des_mat[des_count_present, j] = int(float(row[j]))
+                #     # except:
+                #     #     print 'y: ', row_count, ' x: ', i
+                des_count_present += 1
+            the_file.close()
+        print des_mat.shape
+        time_read_csv_end = clock()
+        print 'read csv time used: ', int((time_read_csv_end - time_read_csv_start)/60), ' minutes ', \
+            int((time_read_csv_end - time_read_csv_start)%60), ' seconds...'
+        print
+        print '...Saving des_mat into npy...'
+        start_npy = clock()
+        np.save(top_dir + 'des_mat.npy',des_mat)
+        end_npy = clock()
+        print '...Saving npy time used: ', end_npy - start_npy, ' seconds...'
+    else:
+        load_des_mat_start = clock()
+        des_mat = np.load(top_dir + 'des_mat.npy')
+        load_des_mat_end = clock()
+        print '...des_mat reloaded...time used: ', load_des_mat_end - load_des_mat_start, ' seconds...'
+        print '...des_mat shape: ', des_mat.shape[0], ' ', des_mat.shape[1], ' ...'
+        print
 
-        for row in reader:
-            des_mat[des_count_present,:] = np.array(map(np.float32, row))
-            # des_mat[des_count_present,:] = np.array(map(np.float32, row)).copy()
-            # for j in range(len(row)):
-            #     des_mat[des_count_present, j] = int(float(row[j]))
-            #     # except:
-            #     #     print 'y: ', row_count, ' x: ', i
-            des_count_present += 1
-        the_file.close()
-    print des_mat.shape
-    time_read_csv_end = clock()
 
-    print 'read csv time used: ', int((time_read_csv_end - time_read_csv_start)/60), ' minutes ', int((time_read_csv_end - time_read_csv_start)%60), ' seconds...'
+
 
     # img_break = cv2.imread('C:/Cassandra/new_orz.jpg')
     # cv2.imshow('break', img_break)
@@ -103,22 +121,35 @@ if __name__ == "__main__":
     # We use 128 clusters for our K-means clustering.
     # Define criteria_kmeans = ( type, max_iter = 10 , epsilon = 1.0 )
     criteria_kmeans = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_MAX_ITER, 5, 1)
+    print '...starting kmeans...'
 
-    start_kmeans = clock()
+    compactness = 0
+    if perform_kmeans:
+        # Apply KMeans  cv2.kmeans(data, K, criteria, attempts, flags[, bestLabels[, centers]])
+        start_kmeans = clock()
+        compactness,labels,centers = cv2.kmeans(data= des_mat, K = cluster_number, bestLabels=None,
+                                                criteria= criteria_kmeans, attempts=10,flags=cv2.KMEANS_RANDOM_CENTERS)
 
-    # Apply KMeans  cv2.kmeans(data, K, criteria, attempts, flags[, bestLabels[, centers]])
-    compactness,labels,centers = cv2.kmeans(data= des_mat, K = cluster_number, bestLabels=None,
-                                            criteria= criteria_kmeans, attempts=10,flags=cv2.KMEANS_RANDOM_CENTERS)
-    finish_kmeans = clock()
+        finish_kmeans = clock()
 
-    print 'compactness', compactness
-    print 'centers: ', centers
+        print 'compactness', compactness
+        # print 'centers: ', centers
 
-    print 'kmean time used: ', int((finish_kmeans - start_kmeans)/60), 'minutes ', int((finish_kmeans - start_kmeans)%60), ' seconds.'
+        print 'kmean time used: ', int((finish_kmeans - start_kmeans)/60), 'minutes ', int((finish_kmeans - start_kmeans)%60), ' seconds.'
+        print
+        print '...Saving labels and centers into npy...'
+        start_npy = clock()
+        np.save(top_dir + 'kmeans_compactness.npy', compactness)
+        np.save(top_dir + 'kmeans_labels.npy',labels)
+        np.save(top_dir + 'kmeans_centers.npy',centers)
+        end_npy = clock()
 
-    # cv2.imshow('break', img_break)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+        print '...Saving labels and centers npy time used: ', end_npy - start_npy, ' seconds...'
+    else:
+        labels = np.load(top_dir + 'kmeans_labels.npy')
+        centers = np.load(top_dir + 'kmeans_centers.npy')
+        compactness = np.load(top_dir + 'kmeans_compactness.npy')
+        print '...Loading kmeans result finished...'
 
     print
     print 'Writing kmeans result.'
@@ -213,7 +244,7 @@ if __name__ == "__main__":
 
         ## normalize the VW:
         ## change 14/05/13
-        VW_tmp_norm = np.float64(VW_tmp)/VW_tmp.sum(axis=1)[0]
+        VW_tmp_norm = np.float64(VW_tmp)/(VW_tmp.sum(axis=1)[0])
 
         VW_max_occur[0,i] = np.amax(VW_tmp, axis=1)[0]
         ## line 3, write the normed VW
@@ -276,12 +307,8 @@ if __name__ == "__main__":
         # Normalize TF_IDF_tmp
         TF_IDF_inner = math.sqrt(np.dot(TF_IDF_tmp, np.transpose(TF_IDF_tmp)))
         # TF_IDF_tmp = TF_IDF_tmp / TF_IDF_inner
-        TF_IDF_tmp /= TF_IDF_inner
-        TF_IDF_out[i,:] = TF_IDF_tmp
-        # if i == 0:
-        #     TF_IDF_out = TF_IDF_tmp.copy()
-        # else:
-        #     TF_IDF_out = np.concatenate((TF_IDF_out, TF_IDF_tmp), axis = 0)
+        TF_IDF_tmp = TF_IDF_tmp/TF_IDF_inner
+        TF_IDF_out[i,:] = np.copy(TF_IDF_tmp)
 
     TF_IDF_append = '/TF_IDF_matrix.txt'
     TF_IDF_dir = top_dir + TF_IDF_append

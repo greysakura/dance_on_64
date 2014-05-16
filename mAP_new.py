@@ -10,7 +10,7 @@ if __name__ == "__main__":
     top_dir = 'C:/Cassandra/python_oxford/'
     query_goto_dir = 'C:/Cassandra/query_object/'
     ground_truth_dir = top_dir + 'ground_truth_file/'
-    top_retrieval_num = 16
+    top_retrieval_num = 50
 
     target_img_dir_list = []
     target_img_list = open(query_goto_dir + 'target_img_list.txt', 'r')
@@ -26,6 +26,9 @@ if __name__ == "__main__":
     negative_count = []
     positive_total = []
     output_file = open(query_goto_dir + 'evaluation.txt', 'w')
+
+    ## zeros and ones
+
 
     positive_or_not = np.zeros((len(target_img_dir_list),top_retrieval_num), np.float64)
     ## read result txt for each query
@@ -148,3 +151,37 @@ if __name__ == "__main__":
     top_some_bigger = np.concatenate((top_some,top_mAP),axis=1)
     print top_some_bigger
     print (top_some.sum(axis=1)/5).sum()/11
+
+    print positive_or_not.shape
+    positive_or_not_csv =  np.transpose(np.int32(positive_or_not))
+
+    mAP_csv = np.zeros((top_retrieval_num, positive_or_not_csv.shape[1]), np.float64)
+
+    for i in range(top_retrieval_num):
+        # print i
+        mAP_csv[i,:] = np.float64(positive_or_not_csv[0:(i+1),:].sum(axis = 0)) / np.float64(i+1)
+        # print positive_or_not_csv[0:(i+1),:].sum(axis = 0)
+    mAP_AP = mAP_csv.sum(axis = 1)/ np.float64(positive_or_not_csv.shape[1])
+    mAP_AP = np.reshape(mAP_AP, (-1,1))
+    # print mAP_AP.shape
+    # print mAP_csv.shape
+    mAP_csv = np.concatenate((mAP_csv,mAP_AP), axis = 1)
+
+    mAP_csv_file = open(top_dir + 'mAP_series.csv', 'w')
+    for i in range(mAP_csv.shape[0]):
+        for j in range(mAP_csv.shape[1]):
+            mAP_csv_file.write(str(mAP_csv[i,j]))
+            if j < (mAP_csv.shape[1] - 1):
+                mAP_csv_file.write(',')
+        mAP_csv_file.write('\n')
+
+    mAP_csv_file.close()
+
+    positive_or_not_file = open(top_dir + 'positive_or_not.csv', 'w')
+    for i in range(positive_or_not_csv.shape[0]):
+        for j in range(positive_or_not_csv.shape[1]):
+            positive_or_not_file.write(str(positive_or_not_csv[i,j]))
+            if j < (positive_or_not_csv.shape[1] - 1):
+                positive_or_not_file.write(',')
+        positive_or_not_file.write('\n')
+    positive_or_not_file.close()
