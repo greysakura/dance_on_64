@@ -10,7 +10,7 @@ if __name__ == "__main__":
     top_dir = 'C:/Cassandra/python_oxford/'
     query_goto_dir = 'C:/Cassandra/query_object/'
     ground_truth_dir = top_dir + 'ground_truth_file/'
-    top_retrieval_num = 50
+    top_retrieval_num = 100
 
     target_img_dir_list = []
     target_img_list = open(query_goto_dir + 'target_img_list.txt', 'r')

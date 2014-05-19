@@ -13,9 +13,11 @@ from time import clock
 if __name__ == "__main__":
     ## Operation bools:
     read_database_image_dirs = True
-    read_desc_csv = True
+    read_desc_csv = False
     perform_kmeans = True
-
+    ## parameters
+    cluster_number = 8192
+    des_dimension = 128
     ## dirs
     top_dir = 'C:/Cassandra/python_oxford/'
     database_image_dir = top_dir + 'database/'
@@ -38,9 +40,7 @@ if __name__ == "__main__":
         os.stat(database_VW_dir)
     except:
         os.mkdir(database_VW_dir)
-    ## parameters
-    cluster_number = 1024
-    des_dimension = 128
+
     result=[]
     result_img_dir =[]
     result_img_kpts = []

@@ -19,7 +19,7 @@ if __name__ == "__main__":
     bool_using_tf_idf = True
 
     # Number of clusters: 128 at present
-    cluster_number = 1024
+    cluster_number = 8192
     # Using SIFT here
     des_dimension = 128
     first_retrieval_num = 100
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     target_img_dir_list = []
     ## list inside a list
     target_img_matching_img_list = []
-    target_name = ['all_souls', 'ashmolean', 'balliol', 'bodleian', 'christ_church', 'cornmarket', 'hertford', 'keble', 'magdalen', 'pitt_rivers', 'radcliffe_camera']
+    # target_name = ['all_souls', 'ashmolean', 'balliol', 'bodleian', 'christ_church', 'cornmarket', 'hertford', 'keble', 'magdalen', 'pitt_rivers', 'radcliffe_camera']
     target_img_list = open(query_goto_dir + 'target_img_list.txt', 'r')
     for line in target_img_list:
         target_img_dir_list.append(line[:-1])
@@ -100,7 +100,7 @@ if __name__ == "__main__":
             target_image_keypoint_labels[0,i] = distance_calc.argsort(axis = 1)[0, 0]
 
         part_1_end = clock()
-        print 'part_1: ', part_1_end - part_1_start
+        print '...part 1 time: ', part_1_end - part_1_start, ' seconds...'
 
         ## generate VW for target image.
         part_2_start = clock()
@@ -110,7 +110,7 @@ if __name__ == "__main__":
         target_image_VW = np.float64(target_image_VW)/np.float64(target_image_VW.sum(axis=1)[0])
         part_2_end = clock()
 
-        print 'part_2: ', part_2_end - part_2_start
+        print '...part 2 time: ', part_2_end - part_2_start, ' seconds...'
 
 
 
@@ -129,7 +129,7 @@ if __name__ == "__main__":
         that_file.close()
         part_3_end = clock()
 
-        print 'part 3 : ', part_3_end - part_3_start
+        print '...part 3 time: ', part_3_end - part_3_start, ' seconds...'
 
         # new image's kpts file output
 
