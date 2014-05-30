@@ -13,7 +13,7 @@ from time import clock
 if __name__ == "__main__":
     ## Operation bools:
     read_database_image_dirs = True
-    read_desc_csv = False
+    read_desc_csv = True
     perform_kmeans = True
     ## parameters
     cluster_number = 8192

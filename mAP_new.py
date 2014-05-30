@@ -63,22 +63,22 @@ if __name__ == "__main__":
         tmp_result_file = open(target_img_dir_list[query_i][:-4] + '.txt', 'r')
         for line_i in range(top_retrieval_num):
             line = tmp_result_file.readline()
-
+            print (line.split('/')[-1]).split('.')[0]
             tmp_result.append(line.split('/')[:-1])
-
+            # print line.split('/')[:-1]
             is_negative = True
             for i in range(len(tmp_good)):
-                if tmp_good[i].find(line.split('/')[-1][:-5]) == 0:
+                if tmp_good[i].find((line.split('/')[-1]).split('.')[0]) == 0:
                     positive_or_not[query_i,line_i] = 1.0
                     is_negative = False
                     good_count_tmp += 1
             for i in range(len(tmp_ok)):
-                if tmp_ok[i].find(line.split('/')[-1][:-5]) == 0:
+                if tmp_ok[i].find((line.split('/')[-1]).split('.')[0]) == 0:
                     positive_or_not[query_i,line_i] = 1.0
                     is_negative = False
                     ok_count_tmp += 1
             for i in range(len(tmp_junk)):
-                if tmp_junk[i].find(line.split('/')[-1][:-5]) == 0:
+                if tmp_junk[i].find((line.split('/')[-1]).split('.')[0]) == 0:
                     is_negative = False
                     junk_count_tmp += 1
             if is_negative:
@@ -168,6 +168,15 @@ if __name__ == "__main__":
     mAP_csv = np.concatenate((mAP_csv,mAP_AP), axis = 1)
 
     mAP_csv_file = open(top_dir + 'mAP_series.csv', 'w')
+    ## write title
+    for i in range(mAP_csv.shape[1]-1):
+        mAP_csv_file.write('Query')
+        mAP_csv_file.write(str(int(i+1)))
+        mAP_csv_file.write(',')
+    mAP_csv_file.write('ALL')
+    mAP_csv_file.write('\n')
+
+    ##write data
     for i in range(mAP_csv.shape[0]):
         for j in range(mAP_csv.shape[1]):
             mAP_csv_file.write(str(mAP_csv[i,j]))

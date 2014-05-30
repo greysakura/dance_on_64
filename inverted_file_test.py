@@ -16,7 +16,7 @@ if __name__ == "__main__":
     ground_truth_dir = top_dir + 'ground_truth_file/'
 
     ## operation bools
-    bool_using_tf_idf = True
+    bool_using_tf_idf = False
 
     # Number of clusters: 128 at present
     cluster_number = 8192
@@ -27,6 +27,12 @@ if __name__ == "__main__":
     target_img_dir_list = []
     ## list inside a list
     target_img_matching_img_list = []
+
+    ## inverted file test
+    inverted_file_test_file = open(top_dir+'inverted_file_test.txt', 'w')
+
+
+
     # target_name = ['all_souls', 'ashmolean', 'balliol', 'bodleian', 'christ_church', 'cornmarket', 'hertford', 'keble', 'magdalen', 'pitt_rivers', 'radcliffe_camera']
     target_img_list = open(query_goto_dir + 'target_img_list.txt', 'r')
     for line in target_img_list:
@@ -34,6 +40,19 @@ if __name__ == "__main__":
         # print line[:-1]
     target_img_list.close()
     print len(target_img_dir_list)
+
+
+    result_img_dir =[]
+    result_img_kpts_dir = []
+    index_file = open(top_dir + 'image_index_python.txt','rb')
+    image_count = 0
+    for line in index_file:
+        result_img_dir.append((line.split(','))[0])
+        result_img_kpts_dir.append(int(float(line.split(',')[1][:-2])))
+    # print result_img_dir
+    # print result_img_kpts
+    index_file.close()
+    image_count = len(result_img_dir)
 
     ## read kmeans centers
     kmeans_result_append = '/kmeans_result.txt'
@@ -70,7 +89,23 @@ if __name__ == "__main__":
     print 'read_tf_idf: ', read_tf_idf_end - read_tf_idf_start
 
 
-    retrieval_time_used_start = clock()
+    ########################## BIG CHANGE, INVERTED FILE ######################################
+    prepare_inverted_file_start = clock()
+    inverted_file_file = open(top_dir + 'inverted_file_matrix_python.txt','r')
+    line = inverted_file_file.readline()
+    inverted_matrix = np.zeros((np.int32(line.split(',')[0]), np.int32(line.split(',')[1])), np.int32)
+
+    for i in range(inverted_matrix.shape[0]):
+        line = inverted_file_file.readline()
+        inverted_matrix[i,:] = np.int32(line.split(','))
+    print 'inverted_matrix: ', inverted_matrix
+    print '...inverted file ready to go...'
+    prepare_inverted_file_end = clock()
+    print '...time used: ', prepare_inverted_file_end - prepare_inverted_file_start, ' seconds...'
+    ###########################################################################################
+
+
+
     ##change 14/05/01
     for target_i in range(len(target_img_dir_list)):
         tmp_img_matching_list_file = open(target_img_dir_list[target_i][:-3] + 'txt', 'w')
@@ -79,7 +114,7 @@ if __name__ == "__main__":
         ## import target image
         img = cv2.imread(target_img_dir_list[target_i])
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        num_feature = int(img_gray.shape[0] * img_gray.shape[1] / 357)
+        num_feature = int(img_gray.shape[0] * img_gray.shape[1] / 238)
         sift = cv2.SIFT(nfeatures=num_feature, edgeThreshold=0.01)
         kpts_target, des_target = sift.detectAndCompute(img_gray, None)
         target_image_keypoint_num = len(kpts_target)
@@ -98,7 +133,7 @@ if __name__ == "__main__":
                 distance_calc[0,j] = np.dot((np.transpose(des_target[i] - centers[j])),(des_target[i] - centers[j]))
             ## argsort? we want to find the min distance, and that would be the nearest cluster center.
             target_image_keypoint_labels[0,i] = distance_calc.argsort(axis = 1)[0, 0]
-        # print 'target_image_keypoint_labels: ', target_image_keypoint_labels
+        print 'target_image_keypoint_labels: ', target_image_keypoint_labels
         part_1_end = clock()
         print '...part 1 time: ', part_1_end - part_1_start, ' seconds...'
 
@@ -107,8 +142,9 @@ if __name__ == "__main__":
         target_image_VW = np.zeros((1, cluster_number), np.int32)
         for i in range(target_image_keypoint_labels.shape[1]):
             target_image_VW[0, target_image_keypoint_labels[0,i]] += 1
-        print 'target_image_VW: ', target_image_VW[0,:]
-        target_image_VW = np.float64(target_image_VW)/np.float64(target_image_VW.sum(axis=1)[0])
+        # print 'target_image_VW: ',target_image_VW
+        target_image_VW_norm = np.float64(target_image_VW)/np.float64(target_image_VW.sum(axis=1)[0])
+        # print 'target_image_VW_norm: ', target_image_VW_norm
         part_2_end = clock()
 
         print '...part 2 time: ', part_2_end - part_2_start, ' seconds...'
@@ -163,6 +199,12 @@ if __name__ == "__main__":
             if i < (target_image_keypoint_labels.shape[1] - 1):
                 target_image_VW_file.write(',')
         target_image_VW_file.write('\n')
+        for i in range(target_image_VW_norm.shape[1]):
+            target_image_VW_file.write(str(target_image_VW_norm[0,i]))
+            if i < (target_image_VW.shape[1] - 1):
+                target_image_VW_file.write(',')
+        target_image_VW_file.write('\n')
+
         for i in range(target_image_VW.shape[1]):
             target_image_VW_file.write(str(target_image_VW[0,i]))
             if i < (target_image_VW.shape[1] - 1):
@@ -170,26 +212,46 @@ if __name__ == "__main__":
         target_image_VW_file.write('\n')
         target_image_VW_file.close()
 
-        # ##########
-        #
-        # # now we calculate the "distance" between each database image and target image
 
-        result_img_dir =[]
-        result_img_kpts = []
-        index_file = open(top_dir + 'image_index_python.txt','rb')
-        image_count = 0
-        for line in index_file:
-            result_img_dir.append((line.split(','))[0])
-            result_img_kpts.append(int(float(line.split(',')[1][:-2])))
-        # print result_img_dir
-        # print result_img_kpts
-        index_file.close()
-        image_count = len(result_img_dir)
-        distance_between_image = np.zeros((1,image_count), np.float64)
+
+        #### USE INVERTED FILE FOR THIS IMAGE. #########################
+        print '...preparing inverted file for this query...'
+        img_dir_need_to_check = []
+        inverted_file_ongoing_start = clock()
+        img_for_query = np.zeros((0,), np.int32)
+        print (np.int32(target_image_VW.flatten() > 0)).sum()
+        target_image_VW_query = np.where(np.int32(target_image_VW.flatten() > 0) == 1)[0]
+        print target_image_VW_query.shape
+        # print target_image_VW_query
+        # print 'target_image_VW_query', target_image_VW_query
+        for i in range(target_image_VW_query.shape[0]):
+            ## problem is here
+            img_for_query_tmp = np.where(inverted_matrix[target_image_VW_query[i],:] == 1)[0]
+            img_for_query = np.union1d(img_for_query, img_for_query_tmp)
+            # print 'i: ', i
+            # print 'num:', img_for_query_tmp.shape[0]
+            # print inverted_matrix[i,:]
+        print img_for_query
+        print img_for_query.shape
+        inverted_file_test_file.write(str(target_image_VW_query.shape))
+        inverted_file_test_file.write(',')
+        inverted_file_test_file.write(str(img_for_query.shape))
+        inverted_file_test_file.write('\n')
+        for i in range(img_for_query.shape[0]):
+            img_dir_need_to_check.append(result_img_dir[img_for_query[i]])
+
+        print
+
+        inverted_file_ongoing_end = clock()
+        print '...time used: ', inverted_file_ongoing_end - inverted_file_ongoing_start, ' seconds...'
+
+        ############## now we calculate the "distance" between each database image and target image
+        distance_between_image = np.zeros((1,len(img_dir_need_to_check)), np.float64)
+
         # target_image_VW_norm = target_image_VW / target_image_VW.sum()
         ## Use the right tf-idf Matrix!!!!!!!!  14/04/28
-        for i in range(len(result_img_dir)):
-            the_file = open(database_VW_dir + ((result_img_dir[i].split('/'))[-1]).split('.')[0] + '_VW.txt','r')
+        for i in range(len(img_dir_need_to_check)):
+            the_file = open(database_VW_dir + ((img_dir_need_to_check[i].split('/'))[-1]).split('.')[0] + '_VW.txt','r')
             line = the_file.readline()
             line = the_file.readline()
             # read the third line
@@ -212,19 +274,24 @@ if __name__ == "__main__":
 
             # VW_tmp_norm = VW_tmp / VW_tmp.sum()
             if bool_using_tf_idf:
-                distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)),
-                                                   np.transpose(np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)))
+                distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW_norm - VW_tmp), TF_IDF_eye)),
+                                                   np.transpose(np.multiply(np.float64(target_image_VW_norm - VW_tmp), TF_IDF_eye)))
             else:
-                distance_between_image[0, i] = np.dot((np.float64(target_image_VW - VW_tmp)), np.transpose(np.float64(target_image_VW - VW_tmp)))
+                distance_between_image[0, i] = np.dot((np.float64(target_image_VW_norm - VW_tmp)), np.transpose(np.float64(target_image_VW_norm - VW_tmp)))
 
             # distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)),
             #                                       np.transpose(np.float64(target_image_VW - VW_tmp)))
         distance_ranking = np.argsort(distance_between_image, axis=1)
         # # print distance_ranking
         #
-        for i in range(first_retrieval_num):
+        query_result_num = np.min((first_retrieval_num, len(img_dir_need_to_check)))
+
+        print query_result_num
+        print distance_ranking.shape
+
+        for i in range(query_result_num):
             # print distance_between_image[0,distance_ranking[0,i]]
-            tmp_img_matching_list_file.write(result_img_dir[distance_ranking[0][i]])
+            tmp_img_matching_list_file.write(img_dir_need_to_check[distance_ranking[0][i]])
             tmp_img_matching_list_file.write('\n')
             # img_tmp = cv2.imread(result_img_dir[distance_ranking[0][i]],0 )
             # img_tmp = cv2.resize(img_tmp, (0,0), fx=0.5, fy=0.5)
@@ -235,6 +302,7 @@ if __name__ == "__main__":
         #
         # ## 14/04/28 here we've done first retrieval of image. But not good...
         tmp_img_matching_list_file.close()
-    retrieval_time_used_end = clock()
-    print 'Retrieval time used total: ', (retrieval_time_used_end - retrieval_time_used_start)/60, ' minutes ', \
-        (retrieval_time_used_end - retrieval_time_used_start)%60, ' seconds...'
+
+
+
+    inverted_file_test_file.close()

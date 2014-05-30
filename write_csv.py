@@ -67,7 +67,27 @@ ggg = np.load('C:/Cassandra/python_oxford/ccc.npy')
 print ggg
 # aaa = cPickle.load(f_read)
 # print ccc
-ddd = np.array([[1,2,5],[2,5,9],[7,8,1]])
-xxx = ddd[0,np.where(ddd[0,:] > 3)]
+ddd = np.array([[0,8,0],[0,0,0],[7,8,1]])
+single01 = np.array([0,0,0,1,0,1,0,0,0,0])
+single02 = np.array([1,1,0,0,0,1,0,1,1,0])
+xxx = ddd[0,np.where(ddd[0,:] > 1)]
 print xxx.shape
 print np.reshape(np.where(ddd[1,:] > 3)[0],(1,-1))
+img01 = np.where(single01 == 1)[0]
+img02 = np.where(single02 == 1)[0]
+print np.union1d(img01,img02).shape
+ggg = np.zeros((0,), np.int32)
+print ggg.shape
+
+filefile = open('C:/Cassandra/python_oxford/database_VW/all_souls_000000_VW.txt', 'r')
+line = filefile.readline()
+line = filefile.readline()
+line = filefile.readline()
+line = filefile.readline()
+what = np.int32(line.split(','))
+print np.int32(what >0)
+print np.where((what>0) == 1)
+
+filefile.close()
+
+print  np.min((1,4))

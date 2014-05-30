@@ -36,7 +36,7 @@ def search_dir_and_create_csv(image_dir, desc_dir, kpts_dir):
     ## change!!! use ORB!!!
 
     # orb = cv2.ORB(nfeatures= 3400)
-    num_feature = int(img_gray.shape[0] * img_gray.shape[1] / 238)
+    num_feature = int(img_gray.shape[0] * img_gray.shape[1] / 357)
     sift = cv2.SIFT(edgeThreshold=0.01, nfeatures = num_feature)
     # kp, des = orb.detectAndCompute(img_gray, None)
     # kp = orb.detect(img_gray)
