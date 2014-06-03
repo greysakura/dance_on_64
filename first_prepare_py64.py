@@ -7,6 +7,8 @@ import sys
 import csv
 import numpy as np
 
+kpts_density = 238
+
 Const_Image_Format = [".jpg", ".bmp", ".png"]
 class FileFilt:
     fileList = [""]
@@ -27,7 +29,7 @@ class FileFilt:
                     self.counter += 1
 
 
-def search_dir_and_create_csv(image_dir, desc_dir, kpts_dir):
+def search_dir_and_create_csv(image_dir, desc_dir, kpts_dir, info_dir):
     keypoint_num = 0
     img_gray = cv2.imread(image_dir,1)
     # img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -36,7 +38,7 @@ def search_dir_and_create_csv(image_dir, desc_dir, kpts_dir):
     ## change!!! use ORB!!!
 
     # orb = cv2.ORB(nfeatures= 3400)
-    num_feature = int(img_gray.shape[0] * img_gray.shape[1] / 357)
+    num_feature = int(img_gray.shape[0] * img_gray.shape[1] / kpts_density)
     sift = cv2.SIFT(edgeThreshold=0.01, nfeatures = num_feature)
     # kp, des = orb.detectAndCompute(img_gray, None)
     # kp = orb.detect(img_gray)
@@ -59,8 +61,9 @@ def search_dir_and_create_csv(image_dir, desc_dir, kpts_dir):
 
     image_dir_des = desc_dir + ((image_dir.split('.'))[0]).split('/')[-1] + str_des
     image_dir_kpts = kpts_dir + ((image_dir.split('.'))[0]).split('/')[-1] + str_kpts
+    image_dir_info = info_dir + ((image_dir.split('.'))[0]).split('/')[-1] + '_info.txt'
 
-
+    #### write descriptors
     that_file = open(image_dir_des, 'w')
     for i in range(des.shape[0]):
         for j in range(des.shape[1]):
@@ -70,6 +73,7 @@ def search_dir_and_create_csv(image_dir, desc_dir, kpts_dir):
         that_file.write('\n')
     that_file.close()
 
+    #### write key-points
     that_file = open(image_dir_kpts, 'w')
     for i in range(0, len(kp) - 1):
         that_file.write(str(kp[i].pt[0]))
@@ -87,6 +91,13 @@ def search_dir_and_create_csv(image_dir, desc_dir, kpts_dir):
         that_file.write(str(kp[i].class_id))
         that_file.write('\n')
     that_file.close()
+
+    #### write image info
+    that_file = open(image_dir_info, 'w')
+    that_file.write(str(keypoint_num))
+    that_file.write(' \n')
+    that_file.close()
+
     return keypoint_num
 
 if __name__ == "__main__":
@@ -99,6 +110,7 @@ if __name__ == "__main__":
     database_image_dir = top_dir + 'database/'
     database_desc_dir = top_dir + 'database_desc/'
     database_kpts_dir = top_dir + 'database_kpts/'
+    database_info_dir = top_dir + 'database_info/'
     try:
         os.stat(database_image_dir)
     except:
@@ -111,6 +123,10 @@ if __name__ == "__main__":
         os.stat(database_kpts_dir)
     except:
         os.mkdir(database_kpts_dir)
+    try:
+        os.stat(database_info_dir)
+    except:
+        os.mkdir(database_info_dir)
 
     str_image_index_python_append = 'image_index_python.txt'
     str_image_index = top_dir + str_image_index_python_append
@@ -122,7 +138,7 @@ if __name__ == "__main__":
         # print "image_dir: ", image_dir_input
         # print type(image_dir_input)
         if len(image_dir) != 0:
-            keypoint_num = search_dir_and_create_csv(image_dir, database_desc_dir, database_kpts_dir)
+            keypoint_num = search_dir_and_create_csv(image_dir, database_desc_dir, database_kpts_dir, database_info_dir)
             total_kpts_num += keypoint_num
             file_image_index.write(image_dir)
             file_image_index.write(',')

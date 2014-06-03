@@ -28,10 +28,10 @@ for i in range(len(raw_matches)):
         good_match.append(raw_matches[i][0])
 
 
-
+print len(raw_matches)
 print 'number of good matches: ', len(good_match)
 
-print good_match[0].distance
+# print good_match[0].distance
 minGoodMatch = 10
 
 if len(good_match) >= minGoodMatch:
@@ -52,7 +52,7 @@ if len(good_match) >= minGoodMatch:
     src_pts = np.reshape(np.float32([ kpts01[m.queryIdx].pt for m in good_match ]),(-1,1,2))
     dst_pts = np.reshape(np.float32([ kpts02[m.trainIdx].pt for m in good_match ]),(-1,1,2))
 
-    print src_pts
+    # print src_pts
 
     homograph_start = clock()
     M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC,5.0)
