@@ -26,7 +26,12 @@ if __name__ == "__main__":
     junk_count = []
     negative_count = []
     positive_total = []
+    good_mat = np.zeros((1,len(target_img_dir_list)), np.float32)
+    ok_mat = np.zeros((1,len(target_img_dir_list)), np.float32)
+    num_mat = np.zeros((1,len(target_img_dir_list)), np.float32)
     output_file = open(query_goto_dir + 'evaluation_SV.txt', 'w')
+    output_file_csv = open(query_goto_dir + 'evaluation_SV.csv', 'w')
+    output_file_csv.write('good,ok,junk,negative,mAP\n')
 
     ## zeros and ones
 
@@ -52,6 +57,8 @@ if __name__ == "__main__":
         ok_count_tmp = 0
         junk_count_tmp = 0
         negative_count_tmp = 0
+
+
 
         for line in tmp_good_file:
             tmp_good.append(line[:-1])
@@ -101,6 +108,11 @@ if __name__ == "__main__":
         ok_count.append(ok_count_tmp)
         junk_count.append(junk_count_tmp)
         negative_count.append(negative_count_tmp)
+        good_mat[0,query_i] = good_count_tmp
+        ok_mat[0,query_i] = ok_count_tmp
+        num_mat[0,query_i] = num_tmp
+
+
         print 'good: ',good_count_tmp
         print 'ok: ',ok_count_tmp
         print 'junk: ',junk_count_tmp
@@ -116,12 +128,30 @@ if __name__ == "__main__":
         output_file.write(' ')
         output_file.write(str(tmp_AP))
         output_file.write('\n')
+
+        output_file_csv.write(str(good_count_tmp))
+        output_file_csv.write(',')
+        output_file_csv.write(str(ok_count_tmp))
+        output_file_csv.write(',')
+        output_file_csv.write(str(junk_count_tmp))
+        output_file_csv.write(',')
+        output_file_csv.write(str(negative_count_tmp))
+        output_file_csv.write(',')
+        output_file_csv.write(str(tmp_AP))
+        output_file_csv.write('\n')
+
     mAP_all = AP_list.sum(axis = 1)[0]/len(target_img_dir_list)
-    print 'mAP_all: ', mAP_all
+    mAP_overall = (good_mat.sum(axis=1)[0] + ok_mat.sum(axis=1)[0])/num_mat.sum(axis=1)[0]
+    print 'total positives:', int(good_mat.sum(axis=1)[0] + ok_mat.sum(axis=1)[0])
+    print 'total verified:', int(num_mat.sum(axis=1)[0])
+    print 'mAP_all:', mAP_all, ',mAP_overall', mAP_overall
     output_file.write(str(mAP_all))
+    output_file.write(',')
+    output_file.write(str(mAP_overall))
     output_file.write('\n')
 
     output_file.close()
+    output_file_csv.close()
 
     # ## mAP, recall
     # mAP_all = np.zeros((1,len(total_image_retrieved)), np.float64)

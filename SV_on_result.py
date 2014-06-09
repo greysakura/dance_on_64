@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     #########
     top_result_taken = 15
-    query_wanna_check = ['all_souls_3_','ashmolean_2_','bodleian_2_']
+    query_wanna_check = ['all_souls_1_']
 
 
     #### 14/05/30  deal with multiple target
