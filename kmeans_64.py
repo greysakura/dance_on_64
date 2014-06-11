@@ -104,9 +104,6 @@ if __name__ == "__main__":
         print '...des_mat shape: ', des_mat.shape[0], ' ', des_mat.shape[1], ' ...'
         print
 
-
-
-
     # img_break = cv2.imread('C:/Cassandra/new_orz.jpg')
     # cv2.imshow('break', img_break)
     # cv2.waitKey(0)
@@ -307,10 +304,11 @@ if __name__ == "__main__":
         # Normalize TF_IDF_tmp
         TF_IDF_inner = math.sqrt(np.dot(TF_IDF_tmp, np.transpose(TF_IDF_tmp)))
         # TF_IDF_tmp = TF_IDF_tmp / TF_IDF_inner
-        TF_IDF_tmp = TF_IDF_tmp/TF_IDF_inner
+        TF_IDF_tmp /= TF_IDF_inner
         TF_IDF_out[i,:] = np.copy(TF_IDF_tmp)
 
-    TF_IDF_append = '/TF_IDF_matrix.txt'
+    ## write TF_IDF record matrix txt.
+    TF_IDF_append = 'TF_IDF_matrix.txt'
     TF_IDF_dir = top_dir + TF_IDF_append
     TF_IDF_file = open(TF_IDF_dir, 'w')
     TF_IDF_file.write(str(TF_IDF_out.shape[0]))
@@ -325,7 +323,25 @@ if __name__ == "__main__":
                 TF_IDF_file.write(',')
         TF_IDF_file.write('\n')
     TF_IDF_file.close()
+    np.save(top_dir + 'TF_IDF_matrix.npy', TF_IDF_out)
 
+
+    ## write IDF record matrix txt for later use.
+    IDF_file = open(top_dir + 'IDF_matrix.txt', 'w')
+    IDF_file.write(str(IDF_matrix.shape[0]))
+    IDF_file.write(',')
+    IDF_file.write(str(IDF_matrix.shape[1]))
+    IDF_file.write('\n')
+
+    for IDF_i in range(IDF_matrix.shape[0]):
+        for IDF_j in range(IDF_matrix.shape[1]):
+            IDF_file.write(str(IDF_matrix[IDF_i, IDF_j]))
+            if IDF_j < (IDF_matrix.shape[1] - 1):
+                IDF_file.write(',')
+        IDF_file.write('\n')
+    IDF_file.close()
+    np.save(top_dir + 'IDF_matrix.npy', IDF_matrix)
+    #####
     tf_idf_timing_end = clock()
     print '...tf-idf time used: ', int((tf_idf_timing_end - tf_idf_timing_start)/60), ' minutes ', \
         int((tf_idf_timing_end - tf_idf_timing_start)%60), ' seconds...'
@@ -356,8 +372,5 @@ if __name__ == "__main__":
     print '...inverted file time used: ', int((inverted_file_end - inverted_file_start)/60), ' minutes ', int((inverted_file_end - inverted_file_start)%60), ' seconds...'
     print
     print '...total number of images: ', image_count, ' ...'
-
-
     finish=clock()
-
     print '...total time used: ', int((finish-start)/60), ' minutes ', int((finish - start)%60), ' seconds...'
