@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="894b480f-b97b-42f2-9066-9070e5054eee" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/image_retrieval_64.py" afterPath="$PROJECT_DIR$/image_retrieval_64.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mAP_new.py" afterPath="$PROJECT_DIR$/mAP_new.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/my_mAP.py" afterPath="$PROJECT_DIR$/my_mAP.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/precision_recall.py" afterPath="$PROJECT_DIR$/precision_recall.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="dance_on_64.iws" />
@@ -507,7 +503,11 @@
       <created>1402292064023</created>
       <updated>1402292064023</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="2014/06/14&#10;Basic image retrieval changed.&#10;Now trying to change SV part.">
+      <created>1402726803702</created>
+      <updated>1402726803702</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -534,6 +534,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -548,7 +549,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -571,7 +571,8 @@
     <MESSAGE value="14/05/14&#10;fix tf-idf" />
     <MESSAGE value="14/05/16&#10;still need inverted file" />
     <MESSAGE value="2014/06/09&#10;A new week." />
-    <option name="LAST_COMMIT_MESSAGE" value="2014/06/09&#10;A new week." />
+    <MESSAGE value="2014/06/14&#10;Basic image retrieval changed.&#10;Now trying to change SV part." />
+    <option name="LAST_COMMIT_MESSAGE" value="2014/06/14&#10;Basic image retrieval changed.&#10;Now trying to change SV part." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
