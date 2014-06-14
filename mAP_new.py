@@ -10,7 +10,7 @@ if __name__ == "__main__":
     top_dir = 'C:/Cassandra/python_oxford/'
     query_goto_dir = 'C:/Cassandra/query_object/'
     ground_truth_dir = top_dir + 'ground_truth_file/'
-    top_retrieval_num = 100
+    top_retrieval_num = 5062
 
     target_img_dir_list = []
     target_img_list = open(query_goto_dir + 'target_img_list.txt', 'r')
@@ -33,7 +33,6 @@ if __name__ == "__main__":
     positive_or_not = np.zeros((len(target_img_dir_list),top_retrieval_num), np.float64)
     ## read result txt for each query
     for query_i in range(len(target_img_dir_list)):
-        print target_img_dir_list[query_i].split('/')[-1][:-9]
         tmp_good_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('/')[-1])[:-9] + 'good.txt'
         tmp_ok_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('/')[-1])[:-9] + 'ok.txt'
         tmp_junk_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('/')[-1])[:-9] + 'junk.txt'
@@ -63,7 +62,7 @@ if __name__ == "__main__":
         tmp_result_file = open(target_img_dir_list[query_i][:-4] + '.txt', 'r')
         for line_i in range(top_retrieval_num):
             line = tmp_result_file.readline()
-            print (line.split('/')[-1]).split('.')[0]
+
             tmp_result.append(line.split('/')[:-1])
             # print line.split('/')[:-1]
             is_negative = True
@@ -146,13 +145,10 @@ if __name__ == "__main__":
 
     top_some = np.reshape(positive_or_not.sum(axis=1)/top_retrieval_num,(-1,5))
     top_mAP = np.reshape((top_some.sum(axis=1)/5),(-1,1))
-    print top_mAP.shape
+
 
     top_some_bigger = np.concatenate((top_some,top_mAP),axis=1)
-    print top_some_bigger
-    print (top_some.sum(axis=1)/5).sum()/11
 
-    print positive_or_not.shape
     positive_or_not_csv =  np.transpose(np.int32(positive_or_not))
 
     mAP_csv = np.zeros((top_retrieval_num, positive_or_not_csv.shape[1]), np.float64)

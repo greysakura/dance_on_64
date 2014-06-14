@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="894b480f-b97b-42f2-9066-9070e5054eee" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DQE_SV.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/my_mAP.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/precision_recall.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sql_test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/image_retrieval_64.py" afterPath="$PROJECT_DIR$/image_retrieval_64.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/kmeans_64.py" afterPath="$PROJECT_DIR$/kmeans_64.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/non_linear_SVM.py" afterPath="$PROJECT_DIR$/non_linear_SVM.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mAP_new.py" afterPath="$PROJECT_DIR$/mAP_new.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/my_mAP.py" afterPath="$PROJECT_DIR$/my_mAP.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/precision_recall.py" afterPath="$PROJECT_DIR$/precision_recall.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="dance_on_64.iws" />
@@ -35,10 +32,8 @@
       <file leaf-file-name="sci_test.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sci_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="20" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="580">
-              <folding>
-                <element signature="e#27#50#0" expanded="true" />
-              </folding>
+            <state line="11" column="20" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0" vertical-offset="220" max-vertical-offset="580">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -46,27 +41,16 @@
       <file leaf-file-name="non_linear_SVM.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/non_linear_SVM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="9" selection-start="1058" selection-end="1058" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="880">
-              <folding>
-                <element signature="e#42#60#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="precision_recall.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/precision_recall.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="57" selection-end="75" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1060">
+            <state line="38" column="9" selection-start="1058" selection-end="1058" vertical-scroll-proportion="0.0" vertical-offset="760" max-vertical-offset="880">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="image_retrieval_64.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/image_retrieval_64.py">
+      <file leaf-file-name="precision_recall.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/precision_recall.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="54" selection-start="3201" selection-end="3201" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="5160">
+            <state line="10" column="0" selection-start="212" selection-end="212" vertical-scroll-proportion="0.025578562" vertical-offset="79" max-vertical-offset="900">
               <folding />
             </state>
           </provider>
@@ -75,19 +59,7 @@
       <file leaf-file-name="my_mAP.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/my_mAP.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="38" selection-start="597" selection-end="597" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1940">
-              <folding>
-                <element signature="e#27#45#0" expanded="true" />
-                <marker date="1402475704323" expanded="true" signature="103:1172" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="kmeans_64.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/kmeans_64.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="352" column="36" selection-start="13305" selection-end="13305" vertical-scroll-proportion="12.0" vertical-offset="0" max-vertical-offset="7500">
+            <state line="98" column="49" selection-start="3118" selection-end="3118" vertical-scroll-proportion="0.0" vertical-offset="1719" max-vertical-offset="2540">
               <folding />
             </state>
           </provider>
@@ -96,19 +68,8 @@
       <file leaf-file-name="free_test.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/free_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="55" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="440">
+            <state line="10" column="41" selection-start="333" selection-end="333" vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="480">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sql_test.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sql_test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="37" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="560">
-              <folding>
-                <element signature="e#27#49#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -116,7 +77,25 @@
       <file leaf-file-name="geo_test.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/geo_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="21" selection-start="1036" selection-end="1036" vertical-scroll-proportion="0.0" vertical-offset="960" max-vertical-offset="2320">
+            <state line="30" column="21" selection-start="1036" selection-end="1036" vertical-scroll-proportion="0.0" vertical-offset="600" max-vertical-offset="2420">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mAP_SV.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mAP_SV.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="141" column="0" selection-start="5630" selection-end="5630" vertical-scroll-proportion="0.0" vertical-offset="2820" max-vertical-offset="5020">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mAP_new.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mAP_new.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="64" column="0" selection-start="2290" selection-end="2290" vertical-scroll-proportion="0.0" vertical-offset="1280" max-vertical-offset="3940">
               <folding />
             </state>
           </provider>
@@ -125,7 +104,16 @@
       <file leaf-file-name="first_retrieval_SV.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/first_retrieval_SV.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="281" column="41" selection-start="12594" selection-end="12594" vertical-scroll-proportion="0.0" vertical-offset="5736" max-vertical-offset="6340">
+            <state line="49" column="26" selection-start="1442" selection-end="1442" vertical-scroll-proportion="0.0" vertical-offset="4872" max-vertical-offset="6340">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Paris_GT.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Paris_GT.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="37" column="29" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.0" vertical-offset="740" max-vertical-offset="1380">
               <folding />
             </state>
           </provider>
@@ -152,7 +140,6 @@
         <option value="$PROJECT_DIR$/write_csv.py" />
         <option value="$PROJECT_DIR$/inverted_file_test.py" />
         <option value="$PROJECT_DIR$/Paris_GT.py" />
-        <option value="$PROJECT_DIR$/mAP_new.py" />
         <option value="$PROJECT_DIR$/first_prepare_py64.py" />
         <option value="$PROJECT_DIR$/geo_test.py" />
         <option value="$PROJECT_DIR$/first_retrieval_SV.py" />
@@ -162,10 +149,11 @@
         <option value="$PROJECT_DIR$/non_linear_SVM.py" />
         <option value="$PROJECT_DIR$/sql_test.py" />
         <option value="$PROJECT_DIR$/DQE_SV.py" />
-        <option value="$PROJECT_DIR$/precision_recall.py" />
         <option value="$PROJECT_DIR$/kmeans_64.py" />
-        <option value="$PROJECT_DIR$/my_mAP.py" />
+        <option value="$PROJECT_DIR$/precision_recall.py" />
         <option value="$PROJECT_DIR$/image_retrieval_64.py" />
+        <option value="$PROJECT_DIR$/mAP_new.py" />
+        <option value="$PROJECT_DIR$/my_mAP.py" />
       </list>
     </option>
   </component>
@@ -225,7 +213,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
+    <property name="options.lastSelected" value="editor" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
@@ -239,80 +227,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.my_mAP">
-    <configuration default="false" name="sql_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="dance_on_64" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sql_test.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="DQE_SV" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="dance_on_64" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DQE_SV.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PyDebugRunner" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PyDebugRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="precision_recall" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="dance_on_64" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/precision_recall.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="first_prepare_py64" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="dance_on_64" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/first_prepare_py64.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
     <configuration default="false" name="my_mAP" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -326,6 +240,86 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="dance_on_64" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/my_mAP.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PyDebugRunner" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PyDebugRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="kmeans_64" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="dance_on_64" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/kmeans_64.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Unittests in C:\Users\LIMU_North\PycharmProjects\dance_on_64\dance_on_64" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="dance_on_64" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="$PROJECT_DIR$" />
+      <option name="TEST_TYPE" value="TEST_FOLDER" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="image_retrieval_64" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="dance_on_64" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/image_retrieval_64.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="mAP_new" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="dance_on_64" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mAP_new.py" />
       <option name="PARAMETERS" value="" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
@@ -453,19 +447,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.sql_test" />
-      <item index="1" class="java.lang.String" itemvalue="Python.DQE_SV" />
-      <item index="2" class="java.lang.String" itemvalue="Python.precision_recall" />
-      <item index="3" class="java.lang.String" itemvalue="Python.first_prepare_py64" />
-      <item index="4" class="java.lang.String" itemvalue="Python.my_mAP" />
+      <item index="0" class="java.lang.String" itemvalue="Python.my_mAP" />
+      <item index="1" class="java.lang.String" itemvalue="Python.kmeans_64" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in C:\Users\LIMU_North\PycharmProjects\dance_on_64\dance_on_64" />
+      <item index="3" class="java.lang.String" itemvalue="Python.image_retrieval_64" />
+      <item index="4" class="java.lang.String" itemvalue="Python.mAP_new" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.my_mAP" />
-        <item index="1" class="java.lang.String" itemvalue="Python.first_prepare_py64" />
-        <item index="2" class="java.lang.String" itemvalue="Python.precision_recall" />
-        <item index="3" class="java.lang.String" itemvalue="Python.DQE_SV" />
-        <item index="4" class="java.lang.String" itemvalue="Python.sql_test" />
+        <item index="1" class="java.lang.String" itemvalue="Python.mAP_new" />
+        <item index="2" class="java.lang.String" itemvalue="Python.image_retrieval_64" />
+        <item index="3" class="java.lang.String" itemvalue="Python.kmeans_64" />
+        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in C:\Users\LIMU_North\PycharmProjects\dance_on_64\dance_on_64" />
       </list>
     </recent_temporary>
   </component>
@@ -537,27 +531,27 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17951426" sideWeight="0.7296467" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17951426" sideWeight="0.7307692" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.260181" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17951426" sideWeight="0.26881722" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17951426" sideWeight="0.26923078" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26357466" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27149323" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -616,8 +610,13 @@
           <line>361</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/my_mAP.py</url>
+          <line>93</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="21" />
+      <option name="time" value="24" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -807,30 +806,9 @@
         <state line="27" column="0" selection-start="751" selection-end="751" vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="2780" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mAP_new.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="43" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3940">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/inverted_file_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="235" column="38" selection-start="9867" selection-end="9867" vertical-scroll-proportion="-0.14035088" vertical-offset="4700" max-vertical-offset="6180">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Paris_GT.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="29" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1380">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mAP_SV.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="141" column="0" selection-start="5630" selection-end="5630" vertical-scroll-proportion="0.0" vertical-offset="3219" max-vertical-offset="4940">
           <folding />
         </state>
       </provider>
@@ -851,86 +829,90 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/first_prepare_py64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="51" selection-start="831" selection-end="831" vertical-scroll-proportion="0.88435376" vertical-offset="0" max-vertical-offset="3040">
-          <folding />
-        </state>
+        <state line="31" column="51" selection-start="831" selection-end="831" vertical-scroll-proportion="0.88435376" vertical-offset="0" max-vertical-offset="3040" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/first_retrieval_SV.py">
+    <entry file="file://$PROJECT_DIR$/sql_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="281" column="41" selection-start="12594" selection-end="12594" vertical-scroll-proportion="0.0" vertical-offset="5532" max-vertical-offset="6340">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/free_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="55" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="440">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/geo_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="21" selection-start="1036" selection-end="1036" vertical-scroll-proportion="0.0" vertical-offset="960" max-vertical-offset="2320">
-          <folding />
-        </state>
+        <state line="11" column="37" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="560" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sci_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="20" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="560">
-          <folding>
-            <element signature="e#27#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sql_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="37" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="560">
-          <folding>
-            <element signature="e#27#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/my_mAP.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="38" selection-start="597" selection-end="597" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1940">
-          <folding>
-            <element signature="e#27#45#0" expanded="true" />
-            <marker date="1402475704323" expanded="true" signature="103:1172" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/precision_recall.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="57" selection-end="75" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1060">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/non_linear_SVM.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="9" selection-start="1058" selection-end="1058" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="880">
-          <folding>
-            <element signature="e#42#60#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/image_retrieval_64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="54" selection-start="3201" selection-end="3201" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="5160">
+        <state line="279" column="102" selection-start="12119" selection-end="12119" vertical-scroll-proportion="0.0" vertical-offset="5124" max-vertical-offset="5700" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/non_linear_SVM.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="9" selection-start="1058" selection-end="1058" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="880">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/kmeans_64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="352" column="36" selection-start="13305" selection-end="13305" vertical-scroll-proportion="12.0" vertical-offset="0" max-vertical-offset="7500">
+        <state line="341" column="20" selection-start="12878" selection-end="12878" vertical-scroll-proportion="0.0" vertical-offset="6543" max-vertical-offset="7500" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/geo_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="21" selection-start="1036" selection-end="1036" vertical-scroll-proportion="0.0" vertical-offset="1020" max-vertical-offset="2320">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mAP_SV.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="141" column="0" selection-start="5630" selection-end="5630" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4940">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/free_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="41" selection-start="333" selection-end="333" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="440">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Paris_GT.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="29" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1280">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mAP_new.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="0" selection-start="2290" selection-end="2290" vertical-scroll-proportion="0.0" vertical-offset="3271" max-vertical-offset="3860">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/first_retrieval_SV.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="26" selection-start="1442" selection-end="1442" vertical-scroll-proportion="0.0" vertical-offset="4872" max-vertical-offset="6340">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my_mAP.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="49" selection-start="3118" selection-end="3118" vertical-scroll-proportion="0.0" vertical-offset="1719" max-vertical-offset="2540">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/precision_recall.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="212" selection-end="212" vertical-scroll-proportion="0.025578562" vertical-offset="79" max-vertical-offset="900">
           <folding />
         </state>
       </provider>

@@ -9,9 +9,6 @@ from sklearn import svm, datasets
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import auc
 
-
-
-
 # import some data to play with
 iris = datasets.load_iris()
 X = iris.data

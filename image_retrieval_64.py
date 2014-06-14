@@ -19,12 +19,13 @@ if __name__ == "__main__":
     bool_using_tf_idf = True
     bool_read_tf_idf_from_txt = False
     bool_read_idf_from_txt = False
+    bool_read_database_VW_from_txt = True
 
     # Number of clusters: 128 at present
     cluster_number = 8192
     # Using SIFT here
     des_dimension = 128
-    first_retrieval_num = 100
+    first_retrieval_num = 5062
     ## store images' dirs
     target_img_dir_list = []
     ## list inside a list
@@ -35,7 +36,7 @@ if __name__ == "__main__":
         target_img_dir_list.append(line[:-1])
         # print line[:-1]
     target_img_list.close()
-    print len(target_img_dir_list)
+    print 'len(target_img_dir_list): ', len(target_img_dir_list)
 
     ## read kmeans centers
     kmeans_result_append = '/kmeans_result.txt'
@@ -51,9 +52,11 @@ if __name__ == "__main__":
     kmeans_result_file.close()
     read_kmeans_time_end = clock()
     print 'read kmeans time used: ', read_kmeans_time_end - read_kmeans_time_start
-
+    print
     # read the TF_IDF_matrix from file.
     # prepare for further VW matching under tf-idf structure
+
+    print '...reading TF-IDF matrix...'
     read_tf_idf_start = clock()
     if bool_read_tf_idf_from_txt:
         TF_IDF_append = 'TF_IDF_matrix.txt'
@@ -68,14 +71,16 @@ if __name__ == "__main__":
         ## print TF_IDF_matrix
         TF_IDF_file.close()
     else:
-        TF_IDF_matrix = np.load(top_dir + 'IDF_matrix.npy')
+        TF_IDF_matrix = np.load(top_dir + 'TF_IDF_matrix.npy')
+    print 'TF_IDF_matrix: ', TF_IDF_matrix.shape
 
     read_tf_idf_end = clock()
 
-    print 'read_tf_idf: ', read_tf_idf_end - read_tf_idf_start
-
+    print '...TF-IDF reading time: ', read_tf_idf_end - read_tf_idf_start, 'seconds...'
+    print
 
     ## read IDF_matrix
+    print '...reading IDF matrix...'
     if bool_read_idf_from_txt:
         IDF_file = open(top_dir + 'IDF_matrix.txt','r')
         line = IDF_file.readline()
@@ -86,6 +91,46 @@ if __name__ == "__main__":
         IDF_file.close()
     else:
         IDF_matrix = np.load(top_dir + 'IDF_matrix.npy')
+
+    print '...IDF matrix load finished...'
+    print
+
+    result_img_dir =[]
+    result_img_kpts = []
+    print '...reading database image dirs...'
+    index_file = open(top_dir + 'image_index_python.txt','rb')
+    image_count = 0
+    for line in index_file:
+        result_img_dir.append((line.split(','))[0])
+        result_img_kpts.append(int(float(line.split(',')[1][:-2])))
+    # print result_img_dir
+    # print result_img_kpts
+    index_file.close()
+    image_count = len(result_img_dir)
+    print '...database image dirs loaded...'
+    print
+
+    ## pre-load all database VWs into memory
+    print '...reading all database image VWs into memory...'
+    database_VW_matrix = np.zeros((len(result_img_dir),cluster_number), np.float64)
+    if bool_read_database_VW_from_txt:
+        for i in range(len(result_img_dir)):
+            the_file = open(database_VW_dir + ((result_img_dir[i].split('/'))[-1]).split('.')[0] + '_VW.txt','r')
+            line = the_file.readline()
+            line = the_file.readline()
+            # read the third line
+            line = the_file.readline()
+            # get the VW of database image
+            database_VW_matrix[i,:] = np.array(map(np.float64,line.split(',')))
+            # print type(VW_tmp)
+            the_file.close()
+        np.save(top_dir + 'database_VW_matrix.npy', database_VW_matrix)
+    else:
+        database_VW_matrix = np.load(top_dir + 'database_VW_matrix.npy')
+
+
+    print '...database image VWs loaded...'
+    print
 
     retrieval_time_used_start = clock()
     ##change 14/05/01
@@ -191,30 +236,30 @@ if __name__ == "__main__":
         #
         # # now we calculate the "distance" between each database image and target image
 
-        result_img_dir =[]
-        result_img_kpts = []
-        index_file = open(top_dir + 'image_index_python.txt','rb')
-        image_count = 0
-        for line in index_file:
-            result_img_dir.append((line.split(','))[0])
-            result_img_kpts.append(int(float(line.split(',')[1][:-2])))
-        # print result_img_dir
-        # print result_img_kpts
-        index_file.close()
-        image_count = len(result_img_dir)
+        # result_img_dir =[]
+        # result_img_kpts = []
+        # index_file = open(top_dir + 'image_index_python.txt','rb')
+        # image_count = 0
+        # for line in index_file:
+        #     result_img_dir.append((line.split(','))[0])
+        #     result_img_kpts.append(int(float(line.split(',')[1][:-2])))
+        # # print result_img_dir
+        # # print result_img_kpts
+        # index_file.close()
+        # image_count = len(result_img_dir)
         distance_between_image = np.zeros((1,image_count), np.float64)
         # target_image_VW_norm = target_image_VW / target_image_VW.sum()
         ## Use the right tf-idf Matrix!!!!!!!!  14/04/28
         for i in range(len(result_img_dir)):
-            the_file = open(database_VW_dir + ((result_img_dir[i].split('/'))[-1]).split('.')[0] + '_VW.txt','r')
-            line = the_file.readline()
-            line = the_file.readline()
-            # read the third line
-            line = the_file.readline()
-            # get the VW of database image
-            VW_tmp = np.array(map(np.float64,line.split(',')))
-            # print type(VW_tmp)
-            the_file.close()
+            # the_file = open(database_VW_dir + ((result_img_dir[i].split('/'))[-1]).split('.')[0] + '_VW.txt','r')
+            # line = the_file.readline()
+            # line = the_file.readline()
+            # # read the third line
+            # line = the_file.readline()
+            # # get the VW of database image
+            # VW_tmp = np.array(map(np.float64,line.split(',')))
+            # # print type(VW_tmp)
+            # the_file.close()
             # create a eye matrix with tf-idf values.
             TF_IDF_eye = np.reshape(TF_IDF_matrix[i,:],(1,-1))
             # TF_IDF_eye = TF_IDF_matrix[i,:]
@@ -229,10 +274,10 @@ if __name__ == "__main__":
 
             # VW_tmp_norm = VW_tmp / VW_tmp.sum()
             if bool_using_tf_idf:
-                distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)),
-                                                   np.transpose(np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)))
+                distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW - database_VW_matrix[i,:]), TF_IDF_eye)),
+                                                   np.transpose(np.multiply(np.float64(target_image_VW - database_VW_matrix[i,:]), TF_IDF_eye)))
             else:
-                distance_between_image[0, i] = np.dot((np.float64(target_image_VW - VW_tmp)), np.transpose(np.float64(target_image_VW - VW_tmp)))
+                distance_between_image[0, i] = np.dot((np.float64(target_image_VW - database_VW_matrix[i,:])), np.transpose(np.float64(target_image_VW - database_VW_matrix[i,:])))
 
             # distance_between_image[0, i] = np.dot((np.multiply(np.float64(target_image_VW - VW_tmp), TF_IDF_eye)),
             #                                       np.transpose(np.float64(target_image_VW - VW_tmp)))
