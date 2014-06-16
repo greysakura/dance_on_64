@@ -18,7 +18,9 @@ sift = cv2.SIFT(nfeatures = (img01.shape[0]*img01.shape[1]/238),edgeThreshold=0.
 kpts01, desc01 = sift.detectAndCompute(img01, None)
 sift = cv2.SIFT(nfeatures = (img02.shape[0]*img02.shape[1]/238),edgeThreshold=0.01)
 kpts02, desc02 = sift.detectAndCompute(img02, None)
-print type(kpts01)
+print "ggg, ", type(kpts01)
+print type(desc01)
+print desc01.shape
 matcher = cv2.BFMatcher(cv2.NORM_L2)
 raw_matches = matcher.knnMatch(desc01, trainDescriptors = desc02, k = 2)
 nnThreshold = 0.8
@@ -26,10 +28,12 @@ good_match = []
 for i in range(len(raw_matches)):
     if (raw_matches[i][0].distance / raw_matches[i][1].distance) <= float(pow(nnThreshold,2)):
         good_match.append(raw_matches[i][0])
-
+print good_match[0]
 
 print len(raw_matches)
 print 'number of good matches: ', len(good_match)
+
+
 
 # print good_match[0].distance
 minGoodMatch = 10
@@ -76,6 +80,21 @@ else:
     print "Not enough matches are found - %d/%d" % (len(good_match),minGoodMatch)
     matchesMask = None
 
+my_kpts = cv2.KeyPoint()
+my_kpts.pt = (1,1)
+print my_kpts.pt
+ggg = 0
+print 'what the %d sdfsdfsdf'  % ggg
+mylist = [1,0,1,1,1,3]
+print set(mylist)
+# ggg = np.argsort(mylist)
+# print type(ggg)
+# print ggg
+#
+# print ggg.shape
+# print len(mylist)
+# for i in range(ggg.shape[0]):
+#     print mylist[ggg[i]]
 
 
 ###########

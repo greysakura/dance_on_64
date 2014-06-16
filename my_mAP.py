@@ -13,7 +13,12 @@ try:
 except:
     os.mkdir(evaluation_dir)
 
-def check_list_AP(AP_input,total_num):
+def check_list_AP(AP_input):
+    this_ap = 0
+    old_recall = 0
+    old_precision = 1.0
+    intersect_size = 0
+    j = 0
 
     if type(AP_input) is list:
         input_mat = np.array(AP_input, np.int32)
@@ -21,29 +26,18 @@ def check_list_AP(AP_input,total_num):
         input_mat = AP_input
         if len(AP_input.shape) >1 :
             input_mat = input_mat.flatten()
-    input_P_mat = np.array(range(1, input_mat.sum()+1,1), np.float64)
-    # print input_P_mat
+    total_positive_num = input_mat.sum()[0]
+    for i in range(input_mat.shape[0]):
 
-    if total_num == None:
-        tmp_recall = input_P_mat/input_mat.sum()
-        # print 'recall: ', tmp_recall
-        tmp_precision = input_P_mat / (np.where(input_mat == 1)[0] + 1)
-        print
-        # print (np.where(input_mat == 1)[0] + 1)
-        print 'precisions:', tmp_precision
-        # print 'precision: ', tmp_precision
-        print 'AP: ', np.average(tmp_precision)
-        if input_mat.sum() !=0:
-            return tmp_precision, tmp_recall, np.average(tmp_precision)
-        else:
-            return tmp_precision, tmp_recall, 0
-    else:
-        tmp_recall = input_P_mat/total_num
-        # print 'recall: ', tmp_recall
-        tmp_precision = tmp_recall / (np.where(input_mat == 1)[0] + 1)
-        # print 'precision: ', tmp_precision
+        recall_tmp = intersect_size / total_positive_num
+        precision_tmp = intersect_size / (j + 1.0)
 
-        return tmp_precision, tmp_recall, np.average(tmp_precision)
+        ap += (recall_tmp - old_recall)*((old_precision + precision_tmp)/2.0)
+
+        old_recall = recall_tmp
+        old_precision = precision_tmp
+
+
 
 
 
@@ -60,11 +54,9 @@ print len(target_img_name_list)
 
 
 
-csv_file = open('C:/Cassandra/test_results/140613/sift3000_238_tf_idf_8192/positive_or_not.csv','r')
-line_count = 0
+csv_file = open('C:/Cassandra/test_results/140616/positive_or_not.csv','r')
 line_push = []
 for line in csv_file:
-    line_count += 1
     line_push.append(np.int32(line.split(',')))
 all_mat = np.array(line_push)
 print all_mat.shape
@@ -74,7 +66,7 @@ mAP_list = []
 for i in range(all_mat.shape[1]):
     # print target_img_name_list[i]
     tmp_0_or_1 = all_mat[:,i]
-    tmp_precision, tmp_recall, tmp_mAP =  check_list_AP(tmp_0_or_1, None)
+    tmp_precision, tmp_recall, tmp_mAP =  check_list_AP(tmp_0_or_1)
     # print 'recall: ', tmp_recall
     precision_for_draw = [0]
     precision_for_draw.extend(tmp_precision)
@@ -101,7 +93,7 @@ print
 input_list = [1,0,0,1,0,1]
 # print type(input_list)
 
-precision, recall, area = check_list_AP(input_list, None)
+precision, recall, area = check_list_AP(input_list)
 print area
 
 pl.clf()

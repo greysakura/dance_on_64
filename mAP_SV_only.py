@@ -11,13 +11,13 @@ if __name__ == "__main__":
     query_goto_dir = 'C:/Cassandra/query_object/'
     ground_truth_dir = top_dir + 'ground_truth_file/'
 
-    SV_ranking_result_dir = top_dir + 'SV_reranking'
+    SV_ranking_result_dir = top_dir + 'SV_reranking/'
     top_retrieval_num = 5062
 
     target_img_dir_list = []
     target_img_list = open(query_goto_dir + 'target_img_list.txt', 'r')
     for line in target_img_list:
-        target_img_dir_list.append(line[:-1])
+        target_img_dir_list.append(line[:-1].split('/')[-1])
     target_img_list.close()
     print 'Number of query images: ', len(target_img_dir_list)
 
@@ -30,14 +30,15 @@ if __name__ == "__main__":
     output_file = open(query_goto_dir + 'evaluation.txt', 'w')
 
     ## zeros and ones
-
+    print target_img_dir_list[0]
+    raw_input('stop it.')
 
     positive_or_not = np.zeros((len(target_img_dir_list),top_retrieval_num), np.float64)
     ## read result txt for each query
     for query_i in range(len(target_img_dir_list)):
-        tmp_good_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('/')[-1])[:-9] + 'good.txt'
-        tmp_ok_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('/')[-1])[:-9] + 'ok.txt'
-        tmp_junk_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('/')[-1])[:-9] + 'junk.txt'
+        tmp_good_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('.')[0])[:-5] + 'good.txt'
+        tmp_ok_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('.')[0])[:-5] + 'ok.txt'
+        tmp_junk_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('.')[0])[:-5] + 'junk.txt'
         tmp_good_file = open(tmp_good_dir)
         tmp_ok_file = open(tmp_ok_dir)
         tmp_junk_file = open(tmp_junk_dir)
@@ -61,7 +62,7 @@ if __name__ == "__main__":
         tmp_junk_file.close()
         ## count the positives
         positive_total.append(len(tmp_good)+ len(tmp_ok))
-        tmp_result_file = open(target_img_dir_list[query_i][:-4] + '.txt', 'r')
+        tmp_result_file = open(SV_ranking_result_dir + target_img_dir_list[query_i].split('.')[0] + '_SV_reranking.txt', 'r')
         for line_i in range(top_retrieval_num):
             line = tmp_result_file.readline()
 

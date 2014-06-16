@@ -11,7 +11,8 @@ if __name__ == "__main__":
     query_goto_dir = 'C:/Cassandra/query_object/'
     ground_truth_dir = top_dir + 'ground_truth_file/'
     SV_result_dir = query_goto_dir + 'SV_verified/'
-    top_retrieval_num = 100
+
+    top_retrieval_num = 5062
 
     target_img_dir_list = []
     target_img_list = open(query_goto_dir + 'target_img_list.txt', 'r')
