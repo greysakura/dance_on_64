@@ -84,6 +84,7 @@ if __name__ == "__main__":
                     is_negative = False
                     junk_count_tmp += 1
             if is_negative:
+                positive_or_not[query_i,line_i] = -1.0
                 negative_count_tmp += 1
         total_image_retrieved.append(len(tmp_result))
         good_count.append(good_count_tmp)

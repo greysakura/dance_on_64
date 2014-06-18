@@ -397,12 +397,16 @@ if __name__ == "__main__":
 
                 h,w = img.shape[0],img.shape[1]
 
-                # print h,w
                 pts = np.reshape(np.float32([ [0,0],[0,h-1],[w-1,h-1],[w-1,0] ]),(-1,1,2))
                 dst = cv2.perspectiveTransform(pts,M)
-                # print M
-                # print dst
+
+                ## 06/18 We need to change this part. Check the number of inliers
+
                 cv2.polylines(tmp_SV_img,[np.int32(dst)],True,(0,0,255),5, 1)
+                if np.array(matchesMask).sum() >= 4 :
+                    print 'We have %d inliers for best match.' % np.array(matchesMask).sum()
+
+                ## too early
                 tmp_SV_result_name.append(ranked_result_name_dir[result_img_i])
                 tmp_SV_result_index.append(first_ranking[result_img_i])
 

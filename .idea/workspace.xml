@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="894b480f-b97b-42f2-9066-9070e5054eee" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mAP_SV_only.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/oxford_AP.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/first_retrieval_SV.py" afterPath="$PROJECT_DIR$/first_retrieval_SV.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/geo_test.py" afterPath="$PROJECT_DIR$/geo_test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mAP_SV.py" afterPath="$PROJECT_DIR$/mAP_SV.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mAP_new.py" afterPath="$PROJECT_DIR$/mAP_new.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/my_mAP.py" afterPath="$PROJECT_DIR$/my_mAP.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mAP_SV_only.py" afterPath="$PROJECT_DIR$/mAP_SV_only.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="dance_on_64.iws" />
@@ -35,16 +32,18 @@
       <file leaf-file-name="precision_recall.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/precision_recall.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="27" selection-start="1199" selection-end="1199" vertical-scroll-proportion="0.0" vertical-offset="79" max-vertical-offset="900">
+            <state vertical-scroll-proportion="0.0" vertical-offset="860" max-vertical-offset="1000">
+              <caret line="43" column="27" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="my_mAP.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="my_mAP.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/my_mAP.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="0" selection-start="897" selection-end="897" vertical-scroll-proportion="-0.92943203" vertical-offset="1200" max-vertical-offset="2380">
+            <state vertical-scroll-proportion="0.0" vertical-offset="700" max-vertical-offset="2420">
+              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -53,9 +52,10 @@
       <file leaf-file-name="oxford_AP.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/oxford_AP.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="121" column="11" selection-start="3698" selection-end="3698" vertical-scroll-proportion="0.0" vertical-offset="879" max-vertical-offset="2540">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1364" max-vertical-offset="2540">
+              <caret line="96" column="7" selection-start-line="96" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
               <folding>
-                <element signature="e#27#45#0" expanded="true" />
+                <marker date="1402984476113" expanded="true" signature="303:1226" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -64,7 +64,8 @@
       <file leaf-file-name="geo_test.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/geo_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="12" selection-start="688" selection-end="688" vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="2700">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="2800">
+              <caret line="69" column="36" selection-start-line="69" selection-start-column="36" selection-end-line="69" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -73,7 +74,8 @@
       <file leaf-file-name="mAP_SV.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mAP_SV.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="19" selection-start="683" selection-end="683" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4960">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3080" max-vertical-offset="5060">
+              <caret line="154" column="15" selection-start-line="154" selection-start-column="15" selection-end-line="154" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -82,7 +84,8 @@
       <file leaf-file-name="mAP_new.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mAP_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="139" column="68" selection-start="5552" selection-end="5552" vertical-scroll-proportion="0.0" vertical-offset="2359" max-vertical-offset="3900">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2780" max-vertical-offset="3980">
+              <caret line="139" column="68" selection-start-line="139" selection-start-column="68" selection-end-line="139" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -91,18 +94,18 @@
       <file leaf-file-name="mAP_SV_only.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mAP_SV_only.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="25" selection-start="931" selection-end="931" vertical-scroll-proportion="0.0" vertical-offset="479" max-vertical-offset="4000">
-              <folding>
-                <element signature="e#27#37#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="1720" max-vertical-offset="4020">
+              <caret line="86" column="51" selection-start-line="86" selection-start-column="51" selection-end-line="86" selection-end-column="51" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="first_retrieval_SV.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="first_retrieval_SV.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/first_retrieval_SV.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="393" column="39" selection-start="17553" selection-end="17553" vertical-scroll-proportion="-20.12" vertical-offset="7257" max-vertical-offset="9900">
+            <state vertical-scroll-proportion="0.23784722" vertical-offset="7903" max-vertical-offset="9980">
+              <caret line="407" column="20" selection-start-line="407" selection-start-column="20" selection-end-line="407" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -111,7 +114,8 @@
       <file leaf-file-name="first_prepare_py64.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/first_prepare_py64.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="84" column="41" selection-start="2763" selection-end="2763" vertical-scroll-proportion="0.0" vertical-offset="2459" max-vertical-offset="3040">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1580" max-vertical-offset="3040">
+              <caret line="84" column="41" selection-start-line="84" selection-start-column="41" selection-end-line="84" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -120,7 +124,8 @@
       <file leaf-file-name="Paris_GT.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Paris_GT.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="29" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.0" vertical-offset="740" max-vertical-offset="1380">
+            <state vertical-scroll-proportion="0.0" vertical-offset="740" max-vertical-offset="1380">
+              <caret line="37" column="29" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -156,13 +161,13 @@
         <option value="$PROJECT_DIR$/kmeans_64.py" />
         <option value="$PROJECT_DIR$/precision_recall.py" />
         <option value="$PROJECT_DIR$/image_retrieval_64.py" />
-        <option value="$PROJECT_DIR$/geo_test.py" />
-        <option value="$PROJECT_DIR$/mAP_SV.py" />
         <option value="$PROJECT_DIR$/mAP_new.py" />
-        <option value="$PROJECT_DIR$/mAP_SV_only.py" />
-        <option value="$PROJECT_DIR$/first_retrieval_SV.py" />
-        <option value="$PROJECT_DIR$/oxford_AP.py" />
         <option value="$PROJECT_DIR$/my_mAP.py" />
+        <option value="$PROJECT_DIR$/mAP_SV.py" />
+        <option value="$PROJECT_DIR$/mAP_SV_only.py" />
+        <option value="$PROJECT_DIR$/oxford_AP.py" />
+        <option value="$PROJECT_DIR$/geo_test.py" />
+        <option value="$PROJECT_DIR$/first_retrieval_SV.py" />
       </list>
     </option>
   </component>
@@ -186,7 +191,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -235,7 +240,7 @@
       <console-settings />
     </option>
   </component>
-  <component name="RunManager" selected="Python.my_mAP">
+  <component name="RunManager" selected="Python.geo_test">
     <configuration default="false" name="my_mAP" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -253,24 +258,6 @@
       <RunnerSettings RunnerId="PyDebugRunner" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PyDebugRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="first_retrieval_SV" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="dance_on_64" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/first_retrieval_SV.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
@@ -310,7 +297,7 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <configuration default="false" name="mAP_new" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="oxford_AP" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -322,7 +309,25 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="dance_on_64" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mAP_new.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/oxford_AP.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="geo_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="dance_on_64" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/geo_test.py" />
       <option name="PARAMETERS" value="" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
@@ -451,18 +456,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.my_mAP" />
-      <item index="1" class="java.lang.String" itemvalue="Python.first_retrieval_SV" />
-      <item index="2" class="java.lang.String" itemvalue="Python.mAP_SV_only" />
-      <item index="3" class="java.lang.String" itemvalue="Python.mAP_SV" />
-      <item index="4" class="java.lang.String" itemvalue="Python.mAP_new" />
+      <item index="1" class="java.lang.String" itemvalue="Python.mAP_SV_only" />
+      <item index="2" class="java.lang.String" itemvalue="Python.mAP_SV" />
+      <item index="3" class="java.lang.String" itemvalue="Python.oxford_AP" />
+      <item index="4" class="java.lang.String" itemvalue="Python.geo_test" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.my_mAP" />
-        <item index="1" class="java.lang.String" itemvalue="Python.mAP_SV_only" />
-        <item index="2" class="java.lang.String" itemvalue="Python.mAP_new" />
+        <item index="0" class="java.lang.String" itemvalue="Python.geo_test" />
+        <item index="1" class="java.lang.String" itemvalue="Python.oxford_AP" />
+        <item index="2" class="java.lang.String" itemvalue="Python.mAP_SV_only" />
         <item index="3" class="java.lang.String" itemvalue="Python.mAP_SV" />
-        <item index="4" class="java.lang.String" itemvalue="Python.first_retrieval_SV" />
+        <item index="4" class="java.lang.String" itemvalue="Python.my_mAP" />
       </list>
     </recent_temporary>
   </component>
@@ -541,21 +546,21 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17951426" sideWeight="0.72981364" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17951426" sideWeight="0.72968984" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.260181" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17951426" sideWeight="0.26863354" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17951426" sideWeight="0.2688331" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27149323" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2341629" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -563,6 +568,9 @@
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
       <collection />
     </option>
   </component>
@@ -630,311 +638,380 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/BIG.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="124" selection-end="146" vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+        <state vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+          <caret line="10" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/write_csv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="14" selection-start="725" selection-end="725" vertical-scroll-proportion="0.0" vertical-offset="700" max-vertical-offset="840" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="700" max-vertical-offset="840">
+          <caret line="35" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/image_retrieval_64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="32" selection-start="802" selection-end="802" vertical-scroll-proportion="0.0" vertical-offset="460" max-vertical-offset="4220" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="460" max-vertical-offset="4220">
+          <caret line="23" column="32" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/performance_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="26" selection-start="3164" selection-end="3164" vertical-scroll-proportion="0.0" vertical-offset="1720" max-vertical-offset="2020" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1720" max-vertical-offset="2020">
+          <caret line="86" column="26" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BIG.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="124" selection-end="146" vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+        <state vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+          <caret line="10" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/write_csv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="14" selection-start="725" selection-end="725" vertical-scroll-proportion="0.0" vertical-offset="700" max-vertical-offset="840" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="700" max-vertical-offset="840">
+          <caret line="35" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/image_retrieval_64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="64" selection-start="7328" selection-end="7343" vertical-scroll-proportion="0.0" vertical-offset="3580" max-vertical-offset="4220" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3580" max-vertical-offset="4220">
+          <caret line="179" column="64" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/performance_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="26" selection-start="1524" selection-end="1524" vertical-scroll-proportion="0.0" vertical-offset="800" max-vertical-offset="2020" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="800" max-vertical-offset="2020">
+          <caret line="40" column="26" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BIG.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="124" selection-end="146" vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+        <state vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+          <caret line="10" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/write_csv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="14" selection-start="725" selection-end="725" vertical-scroll-proportion="0.0" vertical-offset="700" max-vertical-offset="840" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="700" max-vertical-offset="840">
+          <caret line="35" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/image_retrieval_64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="64" selection-start="7328" selection-end="7343" vertical-scroll-proportion="0.0" vertical-offset="3580" max-vertical-offset="4220" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3580" max-vertical-offset="4220">
+          <caret line="179" column="64" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/performance_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="26" selection-start="1524" selection-end="1524" vertical-scroll-proportion="0.0" vertical-offset="800" max-vertical-offset="2020" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="800" max-vertical-offset="2020">
+          <caret line="40" column="26" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BIG.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="124" selection-end="146" vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+        <state vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+          <caret line="10" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/write_csv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="18" selection-start="589" selection-end="589" vertical-scroll-proportion="0.0" vertical-offset="560" max-vertical-offset="760" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="560" max-vertical-offset="760">
+          <caret line="28" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/image_retrieval_64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="27" selection-start="902" selection-end="902" vertical-scroll-proportion="0.0" vertical-offset="520" max-vertical-offset="4180" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="520" max-vertical-offset="4180">
+          <caret line="26" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/performance_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="0" selection-start="1754" selection-end="1754" vertical-scroll-proportion="0.0" vertical-offset="990" max-vertical-offset="2020" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="990" max-vertical-offset="2020">
+          <caret line="50" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BIG.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="124" selection-end="146" vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+        <state vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+          <caret line="10" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/write_csv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="18" selection-start="589" selection-end="589" vertical-scroll-proportion="0.0" vertical-offset="201" max-vertical-offset="760" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="201" max-vertical-offset="760">
+          <caret line="28" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/image_retrieval_64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="27" selection-start="902" selection-end="902" vertical-scroll-proportion="0.0" vertical-offset="520" max-vertical-offset="4180" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="520" max-vertical-offset="4180">
+          <caret line="26" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/performance_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="31" selection-start="3484" selection-end="3484" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="2020" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="2020">
+          <caret line="94" column="31" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BIG.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="124" selection-end="146" vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+        <state vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+          <caret line="10" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/write_csv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="25" selection-start="558" selection-end="558" vertical-scroll-proportion="0.0" vertical-offset="101" max-vertical-offset="660" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="101" max-vertical-offset="660">
+          <caret line="25" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/image_retrieval_64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="192" column="0" selection-start="7846" selection-end="7846" vertical-scroll-proportion="0.0" vertical-offset="3760" max-vertical-offset="4260" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3760" max-vertical-offset="4260">
+          <caret line="192" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BIG.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="27" selection-end="110" vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="5220">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="5220">
+          <caret line="2" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/write_csv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="19" selection-start="496" selection-end="496" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="720" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="720">
+          <caret line="23" column="19" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1149" column="0" selection-start="47792" selection-end="47792" vertical-scroll-proportion="0.33333334" vertical-offset="21498" max-vertical-offset="29600" />
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="21498" max-vertical-offset="29600">
+          <caret line="1149" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BIG.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="124" selection-end="146" vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+        <state vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="5260">
+          <caret line="10" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://C:/Cassandra/workshop/practical-object-instance-recognition-master/extra/crawler/crawl_all_paintings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.15563506" vertical-offset="87" max-vertical-offset="3940" />
+        <state vertical-scroll-proportion="-0.15563506" vertical-offset="87" max-vertical-offset="3940">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fix_tf_idf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="34" selection-start="1672" selection-end="1672" vertical-scroll-proportion="-0.754717" vertical-offset="1380" max-vertical-offset="2080" />
+        <state vertical-scroll-proportion="-0.754717" vertical-offset="1380" max-vertical-offset="2080">
+          <caret line="53" column="34" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/second_neighbour_pre_filter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="30" selection-start="978" selection-end="978" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1340" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1340">
+          <caret line="38" column="30" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/write_csv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="0" selection-start="2301" selection-end="2301" vertical-scroll-proportion="0.0" vertical-offset="1197" max-vertical-offset="1800" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1197" max-vertical-offset="1800">
+          <caret line="91" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/performance_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="0" selection-start="751" selection-end="751" vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="2780" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="2780">
+          <caret line="27" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/inverted_file_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="235" column="38" selection-start="9867" selection-end="9867" vertical-scroll-proportion="-0.14035088" vertical-offset="4700" max-vertical-offset="6180">
+        <state vertical-scroll-proportion="-0.14035088" vertical-offset="4700" max-vertical-offset="6180">
+          <caret line="235" column="38" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DQE_SV.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="361" column="0" selection-start="16073" selection-end="16073" vertical-scroll-proportion="0.0" vertical-offset="6702" max-vertical-offset="7460">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6702" max-vertical-offset="7460">
+          <caret line="361" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SV_on_result.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="22" selection-start="1894" selection-end="1894" vertical-scroll-proportion="0.0" vertical-offset="1728" max-vertical-offset="3580">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1728" max-vertical-offset="3580">
+          <caret line="63" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sql_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="37" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="560" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="560">
+          <caret line="11" column="37" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sci_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="20" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="560">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="560">
+          <caret line="11" column="20" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/non_linear_SVM.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="9" selection-start="1058" selection-end="1058" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="880">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="880">
+          <caret line="38" column="9" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/free_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="41" selection-start="333" selection-end="333" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="440">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="440">
+          <caret line="10" column="41" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Paris_GT.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="29" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1280">
+        <state vertical-scroll-proportion="0.0" vertical-offset="740" max-vertical-offset="1380">
+          <caret line="37" column="29" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/precision_recall.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="27" selection-start="1199" selection-end="1199" vertical-scroll-proportion="0.0" vertical-offset="79" max-vertical-offset="900">
+        <state vertical-scroll-proportion="0.0" vertical-offset="860" max-vertical-offset="1000">
+          <caret line="43" column="27" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/kmeans_64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="341" column="20" selection-start="12878" selection-end="12878" vertical-scroll-proportion="0.0" vertical-offset="963" max-vertical-offset="7500">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="963" max-vertical-offset="7500">
+          <caret line="341" column="20" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/image_retrieval_64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="288" column="59" selection-start="12692" selection-end="12706" vertical-scroll-proportion="-5.382353" vertical-offset="5314" max-vertical-offset="6060">
+        <state vertical-scroll-proportion="-5.382353" vertical-offset="5314" max-vertical-offset="6060">
+          <caret line="288" column="59" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mAP_new.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2780" max-vertical-offset="3980">
+          <caret line="139" column="68" selection-start-line="139" selection-start-column="68" selection-end-line="139" selection-end-column="68" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/first_prepare_py64.py">
+    <entry file="file://$PROJECT_DIR$/my_mAP.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="41" selection-start="2763" selection-end="2763" vertical-scroll-proportion="0.0" vertical-offset="1259" max-vertical-offset="3040">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/geo_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="12" selection-start="688" selection-end="688" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2700">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/first_retrieval_SV.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="393" column="39" selection-start="17553" selection-end="17553" vertical-scroll-proportion="-20.12" vertical-offset="7257" max-vertical-offset="9900">
+        <state vertical-scroll-proportion="0.0" vertical-offset="700" max-vertical-offset="2420">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mAP_SV.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="19" selection-start="683" selection-end="683" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4960">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mAP_new.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="68" selection-start="5552" selection-end="5552" vertical-scroll-proportion="0.0" vertical-offset="2359" max-vertical-offset="3900">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3080" max-vertical-offset="5060">
+          <caret line="154" column="15" selection-start-line="154" selection-start-column="15" selection-end-line="154" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mAP_SV_only.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="25" selection-start="931" selection-end="931" vertical-scroll-proportion="0.0" vertical-offset="479" max-vertical-offset="4000">
-          <folding>
-            <element signature="e#27#37#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="1720" max-vertical-offset="4020">
+          <caret line="86" column="51" selection-start-line="86" selection-start-column="51" selection-end-line="86" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/oxford_AP.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="121" column="11" selection-start="3698" selection-end="3698" vertical-scroll-proportion="0.0" vertical-offset="879" max-vertical-offset="2540">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1364" max-vertical-offset="2540">
+          <caret line="96" column="7" selection-start-line="96" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
           <folding>
-            <element signature="e#27#45#0" expanded="true" />
+            <marker date="1402984476113" expanded="true" signature="303:1226" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/my_mAP.py">
+    <entry file="file://$PROJECT_DIR$/first_prepare_py64.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="897" selection-end="897" vertical-scroll-proportion="-0.92943203" vertical-offset="1200" max-vertical-offset="2380">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1680" max-vertical-offset="3140">
+          <caret line="84" column="41" selection-start-line="84" selection-start-column="41" selection-end-line="84" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/geo_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="2800">
+          <caret line="69" column="36" selection-start-line="69" selection-start-column="36" selection-end-line="69" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/first_retrieval_SV.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23784722" vertical-offset="7903" max-vertical-offset="9980">
+          <caret line="407" column="20" selection-start-line="407" selection-start-column="20" selection-end-line="407" selection-end-column="20" />
           <folding />
         </state>
       </provider>

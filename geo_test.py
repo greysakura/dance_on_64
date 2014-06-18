@@ -9,7 +9,7 @@ from time import clock
 
 img01 = cv2.imread('C:/Cassandra/query_object/ashmolean_2_query.jpg',1)
 print img01.shape
-img02 = cv2.imread('C:/Cassandra/python_oxford/database/ashmolean_000000.jpg',1)
+img02 = cv2.imread('C:/Cassandra/python_oxford/database/ashmolean_000305.jpg',1)
 cv2.imshow('query', img01)
 cv2.imshow('matching image', img02)
 cv2.waitKey(0)
@@ -28,9 +28,8 @@ good_match = []
 for i in range(len(raw_matches)):
     if (raw_matches[i][0].distance / raw_matches[i][1].distance) <= float(pow(nnThreshold,2)):
         good_match.append(raw_matches[i][0])
-print good_match[0]
 
-print len(raw_matches)
+print 'number of raw matches: ', len(raw_matches)
 print 'number of good matches: ', len(good_match)
 
 
@@ -60,17 +59,23 @@ if len(good_match) >= minGoodMatch:
 
     homograph_start = clock()
     M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC,5.0)
-    print 'M: ', M
+    print 'M: '
     homograph_end = clock()
     print 'Homograph time used: ', homograph_end - homograph_start
+    print 'mask: ', mask.shape
+    print mask.sum(axis = 0)[0]
+
     matchesMask = mask.ravel().tolist()
+    print matchesMask
+    print np.array(matchesMask).sum()
+    raw_input('stop')
 
     h,w = img01.shape[0],img01.shape[1]
     pts = np.reshape(np.float32([ [0,0],[0,h-1],[w-1,h-1],[w-1,0] ]),(-1,1,2))
     dst = cv2.perspectiveTransform(pts,M)
 
     cv2.polylines(img02,[np.int32(dst)],True,(0,0,255),3, 1)
-    cv2.imwrite('C:/Cassandra/balliol_1_query_SV.jpg', img02)
+    cv2.imwrite('C:/Cassandra/ashmolean_2_query_SV.jpg', img02)
     cv2.imshow('query', img01)
     cv2.imshow('img3', img02)
     cv2.waitKey(0)
@@ -84,7 +89,7 @@ my_kpts = cv2.KeyPoint()
 my_kpts.pt = (1,1)
 print my_kpts.pt
 ggg = 0
-print 'what the %d sdfsdfsdf'  % ggg
+print 'what the %d '  % ggg
 mylist = [1,0,1,1,1,3]
 print set(mylist)
 # ggg = np.argsort(mylist)

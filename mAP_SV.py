@@ -99,6 +99,7 @@ if __name__ == "__main__":
                         is_negative = False
                         junk_count_tmp += 1
                 if is_negative:
+                    positive_or_not[query_i,line_i] = -1.0
                     negative_count_tmp += 1
             tmp_AP = float(good_count_tmp + ok_count_tmp)/ num_tmp
         else:
