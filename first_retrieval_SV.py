@@ -406,22 +406,25 @@ if __name__ == "__main__":
                 if np.array(matchesMask).sum() >= 4 :
                     print 'We have %d inliers for best match.' % np.array(matchesMask).sum()
 
-                ## too early
-                tmp_SV_result_name.append(ranked_result_name_dir[result_img_i])
-                tmp_SV_result_index.append(first_ranking[result_img_i])
+                    ## too early
+                    tmp_SV_result_name.append(ranked_result_name_dir[result_img_i])
+                    tmp_SV_result_index.append(first_ranking[result_img_i])
 
-                ## addition for 2nd ranking.
-                tmp_IDF_score = 0
-                tmp_VW_appeared = []
-                for good_match_i in range(len(good_match)):
-                    tmp_VW_appeared.append(target_image_keypoint_labels[0,good_match[good_match_i].queryIdx])
-                    # tmp_VW_belonging = target_image_keypoint_labels[0,good_match[good_match_i].queryIdx]
-                    # tmp_IDF_score += IDF_matrix[0,tmp_VW_belonging]
+                    ## addition for 2nd ranking.
+                    tmp_IDF_score = 0
+                    tmp_VW_appeared = []
+                    for good_match_i in range(len(good_match)):
+                        tmp_VW_appeared.append(target_image_keypoint_labels[0,good_match[good_match_i].queryIdx])
+                        # tmp_VW_belonging = target_image_keypoint_labels[0,good_match[good_match_i].queryIdx]
+                        # tmp_IDF_score += IDF_matrix[0,tmp_VW_belonging]
 
-                tmp_VW_appeared = list(set(tmp_VW_appeared))
-                for appeared_VW_i in range(len(tmp_VW_appeared)):
-                    tmp_IDF_score += IDF_matrix[0,tmp_VW_appeared[appeared_VW_i]] * tmp_norm_VW[appeared_VW_i]
-                SV_IDF_score.append(tmp_IDF_score)
+                    tmp_VW_appeared = list(set(tmp_VW_appeared))
+                    for appeared_VW_i in range(len(tmp_VW_appeared)):
+                        tmp_IDF_score += IDF_matrix[0,tmp_VW_appeared[appeared_VW_i]] * tmp_norm_VW[appeared_VW_i]
+                    SV_IDF_score.append(tmp_IDF_score)
+                else:
+                    print 'Not enough inliers in RANSAC... Abandoned...'
+                    matchesMask = None
             else:
                 # print "Not enough matches are found - %d/%d" % (len(good_match),minGoodMatch)
                 matchesMask = None
