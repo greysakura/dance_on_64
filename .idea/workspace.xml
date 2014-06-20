@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="894b480f-b97b-42f2-9066-9070e5054eee" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/first_prepare_py64.py" afterPath="$PROJECT_DIR$/first_prepare_py64.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/first_retrieval_SV.py" afterPath="$PROJECT_DIR$/first_retrieval_SV.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/kmeans_64.py" afterPath="$PROJECT_DIR$/kmeans_64.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mAP_new.py" afterPath="$PROJECT_DIR$/mAP_new.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/my_mAP.py" afterPath="$PROJECT_DIR$/my_mAP.py" />
     </list>
     <ignored path="dance_on_64.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,18 +32,18 @@
       <file leaf-file-name="precision_recall.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/precision_recall.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="860" max-vertical-offset="1000">
+            <state vertical-scroll-proportion="0.0" vertical-offset="185" max-vertical-offset="900">
               <caret line="43" column="27" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="my_mAP.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="my_mAP.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/my_mAP.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="700" max-vertical-offset="2420">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.59800667" vertical-offset="240" max-vertical-offset="2560">
+              <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -66,21 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mAP_SV.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mAP_SV.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3080" max-vertical-offset="5060">
-              <caret line="154" column="15" selection-start-line="154" selection-start-column="15" selection-end-line="154" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="mAP_new.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mAP_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2780" max-vertical-offset="3980">
-              <caret line="139" column="68" selection-start-line="139" selection-start-column="68" selection-end-line="139" selection-end-column="68" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3213" max-vertical-offset="3940">
+              <caret line="86" column="51" selection-start-line="86" selection-start-column="51" selection-end-line="86" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -89,18 +82,18 @@
       <file leaf-file-name="mAP_SV_only.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mAP_SV_only.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1720" max-vertical-offset="4020">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2125" max-vertical-offset="3940">
               <caret line="86" column="51" selection-start-line="86" selection-start-column="51" selection-end-line="86" selection-end-column="51" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="first_retrieval_SV.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="first_retrieval_SV.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/first_retrieval_SV.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.31715772" vertical-offset="8023" max-vertical-offset="10040">
-              <caret line="397" column="43" selection-start-line="397" selection-start-column="43" selection-end-line="397" selection-end-column="43" />
+            <state vertical-scroll-proportion="-13.6" vertical-offset="7680" max-vertical-offset="10280">
+              <caret line="406" column="80" selection-start-line="406" selection-start-column="80" selection-end-line="406" selection-end-column="80" />
               <folding />
             </state>
           </provider>
@@ -109,18 +102,18 @@
       <file leaf-file-name="first_prepare_py64.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/first_prepare_py64.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1680" max-vertical-offset="3140">
-              <caret line="84" column="41" selection-start-line="84" selection-start-column="41" selection-end-line="84" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3040">
+              <caret line="9" column="15" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Paris_GT.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Paris_GT.py">
+      <file leaf-file-name="kmeans_64.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/kmeans_64.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="740" max-vertical-offset="1380">
-              <caret line="37" column="29" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="6000" max-vertical-offset="7500">
+              <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -147,22 +140,22 @@
         <option value="$PROJECT_DIR$/write_csv.py" />
         <option value="$PROJECT_DIR$/inverted_file_test.py" />
         <option value="$PROJECT_DIR$/Paris_GT.py" />
-        <option value="$PROJECT_DIR$/first_prepare_py64.py" />
         <option value="$PROJECT_DIR$/SV_on_result.py" />
         <option value="$PROJECT_DIR$/sci_test.py" />
         <option value="$PROJECT_DIR$/non_linear_SVM.py" />
         <option value="$PROJECT_DIR$/sql_test.py" />
         <option value="$PROJECT_DIR$/DQE_SV.py" />
-        <option value="$PROJECT_DIR$/kmeans_64.py" />
         <option value="$PROJECT_DIR$/precision_recall.py" />
         <option value="$PROJECT_DIR$/image_retrieval_64.py" />
-        <option value="$PROJECT_DIR$/mAP_new.py" />
-        <option value="$PROJECT_DIR$/my_mAP.py" />
         <option value="$PROJECT_DIR$/mAP_SV.py" />
         <option value="$PROJECT_DIR$/mAP_SV_only.py" />
         <option value="$PROJECT_DIR$/oxford_AP.py" />
         <option value="$PROJECT_DIR$/geo_test.py" />
+        <option value="$PROJECT_DIR$/first_prepare_py64.py" />
+        <option value="$PROJECT_DIR$/kmeans_64.py" />
         <option value="$PROJECT_DIR$/first_retrieval_SV.py" />
+        <option value="$PROJECT_DIR$/mAP_new.py" />
+        <option value="$PROJECT_DIR$/my_mAP.py" />
       </list>
     </option>
   </component>
@@ -235,8 +228,8 @@
       <console-settings />
     </option>
   </component>
-  <component name="RunManager" selected="Python.geo_test">
-    <configuration default="false" name="my_mAP" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.my_mAP">
+    <configuration default="false" name="kmeans_64" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -248,11 +241,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="dance_on_64" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/my_mAP.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/kmeans_64.py" />
       <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PyDebugRunner" />
       <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PyDebugRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="first_retrieval_SV" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="dance_on_64" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/first_retrieval_SV.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
@@ -274,7 +283,7 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <configuration default="false" name="mAP_SV" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="my_mAP" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -286,13 +295,13 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="dance_on_64" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mAP_SV.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/my_mAP.py" />
       <option name="PARAMETERS" value="" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <configuration default="false" name="oxford_AP" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="mAP_new" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -304,25 +313,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="dance_on_64" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/oxford_AP.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="geo_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="dance_on_64" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/geo_test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mAP_new.py" />
       <option name="PARAMETERS" value="" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
@@ -450,19 +441,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.my_mAP" />
-      <item index="1" class="java.lang.String" itemvalue="Python.mAP_SV_only" />
-      <item index="2" class="java.lang.String" itemvalue="Python.mAP_SV" />
-      <item index="3" class="java.lang.String" itemvalue="Python.oxford_AP" />
-      <item index="4" class="java.lang.String" itemvalue="Python.geo_test" />
+      <item index="0" class="java.lang.String" itemvalue="Python.kmeans_64" />
+      <item index="1" class="java.lang.String" itemvalue="Python.first_retrieval_SV" />
+      <item index="2" class="java.lang.String" itemvalue="Python.mAP_SV_only" />
+      <item index="3" class="java.lang.String" itemvalue="Python.my_mAP" />
+      <item index="4" class="java.lang.String" itemvalue="Python.mAP_new" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.geo_test" />
-        <item index="1" class="java.lang.String" itemvalue="Python.oxford_AP" />
+        <item index="0" class="java.lang.String" itemvalue="Python.my_mAP" />
+        <item index="1" class="java.lang.String" itemvalue="Python.mAP_new" />
         <item index="2" class="java.lang.String" itemvalue="Python.mAP_SV_only" />
-        <item index="3" class="java.lang.String" itemvalue="Python.mAP_SV" />
-        <item index="4" class="java.lang.String" itemvalue="Python.my_mAP" />
+        <item index="3" class="java.lang.String" itemvalue="Python.first_retrieval_SV" />
+        <item index="4" class="java.lang.String" itemvalue="Python.kmeans_64" />
       </list>
     </recent_temporary>
   </component>
@@ -528,8 +519,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -539,7 +530,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.260181" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17951426" sideWeight="0.2699115" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23303168" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23303168" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -614,7 +605,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/my_mAP.py</url>
-          <line>85</line>
+          <line>94</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
@@ -847,13 +838,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/performance_evaluation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="2780">
-          <caret line="27" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/inverted_file_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.14035088" vertical-offset="4700" max-vertical-offset="6180">
@@ -914,21 +898,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/precision_recall.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="860" max-vertical-offset="1000">
-          <caret line="43" column="27" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kmeans_64.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="963" max-vertical-offset="7500">
-          <caret line="341" column="20" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/image_retrieval_64.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.382353" vertical-offset="5314" max-vertical-offset="6060">
@@ -936,42 +905,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mAP_new.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2780" max-vertical-offset="3980">
-          <caret line="139" column="68" selection-start-line="139" selection-start-column="68" selection-end-line="139" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/my_mAP.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="700" max-vertical-offset="2420">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mAP_SV.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3080" max-vertical-offset="5060">
           <caret line="154" column="15" selection-start-line="154" selection-start-column="15" selection-end-line="154" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mAP_SV_only.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1720" max-vertical-offset="4020">
-          <caret line="86" column="51" selection-start-line="86" selection-start-column="51" selection-end-line="86" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/first_prepare_py64.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1680" max-vertical-offset="3140">
-          <caret line="84" column="41" selection-start-line="84" selection-start-column="41" selection-end-line="84" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -992,10 +929,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/kmeans_64.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6000" max-vertical-offset="7500">
+          <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/first_prepare_py64.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3040">
+          <caret line="9" column="15" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/first_retrieval_SV.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.31715772" vertical-offset="8023" max-vertical-offset="10040">
-          <caret line="397" column="43" selection-start-line="397" selection-start-column="43" selection-end-line="397" selection-end-column="43" />
+        <state vertical-scroll-proportion="-13.6" vertical-offset="7680" max-vertical-offset="10280">
+          <caret line="406" column="80" selection-start-line="406" selection-start-column="80" selection-end-line="406" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mAP_SV_only.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2125" max-vertical-offset="3940">
+          <caret line="86" column="51" selection-start-line="86" selection-start-column="51" selection-end-line="86" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/precision_recall.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="860" max-vertical-offset="1000">
+          <caret line="43" column="27" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mAP_new.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3213" max-vertical-offset="3940">
+          <caret line="86" column="51" selection-start-line="86" selection-start-column="51" selection-end-line="86" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/performance_evaluation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.4715447" vertical-offset="1980" max-vertical-offset="2780">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my_mAP.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.59800667" vertical-offset="240" max-vertical-offset="2560">
+          <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
           <folding />
         </state>
       </provider>

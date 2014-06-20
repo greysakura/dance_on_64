@@ -16,7 +16,7 @@ if __name__ == "__main__":
     read_desc_csv = True
     perform_kmeans = True
     ## parameters
-    cluster_number = 8192
+    cluster_number = 10000
     des_dimension = 128
     ## dirs
     top_dir = 'C:/Cassandra/python_oxford/'

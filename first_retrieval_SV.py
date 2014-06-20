@@ -34,11 +34,11 @@ if __name__ == "__main__":
     bool_read_database_VW_from_txt = False
 
     # Number of clusters: 128 at present
-    cluster_number = 8192
+    cluster_number = 10000
     first_retrieval_num = 5062
     # Using SIFT here
     des_dimension = 128
-    kpts_density = 238
+    kpts_density = 4800
     # For SV
     num_for_SV = 200
     nnThreshold = 0.8
@@ -162,7 +162,7 @@ if __name__ == "__main__":
         ## import target image
         img = cv2.imread(target_img_dir_list[target_i])
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        num_feature = int(img_gray.shape[0] * img_gray.shape[1] / 357)
+        num_feature = int(img_gray.shape[0] * img_gray.shape[1] / kpts_density)
         sift = cv2.SIFT(nfeatures=num_feature, edgeThreshold=0.01)
         kpts_target, desc_target = sift.detectAndCompute(img_gray, None)
         target_image_keypoint_num = len(kpts_target)
@@ -371,11 +371,21 @@ if __name__ == "__main__":
             raw_matches = matcher.knnMatch(desc_target, trainDescriptors = desc_tmp, k = 2)
             good_match = []
 
+
+            # m_trainIdx = [m[0].trainIdx for m in raw_matches]
+            # print list(set(m_trainIdx))[-1]
+            # m_queryIdx = [m[0].queryIdx for m in raw_matches]
+            # print list(set(m_queryIdx))[-1]
+            # print len(kpts_target)
+            # print len(kpts_tmp)
+            # raw_input("Press Enter to continue...")
+
+
             trainIdx_range = []
             for j in range(len(raw_matches)):
                 trainIdx_range.append(raw_matches[j][0].trainIdx)
                 if (raw_matches[j][0].distance / raw_matches[j][1].distance) <= float(pow(nnThreshold,2)) \
-                        and raw_matches[j][0].queryIdx < len(kpts_target) and raw_matches[j][0].trainIdx < len(kpts_target):
+                        and raw_matches[j][0].queryIdx < len(kpts_target) and raw_matches[j][0].trainIdx < len(kpts_tmp):
                     good_match.append(raw_matches[j][0])
             ###
             cv2.rectangle(tmp_SV_img,(0,0),(tmp_SV_img.shape[1],tmp_SV_img.shape[0]),(0,255,0),thickness=20)
@@ -383,9 +393,11 @@ if __name__ == "__main__":
 
             if len(good_match) >= minGoodMatch:
                 # if target_i == 32:
-                #     print len(kpts_target)
-                #     print len(kpts_tmp)
-                #     raw_input("Press Enter to continue...")
+                # print len(kpts_target)
+                # print len(kpts_tmp)
+                # m_trainIdx = [m.trainIdx for m in good_match]
+                # print list(set(m_trainIdx))
+                # raw_input("Press Enter to continue...")
                 src_pts = np.reshape(np.float32([ kpts_target[m.queryIdx].pt for m in good_match ]),(-1,1,2))
                 dst_pts = np.reshape(np.float32([ kpts_tmp[m.trainIdx].pt for m in good_match ]),(-1,1,2))
 

@@ -20,24 +20,32 @@ def check_list_AP(AP_input):
     intersect_size = 0
     j = 0
 
+    recall_list = [old_recall]
+    precision_list = [old_precision]
+
     if type(AP_input) is list:
         input_mat = np.array(AP_input, np.int32)
     elif type(AP_input) is np.ndarray:
         input_mat = AP_input
         if len(AP_input.shape) >1 :
             input_mat = input_mat.flatten()
-    total_positive_num = input_mat.sum()[0]
+    # print np.where(input_mat == 1)[0].shape[0]
+    # raw_input('sdf')
+    total_positive_num = np.where(input_mat == 1)[0].shape[0]
     for i in range(input_mat.shape[0]):
 
         recall_tmp = intersect_size / total_positive_num
         precision_tmp = intersect_size / (j + 1.0)
+        recall_list.append(recall_tmp)
+        precision_list.append(precision_tmp)
 
-        ap += (recall_tmp - old_recall)*((old_precision + precision_tmp)/2.0)
+        this_ap += (recall_tmp - old_recall)*((old_precision + precision_tmp)/2.0)
 
         old_recall = recall_tmp
         old_precision = precision_tmp
 
 
+    return  precision_list, recall_list, this_ap
 
 
 
@@ -54,7 +62,8 @@ print len(target_img_name_list)
 
 
 
-csv_file = open('C:/Cassandra/test_results/140616/positive_or_not.csv','r')
+csv_file = open('C:/Cassandra/test_results/140620/sift160_10k_tf_idf_SV/positive_or_not.csv','r')
+# csv_file = open(top_dir + 'positive_or_not.csv','r')
 line_push = []
 for line in csv_file:
     line_push.append(np.int32(line.split(',')))
@@ -68,13 +77,13 @@ for i in range(all_mat.shape[1]):
     tmp_0_or_1 = all_mat[:,i]
     tmp_precision, tmp_recall, tmp_mAP =  check_list_AP(tmp_0_or_1)
     # print 'recall: ', tmp_recall
-    precision_for_draw = [0]
-    precision_for_draw.extend(tmp_precision)
-    recall_for_draw = [0]
-    recall_for_draw.extend(tmp_recall)
+    # precision_for_draw = [0]
+    # precision_for_draw.extend(tmp_precision)
+    # recall_for_draw = [0]
+    # recall_for_draw.extend(tmp_recall)
     mAP_list.append(tmp_mAP)
     pl.clf()
-    pl.plot(recall_for_draw, precision_for_draw, label='Precision-Recall curve')
+    pl.plot(tmp_recall, tmp_precision, label='Precision-Recall curve')
     pl.xlabel('Recall')
     pl.ylabel('Precision')
     pl.ylim([0.0, 1.05])
