@@ -6,17 +6,18 @@ import csv
 import gc
 import cv2
 import numpy as np
+from time import gmtime, strftime
 ## timeit!!!
 from time import clock
 if __name__ == "__main__":
     ## Operation bools:
     read_database_image_dirs = True
-    read_desc_csv = True
-    perform_kmeans = True
+    read_desc_csv = False
+    perform_kmeans = False
     bool_generate_VW = True
     # bool_read_VW_txt_for_TF_IDF = False
     ## parameters
-    cluster_number = 1000000
+    cluster_number = 10000
     des_dimension = 128
     ## dirs
     top_dir = 'C:/Cassandra/python_oxford/'
@@ -79,11 +80,6 @@ if __name__ == "__main__":
 
             for row in reader:
                 des_mat[des_count_present,:] = np.array(map(np.float32, row))
-                # des_mat[des_count_present,:] = np.array(map(np.float32, row)).copy()
-                # for j in range(len(row)):
-                #     des_mat[des_count_present, j] = int(float(row[j]))
-                #     # except:
-                #     #     print 'y: ', row_count, ' x: ', i
                 des_count_present += 1
             the_file.close()
         print des_mat.shape
@@ -104,6 +100,17 @@ if __name__ == "__main__":
         print '...des_mat shape: ', des_mat.shape[0], ' ', des_mat.shape[1], ' ...'
         print
 
+    ## here we do a sub-sampling
+
+    randn_percentage = 800000.0 / des_mat.shape[0]
+    myrandn = np.random.uniform(low=0.0, high=1.0, size=des_mat.shape[0])
+    mysubset = tuple(np.where(myrandn<= randn_percentage)[0])
+
+    ## our des_mat subset
+    des_mat_subset = des_mat[mysubset, :]
+    ## delete des_mat
+    des_mat = None
+    # raw_input('stop here.')
     # Set flags (Just to avoid line break in the code)
     flags = cv2.KMEANS_RANDOM_CENTERS
     # We use 128 clusters for our K-means clustering.
@@ -115,7 +122,7 @@ if __name__ == "__main__":
     if perform_kmeans:
         # Apply KMeans  cv2.kmeans(data, K, criteria, attempts, flags[, bestLabels[, centers]])
         start_kmeans = clock()
-        compactness,labels,centers = cv2.kmeans(data= des_mat, K = cluster_number, bestLabels=None,
+        compactness,labels,centers = cv2.kmeans(data= des_mat_subset, K = cluster_number, bestLabels=None,
                                                 criteria= criteria_kmeans, attempts=5,flags=cv2.KMEANS_RANDOM_CENTERS)
         finish_kmeans = clock()
 
@@ -138,6 +145,10 @@ if __name__ == "__main__":
         compactness = np.load(top_dir + 'kmeans_compactness.npy')
         print '...Loading kmeans result finished...'
 
+    print type(des_mat_subset[0,0])
+    timenow = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    print timenow
+    # raw_input('stop here.')
     print
     print 'Writing kmeans result.'
 
@@ -171,8 +182,6 @@ if __name__ == "__main__":
     # print type(labels[0][0])
 
     label_size = np.zeros((1, cluster_number), np.int32)
-    for i in range(len(labels)):
-        label_size[0, labels[i][0]] +=1
 
     # Generate Visual Word
     if bool_generate_VW:
@@ -194,7 +203,33 @@ if __name__ == "__main__":
         total_VW = np.zeros((image_count, cluster_number), np.int32)
 
         for i in range(len(result_img_dir)):
-            print '...creating VW for image number: ', i+1, ' ...'
+            ## added for sub-sampling
+            des_mat_tmp = np.zeros((result_img_kpts[i], des_dimension), np.float32)
+
+            print '...open des csv of image number ', i , '...'
+            img_des_tmp = database_desc_dir + ((result_img_dir[i].split('.'))[0]).split('/')[-1] + '_des.csv'
+            the_file = open(img_des_tmp,'rb')
+            # des_mat_tmp = np.zeros((result_img_kpts[i], des_dimension), np.int32)
+            reader = csv.reader(the_file, delimiter=',', quoting = csv.QUOTE_NONE)
+            # reader = csv.reader(the_file, delimiter=',', quoting = csv.QUOTE_NONE)
+
+
+            des_count_tmp = 0
+            for row in reader:
+                des_mat_tmp[des_count_tmp,:] = np.array(map(np.float32, row))
+                des_count_tmp += 1
+            the_file.close()
+
+            # raw_input('stop')
+            matcher = cv2.BFMatcher(cv2.NORM_L2)
+            raw_matches = matcher.knnMatch(des_mat_tmp, trainDescriptors = centers, k = 1)
+            labels_tmp = np.array([m[0].trainIdx for m in raw_matches], np.int32)
+
+
+
+
+
+            print '...creating VW for image number: ', i, ' ...'
             img_des_tmp = database_VW_dir + ((result_img_dir[i].split('.'))[0]).split('/')[-1] + '_VW.txt'
             the_file = open(img_des_tmp,'w')
             the_file.write(str(result_img_kpts[i]))
@@ -203,16 +238,19 @@ if __name__ == "__main__":
             the_file.write('\n')
 
             # VW of present image.
-            VW_tmp = np.zeros((1,cluster_number),np.int32)
 
-            for j in range(result_img_kpts[i]):
-                VW_tmp[0,labels[j + des_count_for_VW][0]] += 1
-                the_file.write(str(labels[j + des_count_for_VW][0]))
-                if (result_img_kpts>=1) & (j < (result_img_kpts[i] - 1)):
+            VW_tmp = np.zeros((1,cluster_number),np.int32)
+            for label_i in range(result_img_kpts[i]):
+                VW_tmp[0,labels_tmp[label_i]] += 1
+                the_file.write(str(labels_tmp[label_i]))
+                if (result_img_kpts>=1) & (label_i < (result_img_kpts[i] - 1)):
                     the_file.write(',')
             the_file.write('\n')
-
+            print 'VW_tmp: ', VW_tmp
+            print VW_tmp.sum()
             total_VW[i,:] = VW_tmp
+            label_size = label_size + VW_tmp
+
 
             ## Extra: for inverted file
             # inverted_file_matrix = np.concatenate((inverted_file_matrix, np.int32(VW_tmp.transpose() > 0)), axis = 1)
@@ -221,14 +259,7 @@ if __name__ == "__main__":
 
             ## document_freq: used in tf-idf
             document_freq = document_freq + np.int32(VW_tmp > 0)
-            # print VW_tmp.sum(dtype=np.int32)
             des_count_for_VW += result_img_kpts[i]
-            # position where we can find the max
-            # print VW_tmp.argmax(axis = 1)[0]
-            # the max value
-            # print VW_tmp[0,VW_tmp.argmax(axis = 1)][0]
-            # the max value, another version
-            # print np.amax(VW_tmp, axis=1)[0]
 
             ## normalize the VW:
             ## change 14/05/13

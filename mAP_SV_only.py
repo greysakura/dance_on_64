@@ -27,11 +27,9 @@ if __name__ == "__main__":
     junk_count = []
     negative_count = []
     positive_total = []
-    output_file = open(query_goto_dir + 'evaluation.txt', 'w')
+    output_file = open(query_goto_dir + 'evaluation_SV.txt', 'w')
 
     ## zeros and ones
-    print target_img_dir_list[0]
-    raw_input('stop it.')
 
     positive_or_not = np.zeros((len(target_img_dir_list),top_retrieval_num), np.float64)
     ## read result txt for each query
@@ -186,7 +184,7 @@ if __name__ == "__main__":
 
     mAP_csv_file.close()
 
-    positive_or_not_file = open(top_dir + 'positive_or_not.csv', 'w')
+    positive_or_not_file = open(top_dir + 'positive_or_not_SV.csv', 'w')
     for i in range(positive_or_not_csv.shape[0]):
         for j in range(positive_or_not_csv.shape[1]):
             positive_or_not_file.write(str(positive_or_not_csv[i,j]))

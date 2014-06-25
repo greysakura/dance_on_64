@@ -6,6 +6,22 @@ import sys
 import scipy
 from scipy import spatial
 from time import clock
+from time import gmtime, strftime
+
+ttt = np.array(range(10), int)
+ttt = ttt.reshape(5,-1)
+print ttt.shape
+print tuple(ttt.reshape(-1,))
+xxx =  ttt[(1,3), :]
+print xxx
+
+myrandn = np.random.uniform(low=0.0, high=1.0, size=1000000)
+# print tuple(np.where(myrandn<= 0.8)[0])
+
+timenow = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+print timenow
+raw_input('sdfsadf')
+
 
 img01 = cv2.imread('C:/Cassandra/query_object/ashmolean_2_query.jpg',1)
 print img01.shape
@@ -23,6 +39,7 @@ print type(desc01)
 print desc01.shape
 matcher = cv2.BFMatcher(cv2.NORM_L2)
 raw_matches = matcher.knnMatch(desc01, trainDescriptors = desc02, k = 2)
+
 nnThreshold = 0.8
 good_match = []
 for i in range(len(raw_matches)):

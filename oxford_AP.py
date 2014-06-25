@@ -63,7 +63,9 @@ print len(target_img_name_list)
 
 
 
-csv_file = open('C:/Cassandra/test_results/140617/positive_or_not.csv','r')
+# csv_file = open('C:/Cassandra/test_results/140617/positive_or_not.csv','r')
+# csv_file = open(top_dir + 'positive_or_not_SV.csv','r')
+csv_file = open(top_dir + 'positive_or_not.csv','r')
 line_push = []
 for line in csv_file:
     line_push.append(np.int32(line.split(',')))
@@ -75,8 +77,10 @@ mAP_list = []
 for i in range(all_mat.shape[1]):
     print target_img_name_list[i]
     tmp_0_or_1 = all_mat[:,i]
+    print tmp_0_or_1[0:20]
     tmp_mAP, tmp_recall, tmp_precision =  check_list_AP(tmp_0_or_1)
-    print 'recall: ', tmp_recall
+    print 'P: ', tmp_precision
+    print 'AP: ', tmp_mAP
     mAP_list.append(tmp_mAP)
     pl.clf()
     pl.plot(tmp_recall, tmp_precision, label='Precision-Recall curve')

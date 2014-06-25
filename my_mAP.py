@@ -14,8 +14,8 @@ except:
     os.mkdir(evaluation_dir)
 
 def check_list_AP(AP_input):
-    this_ap = 0
-    old_recall = 0
+    this_ap = 0.0
+    old_recall = 0.0
     old_precision = 1.0
     intersect_size = 0
     j = 0
@@ -32,18 +32,23 @@ def check_list_AP(AP_input):
     # print np.where(input_mat == 1)[0].shape[0]
     # raw_input('sdf')
     total_positive_num = np.where(input_mat == 1)[0].shape[0]
+    print total_positive_num
+    print input_mat.shape[0]
     for i in range(input_mat.shape[0]):
 
-        recall_tmp = intersect_size / total_positive_num
+        recall_tmp = intersect_size / np.float64(total_positive_num)
         precision_tmp = intersect_size / (j + 1.0)
         recall_list.append(recall_tmp)
         precision_list.append(precision_tmp)
 
         this_ap += (recall_tmp - old_recall)*((old_precision + precision_tmp)/2.0)
+        print this_ap
 
         old_recall = recall_tmp
         old_precision = precision_tmp
+    print this_ap
 
+    raw_input('df')
 
     return  precision_list, recall_list, this_ap
 
@@ -62,8 +67,8 @@ print len(target_img_name_list)
 
 
 
-csv_file = open('C:/Cassandra/test_results/140620/sift160_10k_tf_idf_SV/positive_or_not.csv','r')
-# csv_file = open(top_dir + 'positive_or_not.csv','r')
+# csv_file = open('C:/Cassandra/test_results/140620/sift160_10k_tf_idf_SV/positive_or_not.csv','r')
+csv_file = open(top_dir + 'positive_or_not.csv','r')
 line_push = []
 for line in csv_file:
     line_push.append(np.int32(line.split(',')))
@@ -75,6 +80,8 @@ mAP_list = []
 for i in range(all_mat.shape[1]):
     # print target_img_name_list[i]
     tmp_0_or_1 = all_mat[:,i]
+    print tmp_0_or_1[0:10]
+    raw_input('asdfasdf')
     tmp_precision, tmp_recall, tmp_mAP =  check_list_AP(tmp_0_or_1)
     # print 'recall: ', tmp_recall
     # precision_for_draw = [0]
@@ -96,6 +103,8 @@ for i in range(all_mat.shape[1]):
 
 # print range(1,11,1)
 mAP_mat = np.array(mAP_list)
+print mAP_list
+raw_input('sdf')
 print
 print 'test mAP: ', mAP_mat.sum()/mAP_mat.shape[0]
 print

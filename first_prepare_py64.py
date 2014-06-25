@@ -7,7 +7,7 @@ import sys
 import csv
 import numpy as np
 
-kpts_density = 4800
+kpts_density = 238
 
 Const_Image_Format = [".jpg", ".bmp", ".png"]
 class FileFilt:
