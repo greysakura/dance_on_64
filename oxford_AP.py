@@ -8,6 +8,8 @@ top_dir = 'C:/Cassandra/python_oxford/'
 evaluation_dir = top_dir + 'evaluation/'
 query_goto_dir = 'C:/Cassandra/query_object/'
 
+######### 2014/06/25
+
 try:
     os.stat(evaluation_dir)
 except:
@@ -83,13 +85,14 @@ for i in range(all_mat.shape[1]):
     print 'AP: ', tmp_mAP
     mAP_list.append(tmp_mAP)
     pl.clf()
-    pl.plot(tmp_recall, tmp_precision, label='Precision-Recall curve')
+    pl.plot(tmp_recall, tmp_precision,'b-o', label='Precision-Recall curve')
     pl.xlabel('Recall')
     pl.ylabel('Precision')
     pl.ylim([0.0, 1.05])
     pl.xlim([0.0, 1.0])
-    pl.title('%s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
-    pl.legend(loc="lower left")
+    # pl.title('%s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
+    pl.title('tf-idf weighting, %s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
+    pl.legend(loc="upper right", numpoints = 1)
     pl.savefig(evaluation_dir + target_img_name_list[i] + '.jpg')
     # pl.show()
     # pass

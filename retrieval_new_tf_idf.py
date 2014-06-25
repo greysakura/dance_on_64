@@ -17,6 +17,7 @@ if __name__ == "__main__":
     ground_truth_dir = top_dir + 'ground_truth_file/'
     SV_result_dir = top_dir + 'SV_verified/'
     SV_reranking_dir = top_dir + 'SV_reranking/'
+    SVM_reranking_dir = top_dir + 'SVM_reranking/'
 
     try:
         os.stat(SV_result_dir)
@@ -26,6 +27,10 @@ if __name__ == "__main__":
         os.stat(SV_reranking_dir)
     except:
         os.mkdir(SV_reranking_dir)
+    try:
+        os.stat(SVM_reranking_dir)
+    except:
+        os.mkdir(SVM_reranking_dir)
 
     ## operation bools
     bool_using_tf_idf = True
@@ -229,6 +234,8 @@ if __name__ == "__main__":
         ## 06/20 new: tf-idf for query image
         # query_TF_IDF = np.float64((0.5 + 0.5 * np.float64(query_image_VW)/(np.float64(query_image_VW.max(axis = 1)[0]))) * IDF_matrix)
         query_TF_IDF = np.float64(np.float64(query_image_VW)/(np.float64(query_image_VW.max(axis = 1)[0])) * IDF_matrix)
+        query_TF_IDF_tmp = query_TF_IDF / math.sqrt(np.dot(query_TF_IDF.flatten(), query_TF_IDF.flatten()))
+
         print 'query tf-idf: ', query_TF_IDF.shape
         # raw_input('stop')
         
@@ -236,17 +243,18 @@ if __name__ == "__main__":
         # ##########
         #
         # # now we calculate the "distance" between each database image and target image
-
+        ## 2014/06/25  something to do the inverted file part.
         L2_distance_between_image = np.zeros((1,image_count), np.float64)
         # query_image_VW_norm = query_image_VW / query_image_VW.sum()
         ## Use the right tf-idf Matrix!!!!!!!!  14/04/28
         for i in range(len(result_img_dir)):
             TF_IDF_eye = np.reshape(TF_IDF_matrix[i,:],(1,-1))
+            TF_IDF_eye = TF_IDF_eye / math.sqrt(np.dot(TF_IDF_eye.flatten(), TF_IDF_eye.flatten()))
             ##14/05/05  normalize the VW, and then calculate distance.
 
             # VW_tmp_norm = VW_tmp / VW_tmp.sum()
             if bool_using_tf_idf:
-                L2_distance_between_image[0, i] = np.dot((TF_IDF_eye.flatten() - query_TF_IDF.flatten()),(TF_IDF_eye.flatten() - query_TF_IDF.flatten()))
+                L2_distance_between_image[0, i] = np.dot((TF_IDF_eye.flatten() - query_TF_IDF_tmp.flatten()),(TF_IDF_eye.flatten() - query_TF_IDF_tmp.flatten()))
                 # L2_distance_between_image[0, i] = np.dot(TF_IDF_eye.flatten(),query_TF_IDF.flatten()) / (math.sqrt(np.dot(TF_IDF_eye.flatten(), TF_IDF_eye.flatten())) * math.sqrt(np.dot(query_TF_IDF.flatten(), query_TF_IDF.flatten())))
             else:
                 L2_distance_between_image[0, i] = np.dot((TF_IDF_eye.flatten() - query_TF_IDF.flatten()),(TF_IDF_eye.flatten() - query_TF_IDF.flatten()))
@@ -281,10 +289,7 @@ if __name__ == "__main__":
         tmp_SV_time_start = clock()
 
         for result_img_i in range(num_for_SV):
-
-            tmp_SV_img = cv2.imread(database_image_dir + ranked_result_name_dir[result_img_i] + '.jpg',0)
-
-
+            # tmp_SV_img = cv2.imread(database_image_dir + ranked_result_name_dir[result_img_i] + '.jpg',0)
             ## First we read their kpts & desc
             ## read desc
             tmp_desc_file = open(database_desc_dir + ranked_result_name_dir[result_img_i] + '_des.csv', 'r')
@@ -331,7 +336,7 @@ if __name__ == "__main__":
                 if (raw_matches[j][0].distance / raw_matches[j][1].distance) <= float(pow(nnThreshold,2)) \
                         and raw_matches[j][0].queryIdx < len(kpts_query) and raw_matches[j][0].trainIdx < len(kpts_tmp):
                     good_match.append(raw_matches[j][0])
-            cv2.rectangle(tmp_SV_img,(0,0),(tmp_SV_img.shape[1],tmp_SV_img.shape[0]),(0,255,0),thickness=20)
+            # cv2.rectangle(tmp_SV_img,(0,0),(tmp_SV_img.shape[1],tmp_SV_img.shape[0]),(0,255,0),thickness=20)
 
             if len(good_match) >= minGoodMatch:
                 # if query_i == 32:
@@ -356,7 +361,7 @@ if __name__ == "__main__":
 
                 ## 06/18 We need to change this part. Check the number of inliers
 
-                cv2.polylines(tmp_SV_img,[np.int32(dst)],True,(0,0,255),5, 1)
+                # cv2.polylines(tmp_SV_img,[np.int32(dst)],True,(0,0,255),5, 1)
                 if np.array(matchesMask).sum() >= 10 :
                     # print 'We have %d inliers for best match.' % np.array(matchesMask).sum()
 
