@@ -122,28 +122,28 @@ if __name__ == "__main__":
 
 
     ## write the final mAP score
-    final_score_file_mAP = open(top_dir + 'final_score_mAP.txt', 'w')
-    for i in range(len(total_image_retrieved)/5):
-        for j in range(5):
-            final_score_file_mAP.write(str(mAP_all[0,i*5+j]))
-            final_score_file_mAP.write(' ')
-        final_score_file_mAP.write(str(mAP_on_query[0,i]))
-        final_score_file_mAP.write('\n')
-    final_score_file_mAP.write(str(mAP_on_query.sum(axis=1)[0]/11))
-    final_score_file_mAP.write('\n')
-    final_score_file_mAP.close()
+    # final_score_file_mAP = open(top_dir + 'final_score_mAP.txt', 'w')
+    # for i in range(len(total_image_retrieved)/5):
+    #     for j in range(5):
+    #         final_score_file_mAP.write(str(mAP_all[0,i*5+j]))
+    #         final_score_file_mAP.write(' ')
+    #     final_score_file_mAP.write(str(mAP_on_query[0,i]))
+    #     final_score_file_mAP.write('\n')
+    # final_score_file_mAP.write(str(mAP_on_query.sum(axis=1)[0]/11))
+    # final_score_file_mAP.write('\n')
+    # final_score_file_mAP.close()
 
     ## write the final recall score
-    final_score_file_recall = open(top_dir + 'final_score_Recall.txt', 'w')
-    for i in range(len(total_image_retrieved)/5):
-        for j in range(5):
-            final_score_file_recall.write(str(recall_all[0, i*5+j]))
-            final_score_file_recall.write(' ')
-        final_score_file_recall.write(str(recall_on_query[0,i]))
-        final_score_file_recall.write('\n')
-    final_score_file_recall.write(str(recall_on_query.sum(axis=1)[0]/11))
-    final_score_file_recall.write('\n')
-    final_score_file_recall.close()
+    # final_score_file_recall = open(top_dir + 'final_score_Recall.txt', 'w')
+    # for i in range(len(total_image_retrieved)/5):
+    #     for j in range(5):
+    #         final_score_file_recall.write(str(recall_all[0, i*5+j]))
+    #         final_score_file_recall.write(' ')
+    #     final_score_file_recall.write(str(recall_on_query[0,i]))
+    #     final_score_file_recall.write('\n')
+    # final_score_file_recall.write(str(recall_on_query.sum(axis=1)[0]/11))
+    # final_score_file_recall.write('\n')
+    # final_score_file_recall.close()
 
     top_some = np.reshape(positive_or_not.sum(axis=1)/top_retrieval_num,(-1,5))
     top_mAP = np.reshape((top_some.sum(axis=1)/5),(-1,1))
@@ -165,24 +165,23 @@ if __name__ == "__main__":
     # print mAP_csv.shape
     mAP_csv = np.concatenate((mAP_csv,mAP_AP), axis = 1)
 
-    mAP_csv_file = open(top_dir + 'mAP_series.csv', 'w')
-    ## write title
-    for i in range(mAP_csv.shape[1]-1):
-        mAP_csv_file.write('Query')
-        mAP_csv_file.write(str(int(i+1)))
-        mAP_csv_file.write(',')
-    mAP_csv_file.write('ALL')
-    mAP_csv_file.write('\n')
-
-    ##write data
-    for i in range(mAP_csv.shape[0]):
-        for j in range(mAP_csv.shape[1]):
-            mAP_csv_file.write(str(mAP_csv[i,j]))
-            if j < (mAP_csv.shape[1] - 1):
-                mAP_csv_file.write(',')
-        mAP_csv_file.write('\n')
-
-    mAP_csv_file.close()
+    # mAP_csv_file = open(top_dir + 'mAP_series.csv', 'w')
+    # ## write title
+    # for i in range(mAP_csv.shape[1]-1):
+    #     mAP_csv_file.write('Query')
+    #     mAP_csv_file.write(str(int(i+1)))
+    #     mAP_csv_file.write(',')
+    # mAP_csv_file.write('ALL')
+    # mAP_csv_file.write('\n')
+    #
+    # ##write data
+    # for i in range(mAP_csv.shape[0]):
+    #     for j in range(mAP_csv.shape[1]):
+    #         mAP_csv_file.write(str(mAP_csv[i,j]))
+    #         if j < (mAP_csv.shape[1] - 1):
+    #             mAP_csv_file.write(',')
+    #     mAP_csv_file.write('\n')
+    # mAP_csv_file.close()
 
     positive_or_not_file = open(top_dir + 'positive_or_not_SV.csv', 'w')
     for i in range(positive_or_not_csv.shape[0]):

@@ -6,18 +6,20 @@ import numpy as np
 import sys
 from time import clock
 
+
+
 if __name__ == "__main__":
     top_dir = 'C:/Cassandra/python_oxford/'
     query_goto_dir = 'C:/Cassandra/query_object/'
     ground_truth_dir = top_dir + 'ground_truth_file/'
-    TF_IDF_ranking_dir = top_dir + 'TF_IDF_ranking/'
+    DQE_reranking_dir = top_dir + 'DQE_reranking/'
     SV_ranking_result_dir = top_dir + 'SV_reranking/'
     top_retrieval_num = 5062
 
     target_img_dir_list = []
     target_img_list = open(query_goto_dir + 'target_img_list.txt', 'r')
     for line in target_img_list:
-        target_img_dir_list.append(line[:-1])
+        target_img_dir_list.append(line[:-1].split('/')[-1])
     target_img_list.close()
     print 'Number of query images: ', len(target_img_dir_list)
 
@@ -27,17 +29,16 @@ if __name__ == "__main__":
     junk_count = []
     negative_count = []
     positive_total = []
-    output_file = open(query_goto_dir + 'evaluation.txt', 'w')
+    output_file = open(query_goto_dir + 'evaluation_DQE.txt', 'w')
 
     ## zeros and ones
-
 
     positive_or_not = np.zeros((len(target_img_dir_list),top_retrieval_num), np.float64)
     ## read result txt for each query
     for query_i in range(len(target_img_dir_list)):
-        tmp_good_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('/')[-1])[:-9] + 'good.txt'
-        tmp_ok_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('/')[-1])[:-9] + 'ok.txt'
-        tmp_junk_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('/')[-1])[:-9] + 'junk.txt'
+        tmp_good_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('.')[0])[:-5] + 'good.txt'
+        tmp_ok_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('.')[0])[:-5] + 'ok.txt'
+        tmp_junk_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('.')[0])[:-5] + 'junk.txt'
         tmp_good_file = open(tmp_good_dir)
         tmp_ok_file = open(tmp_ok_dir)
         tmp_junk_file = open(tmp_junk_dir)
@@ -61,7 +62,7 @@ if __name__ == "__main__":
         tmp_junk_file.close()
         ## count the positives
         positive_total.append(len(tmp_good)+ len(tmp_ok))
-        tmp_result_file = open(TF_IDF_ranking_dir + (target_img_dir_list[query_i].split('.')[0]).split('/')[-1] + '_TF_IDF_ranking.txt', 'r')
+        tmp_result_file = open(DQE_reranking_dir + target_img_dir_list[query_i].split('.')[0] + '_DQE_reranking.txt', 'r')
         for line_i in range(top_retrieval_num):
             line = tmp_result_file.readline()
 
@@ -80,7 +81,6 @@ if __name__ == "__main__":
                     ok_count_tmp += 1
             for i in range(len(tmp_junk)):
                 if tmp_junk[i].find((line.split('/')[-1]).split('.')[0]) == 0:
-                    positive_or_not[query_i,line_i] = 0.0
                     is_negative = False
                     junk_count_tmp += 1
             if is_negative:
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     recall_on_query = np.reshape(recall_on_query.sum(axis = 1), (1,-1))/5
 
 
-    # ## write the final mAP score
+    ## write the final mAP score
     # final_score_file_mAP = open(top_dir + 'final_score_mAP.txt', 'w')
     # for i in range(len(total_image_retrieved)/5):
     #     for j in range(5):
@@ -134,8 +134,8 @@ if __name__ == "__main__":
     # final_score_file_mAP.write(str(mAP_on_query.sum(axis=1)[0]/11))
     # final_score_file_mAP.write('\n')
     # final_score_file_mAP.close()
-    #
-    # ## write the final recall score
+
+    ## write the final recall score
     # final_score_file_recall = open(top_dir + 'final_score_Recall.txt', 'w')
     # for i in range(len(total_image_retrieved)/5):
     #     for j in range(5):
@@ -165,7 +165,7 @@ if __name__ == "__main__":
     mAP_AP = np.reshape(mAP_AP, (-1,1))
     # print mAP_AP.shape
     # print mAP_csv.shape
-    # mAP_csv = np.concatenate((mAP_csv,mAP_AP), axis = 1)
+    mAP_csv = np.concatenate((mAP_csv,mAP_AP), axis = 1)
 
     # mAP_csv_file = open(top_dir + 'mAP_series.csv', 'w')
     # ## write title
@@ -175,7 +175,7 @@ if __name__ == "__main__":
     #     mAP_csv_file.write(',')
     # mAP_csv_file.write('ALL')
     # mAP_csv_file.write('\n')
-    #
+    # 
     # ##write data
     # for i in range(mAP_csv.shape[0]):
     #     for j in range(mAP_csv.shape[1]):
@@ -183,10 +183,9 @@ if __name__ == "__main__":
     #         if j < (mAP_csv.shape[1] - 1):
     #             mAP_csv_file.write(',')
     #     mAP_csv_file.write('\n')
-    #
     # mAP_csv_file.close()
 
-    positive_or_not_file = open(top_dir + 'positive_or_not.csv', 'w')
+    positive_or_not_file = open(top_dir + 'positive_or_not_DQE.csv', 'w')
     for i in range(positive_or_not_csv.shape[0]):
         for j in range(positive_or_not_csv.shape[1]):
             positive_or_not_file.write(str(positive_or_not_csv[i,j]))

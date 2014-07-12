@@ -65,15 +65,16 @@ print len(target_img_name_list)
 
 
 
-# csv_file = open('C:/Cassandra/test_results/140617/positive_or_not.csv','r')
-# csv_file = open(top_dir + 'positive_or_not_SV.csv','r')
-csv_file = open(top_dir + 'positive_or_not.csv','r')
+# csv_file = open('C:/Cassandra/test_results/140629/test03_SVM/positive_or_not_DQE.csv','r')
+# csv_file = open(top_dir + 'positive_or_not_DQE.csv','r')
+csv_file = open(top_dir + 'positive_or_not_SV.csv','r')
+# csv_file = open(top_dir + 'positive_or_not.csv','r')
 line_push = []
 for line in csv_file:
     line_push.append(np.int32(line.split(',')))
 all_mat = np.array(line_push)
 print all_mat.shape
-
+csv_file.close()
 mAP_list = []
 
 for i in range(all_mat.shape[1]):
@@ -91,7 +92,8 @@ for i in range(all_mat.shape[1]):
     pl.ylim([0.0, 1.05])
     pl.xlim([0.0, 1.0])
     # pl.title('%s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
-    pl.title('tf-idf weighting, %s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
+    # pl.title('tf-idf weighting, %s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
+    # pl.title('tf-idf weighting+SV+linear-SVM, %s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
     pl.legend(loc="upper right", numpoints = 1)
     pl.savefig(evaluation_dir + target_img_name_list[i] + '.jpg')
     # pl.show()
@@ -105,7 +107,12 @@ print 'test mAP: ', mAP_mat.sum()/mAP_mat.shape[0]
 input_list = [1,0,0,1,0,1]
 input_list = np.array(input_list)
 print np.where(input_list == 1)[0].shape[0]
-#
+
+
+
+
+
+
 # precision, recall, area = check_list_AP(input_list, None)
 # print area
 #

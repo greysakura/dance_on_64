@@ -13,11 +13,12 @@ if __name__ == "__main__":
     ## Operation bools:
     read_database_image_dirs = True
     read_desc_csv = False
-    perform_kmeans = False
+    perform_kmeans = True
     bool_generate_VW = True
     # bool_read_VW_txt_for_TF_IDF = False
     ## parameters
-    cluster_number = 10000
+    subsampling_num = 5000000
+    cluster_number = 50000
     des_dimension = 128
     ## dirs
     top_dir = 'C:/Cassandra/python_oxford/'
@@ -102,7 +103,7 @@ if __name__ == "__main__":
 
     ## here we do a sub-sampling
 
-    randn_percentage = 800000.0 / des_mat.shape[0]
+    randn_percentage = float(subsampling_num) / des_mat.shape[0]
     myrandn = np.random.uniform(low=0.0, high=1.0, size=des_mat.shape[0])
     mysubset = tuple(np.where(myrandn<= randn_percentage)[0])
 
@@ -115,7 +116,7 @@ if __name__ == "__main__":
     flags = cv2.KMEANS_RANDOM_CENTERS
     # We use 128 clusters for our K-means clustering.
     # Define criteria_kmeans = ( type, max_iter = 10 , epsilon = 1.0 )
-    criteria_kmeans = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_MAX_ITER, 5, 3)
+    criteria_kmeans = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_MAX_ITER, 10, 0.5)
     print '...starting kmeans...'
 
     compactness = 0
@@ -123,7 +124,7 @@ if __name__ == "__main__":
         # Apply KMeans  cv2.kmeans(data, K, criteria, attempts, flags[, bestLabels[, centers]])
         start_kmeans = clock()
         compactness,labels,centers = cv2.kmeans(data= des_mat_subset, K = cluster_number, bestLabels=None,
-                                                criteria= criteria_kmeans, attempts=5,flags=cv2.KMEANS_RANDOM_CENTERS)
+                                                criteria= criteria_kmeans, attempts=10,flags=cv2.KMEANS_RANDOM_CENTERS)
         finish_kmeans = clock()
 
         print 'compactness', compactness
@@ -352,9 +353,8 @@ if __name__ == "__main__":
     print IDF_matrix
     print '...starting computing tf-idf matrix...'
     tf_idf_timing_start = clock()
-    TF_IDF_matrix = np.zeros((1,len(labels)), np.float64)
     IDF_matrix_tmp = IDF_matrix.flatten()
-    TF_IDF_out = np.zeros((len(result_img_dir), cluster_number), np.float64)
+    TF_IDF_matrix = np.zeros((len(result_img_dir), cluster_number), np.float64)
     for i in range(len(result_img_dir)):
         print 'TF_IDF for number: ', i+1
         # img_des_tmp = database_VW_dir + ((result_img_dir[i].split('.'))[0]).split('/')[-1] + '_VW.txt'
@@ -386,26 +386,26 @@ if __name__ == "__main__":
         # TF_IDF_inner = math.sqrt(np.dot(TF_IDF_tmp, np.transpose(TF_IDF_tmp)))
         # TF_IDF_tmp = TF_IDF_tmp / TF_IDF_inner
         # TF_IDF_tmp /= TF_IDF_inner
-        TF_IDF_out[i,:] = np.copy(TF_IDF_tmp)
+        TF_IDF_matrix[i,:] = np.copy(TF_IDF_tmp)
 
     print 'here!'
     ## write TF_IDF record matrix txt.
     TF_IDF_append = 'TF_IDF_matrix.txt'
     TF_IDF_dir = top_dir + TF_IDF_append
     TF_IDF_file = open(TF_IDF_dir, 'w')
-    TF_IDF_file.write(str(TF_IDF_out.shape[0]))
+    TF_IDF_file.write(str(TF_IDF_matrix.shape[0]))
     TF_IDF_file.write(',')
-    TF_IDF_file.write(str(TF_IDF_out.shape[1]))
+    TF_IDF_file.write(str(TF_IDF_matrix.shape[1]))
     TF_IDF_file.write('\n')
 
-    for i in range(TF_IDF_out.shape[0]):
-        for j in range(TF_IDF_out.shape[1]):
-            TF_IDF_file.write(str(TF_IDF_out[i,j]))
-            if j < (TF_IDF_out.shape[1] - 1):
+    for i in range(TF_IDF_matrix.shape[0]):
+        for j in range(TF_IDF_matrix.shape[1]):
+            TF_IDF_file.write(str(TF_IDF_matrix[i,j]))
+            if j < (TF_IDF_matrix.shape[1] - 1):
                 TF_IDF_file.write(',')
         TF_IDF_file.write('\n')
     TF_IDF_file.close()
-    np.save(top_dir + 'TF_IDF_matrix.npy', TF_IDF_out)
+    np.save(top_dir + 'TF_IDF_matrix.npy', TF_IDF_matrix)
     ## write IDF record matrix txt for later use.
     IDF_file = open(top_dir + 'IDF_matrix.txt', 'w')
     IDF_file.write(str(IDF_matrix.shape[0]))
@@ -421,6 +421,15 @@ if __name__ == "__main__":
         IDF_file.write('\n')
     IDF_file.close()
     np.save(top_dir + 'IDF_matrix.npy', IDF_matrix)
+
+    TF_IDF_norm_matrix = np.zeros(TF_IDF_matrix.shape, np.float64)
+    for i in range(TF_IDF_matrix.shape[0]):
+        tmp_tf_idf = TF_IDF_matrix[i,:]
+        tmp_tf_idf /= math.sqrt(np.dot(tmp_tf_idf.flatten(), tmp_tf_idf.flatten()))
+        TF_IDF_norm_matrix[i,:] = tmp_tf_idf
+    np.save(top_dir + 'TF_IDF_norm_matrix.npy', TF_IDF_norm_matrix)
+
+
     #####
     tf_idf_timing_end = clock()
     print '...tf-idf time used: ', int((tf_idf_timing_end - tf_idf_timing_start)/60), ' minutes ', \

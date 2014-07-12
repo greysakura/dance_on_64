@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 import os
 import math
+from sklearn import svm
 from time import clock
 
 
@@ -15,10 +16,15 @@ if __name__ == "__main__":
     database_VW_dir = top_dir + 'database_VW/'
     query_goto_dir = 'C:/Cassandra/query_object/'
     ground_truth_dir = top_dir + 'ground_truth_file/'
+    TF_IDF_ranking_dir = top_dir + 'TF_IDF_ranking/'
     SV_result_dir = top_dir + 'SV_verified/'
     SV_reranking_dir = top_dir + 'SV_reranking/'
-    SVM_reranking_dir = top_dir + 'SVM_reranking/'
+    DQE_reranking_dir = top_dir + 'DQE_reranking/'
 
+    try:
+        os.stat(TF_IDF_ranking_dir)
+    except:
+        os.mkdir(TF_IDF_ranking_dir)
     try:
         os.stat(SV_result_dir)
     except:
@@ -28,9 +34,9 @@ if __name__ == "__main__":
     except:
         os.mkdir(SV_reranking_dir)
     try:
-        os.stat(SVM_reranking_dir)
+        os.stat(DQE_reranking_dir)
     except:
-        os.mkdir(SVM_reranking_dir)
+        os.mkdir(DQE_reranking_dir)
 
     ## operation bools
     bool_using_tf_idf = True
@@ -39,7 +45,7 @@ if __name__ == "__main__":
     bool_read_database_VW_from_txt = False
 
     # Number of clusters: 128 at present
-    cluster_number = 10000
+    cluster_number = 50000
     first_retrieval_num = 5062
     # Using SIFT here
     des_dimension = 128
@@ -93,6 +99,18 @@ if __name__ == "__main__":
     else:
         TF_IDF_matrix = np.load(top_dir + 'TF_IDF_matrix.npy')
     print 'TF_IDF_matrix: ', TF_IDF_matrix.shape
+
+    # # ## urgent task
+    # TF_IDF_norm_matrix = np.zeros(TF_IDF_matrix.shape, np.float64)
+    # for i in range(TF_IDF_matrix.shape[0]):
+    #     tmp_tf_idf = TF_IDF_matrix[i,:]
+    #     tmp_tf_idf /= math.sqrt(np.dot(tmp_tf_idf.flatten(), tmp_tf_idf.flatten()))
+    #     TF_IDF_norm_matrix[i,:] = tmp_tf_idf
+    # np.save(top_dir + 'TF_IDF_norm_matrix.npy', TF_IDF_norm_matrix)
+    # # raw_input('stop!!!!!!!!!!!')
+
+    TF_IDF_norm_matrix = np.load(top_dir + 'TF_IDF_norm_matrix.npy')
+
 
     read_tf_idf_end = clock()
 
@@ -160,9 +178,14 @@ if __name__ == "__main__":
     ## 14/06/14
     SV_time_list = []
     SV_got_list = []
+
+    DQE_predict_time_list = []
+
+    DQE_train_list = []
     ##change 14/05/01
     for query_i in range(len(query_img_dir_list)):
-        tmp_img_matching_list_file = open(query_img_dir_list[query_i][:-3] + 'txt', 'w')
+        # tmp_img_matching_list_file = open(query_img_dir_list[query_i][:-3] + 'txt', 'w')
+        tmp_img_matching_list_file = open(TF_IDF_ranking_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_TF_IDF_ranking.txt','w')
         tmp_img_matching_img_list = []
         # print query_img_dir_list[query_i]
         ## import target image
@@ -234,7 +257,7 @@ if __name__ == "__main__":
         ## 06/20 new: tf-idf for query image
         # query_TF_IDF = np.float64((0.5 + 0.5 * np.float64(query_image_VW)/(np.float64(query_image_VW.max(axis = 1)[0]))) * IDF_matrix)
         query_TF_IDF = np.float64(np.float64(query_image_VW)/(np.float64(query_image_VW.max(axis = 1)[0])) * IDF_matrix)
-        query_TF_IDF_tmp = query_TF_IDF / math.sqrt(np.dot(query_TF_IDF.flatten(), query_TF_IDF.flatten()))
+        query_TF_IDF_norm = query_TF_IDF / math.sqrt(np.dot(query_TF_IDF.flatten(), query_TF_IDF.flatten()))
 
         print 'query tf-idf: ', query_TF_IDF.shape
         # raw_input('stop')
@@ -254,7 +277,7 @@ if __name__ == "__main__":
 
             # VW_tmp_norm = VW_tmp / VW_tmp.sum()
             if bool_using_tf_idf:
-                L2_distance_between_image[0, i] = np.dot((TF_IDF_eye.flatten() - query_TF_IDF_tmp.flatten()),(TF_IDF_eye.flatten() - query_TF_IDF_tmp.flatten()))
+                L2_distance_between_image[0, i] = np.dot((TF_IDF_eye.flatten() - query_TF_IDF_norm.flatten()),(TF_IDF_eye.flatten() - query_TF_IDF_norm.flatten()))
                 # L2_distance_between_image[0, i] = np.dot(TF_IDF_eye.flatten(),query_TF_IDF.flatten()) / (math.sqrt(np.dot(TF_IDF_eye.flatten(), TF_IDF_eye.flatten())) * math.sqrt(np.dot(query_TF_IDF.flatten(), query_TF_IDF.flatten())))
             else:
                 L2_distance_between_image[0, i] = np.dot((TF_IDF_eye.flatten() - query_TF_IDF.flatten()),(TF_IDF_eye.flatten() - query_TF_IDF.flatten()))
@@ -289,7 +312,6 @@ if __name__ == "__main__":
         tmp_SV_time_start = clock()
 
         for result_img_i in range(num_for_SV):
-            # tmp_SV_img = cv2.imread(database_image_dir + ranked_result_name_dir[result_img_i] + '.jpg',0)
             ## First we read their kpts & desc
             ## read desc
             tmp_desc_file = open(database_desc_dir + ranked_result_name_dir[result_img_i] + '_des.csv', 'r')
@@ -391,6 +413,7 @@ if __name__ == "__main__":
         ## here's the problem
         ## first_ranking is alright
         # without_SV_Idx = list(first_ranking - tmp_SV_result_index)
+
         without_SV_Idx = list(first_ranking)
         if len(tmp_SV_result_index) > 0:
             for element_x in tmp_SV_result_index:
@@ -405,7 +428,9 @@ if __name__ == "__main__":
         # raw_input("Press Enter to continue...")
         if len(SV_IDF_score) > 0:
             ## SV_reranking_Idx_list is empty
-            SV_IDF_ranking = np.argsort(SV_IDF_score)
+            ## here should be decreasing order?
+            ## 2014/06/25 night
+            SV_IDF_ranking = np.argsort(SV_IDF_score)[::-1]
             for ranking_SV_i in range(SV_IDF_ranking.shape[0]):
                 # print result_img_dir[tmp_SV_result_index[SV_IDF_ranking[ranking_SV_i]]]
                 ranking_SV_Idx.append(tmp_SV_result_index[SV_IDF_ranking[ranking_SV_i]])
@@ -448,6 +473,60 @@ if __name__ == "__main__":
             SV_reranking_file.write('\n')
         SV_reranking_file.close()
 
+
+        ## decrease dimension for DQE  14/06/29
+
+
+
+        ## Adding SVM for DQE.
+        DQE_positive = query_TF_IDF_norm.tolist()
+
+        if len(ranking_SV_Idx)>0:
+            DQE_positive.extend(TF_IDF_norm_matrix[ranking_SV_Idx, :].tolist())
+
+        DQE_negative = TF_IDF_norm_matrix[first_ranking[-200:], :].tolist()
+        DQE_data = list(DQE_positive)
+        DQE_data.extend(DQE_negative)
+
+        print len(DQE_positive)
+        print len(DQE_negative)
+        unbalance_ratio = len(DQE_positive)/np.float64(len(DQE_negative))
+        DQE_label = [1]*len(DQE_positive) +  [0]*len(DQE_negative)
+        clf = svm.SVC(kernel='linear', C =1.0)
+        # clf = svm.SVC(kernel='linear', C =1.0, class_weight={1: unbalance_ratio})
+        # clf = svm.SVC(kernel='rbf',C = 1.0,gamma = 1.0)
+        # print clf.class_weight
+        SVM_train_start = clock()
+        clf.fit(DQE_data, DQE_label)
+        SVM_train_end = clock()
+
+        print 'SVM train time: ', SVM_train_end - SVM_train_start
+
+        DQE_train_list.append(SVM_train_end - SVM_train_start)
+
+        SVM_predict_start = clock()
+        DQE_decision_function =  clf.decision_function(TF_IDF_norm_matrix)
+        DQE_reranking_Idx_list = np.argsort(DQE_decision_function.flatten())[::-1]
+        print len(SV_reranking_Idx_list)
+        print len(DQE_reranking_Idx_list)
+        DQE_decision_function = DQE_decision_function.flatten()
+        print DQE_decision_function[DQE_reranking_Idx_list]
+        print clf.predict(query_TF_IDF_norm)
+        SVM_predict_end = clock()
+        print 'SVM predict time used: ', SVM_predict_end - SVM_predict_start
+        DQE_predict_time_list.append(SVM_predict_end - SVM_predict_start)
+        # print clf.predict(TF_IDF_norm_matrix)
+
+        DQE_reranking_file = open(DQE_reranking_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_DQE_reranking.txt','w')
+
+        for DQE_reranking_i in range(first_retrieval_num):
+            DQE_reranking_file.write(result_img_dir[DQE_reranking_Idx_list[DQE_reranking_i]])
+            DQE_reranking_file.write('\n')
+        DQE_reranking_file.close()
+
+
+
+
     # raw_input("Press Enter to continue...")
     retrieval_time_used_end = clock()
     print 'Retrieval time used total: ', int((retrieval_time_used_end - retrieval_time_used_start)/60), ' minutes ', \
@@ -457,3 +536,6 @@ if __name__ == "__main__":
     print 'SV time used average: %f seconds' % np.average(SV_time_array)
     print SV_got_list
     print np.average(np.array(SV_got_list))
+
+    print 'DQE train time used average: ', np.average(np.array(DQE_train_list))
+    print 'DQE predict time used average: %f ' % np.average(np.array(DQE_predict_time_list))
