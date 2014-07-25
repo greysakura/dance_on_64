@@ -66,8 +66,8 @@ print len(target_img_name_list)
 
 
 # csv_file = open('C:/Cassandra/test_results/140629/test03_SVM/positive_or_not_DQE.csv','r')
-# csv_file = open(top_dir + 'positive_or_not_DQE.csv','r')
-csv_file = open(top_dir + 'positive_or_not_SV.csv','r')
+csv_file = open(top_dir + 'positive_or_not_DQE.csv','r')
+# csv_file = open(top_dir + 'positive_or_not_SV.csv','r')
 # csv_file = open(top_dir + 'positive_or_not.csv','r')
 line_push = []
 for line in csv_file:
@@ -86,7 +86,7 @@ for i in range(all_mat.shape[1]):
     print 'AP: ', tmp_mAP
     mAP_list.append(tmp_mAP)
     pl.clf()
-    pl.plot(tmp_recall, tmp_precision,'b-o', label='Precision-Recall curve')
+    pl.plot(tmp_recall, tmp_precision,'b-o', label='Logistic regression: Precision-Recall curve')
     pl.xlabel('Recall')
     pl.ylabel('Precision')
     pl.ylim([0.0, 1.05])

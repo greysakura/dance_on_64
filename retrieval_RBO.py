@@ -314,6 +314,9 @@ if __name__ == "__main__":
         ## Re-write the logic. We have the 1st ranking list. Now we take maybe top 200 images into SV.
         SV_IDF_score = []
 
+        #### 14/07/25
+        
+
 
 
         tmp_SV_time_start = clock()
