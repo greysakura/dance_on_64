@@ -4,8 +4,10 @@ import cv2
 import numpy as np
 import os
 import math
+import subprocess
 from sklearn import svm, linear_model
 from time import clock
+
 
 
 if __name__ == "__main__":
@@ -20,6 +22,10 @@ if __name__ == "__main__":
     SV_result_dir = top_dir + 'SV_verified/'
     SV_reranking_dir = top_dir + 'SV_reranking/'
     DQE_reranking_dir = top_dir + 'DQE_reranking/'
+
+    Ranking_SVM_file_dir = top_dir + 'Ranking_SVM_file/'
+    Ranking_SVM_exe_dir = top_dir + 'Ranking_SVM_exe/'
+    Ranking_SVM_reranking_dir = top_dir + 'Ranking_SVM_reranking/'
 
     try:
         os.stat(TF_IDF_ranking_dir)
@@ -37,6 +43,14 @@ if __name__ == "__main__":
         os.stat(DQE_reranking_dir)
     except:
         os.mkdir(DQE_reranking_dir)
+    try:
+        os.stat(Ranking_SVM_file_dir)
+    except:
+        os.mkdir(Ranking_SVM_file_dir)
+    try:
+        os.stat(Ranking_SVM_reranking_dir)
+    except:
+        os.mkdir(Ranking_SVM_reranking_dir)
 
     ## operation bools
     bool_using_tf_idf = True
@@ -54,6 +68,7 @@ if __name__ == "__main__":
     num_for_SV = 200
     nnThreshold = 0.8
     minGoodMatch = 10
+
     ## store images' dirs
     query_img_dir_list = []
     ## list inside a list
@@ -173,12 +188,26 @@ if __name__ == "__main__":
     ## load IDF_matrix
     IDF_matrix = np.load(top_dir + 'IDF_matrix.npy')
 
+    ####  start: 2014/09/16 ####
+    ####  save the data norm-VWs into .bat needed by ranking-SVM exe
+    # TF_IDF_norm_matrix_bat_file = open(Ranking_SVM_exe_dir + 'dataset_TF_IDF_norm.dat','w')
+    # for write_i in range(TF_IDF_norm_matrix.shape[0]):
+    #     TF_IDF_norm_matrix_bat_file.write('0 qid:1')
+    #     for write_j in range(TF_IDF_norm_matrix.shape[1]):
+    #         if 0 != TF_IDF_norm_matrix[write_i, write_j]:
+    #             TF_IDF_norm_matrix_bat_file.write(' ' + str(write_j+1) + ':' +str(TF_IDF_norm_matrix[write_i, write_j]))
+    #     TF_IDF_norm_matrix_bat_file.write('\n')
+    # TF_IDF_norm_matrix_bat_file.close()
+    #
+    # raw_input('output ready. end it.')
+    ####  end: 2014/09/16 ####
+
     retrieval_time_used_start = clock()
+
+    print '...loading finished...'
 
     ## 07/15 record on how many support vector used.
     num_support_vector_list = []
-
-
     ## 14/06/14
     SV_time_list = []
     SV_got_list = []
@@ -188,7 +217,7 @@ if __name__ == "__main__":
     DQE_train_list = []
     ##change 14/05/01
     for query_i in range(len(query_img_dir_list)):
-        # tmp_img_matching_list_file = open(query_img_dir_list[query_i][:-3] + 'txt', 'w')
+        print '...starting query ', str(query_i+1), '...'
         tmp_img_matching_list_file = open(TF_IDF_ranking_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_TF_IDF_ranking.txt','w')
         tmp_img_matching_img_list = []
         # print query_img_dir_list[query_i]
@@ -263,9 +292,6 @@ if __name__ == "__main__":
         query_TF_IDF = np.float64(np.float64(query_image_VW)/(np.float64(query_image_VW.max(axis = 1)[0])) * IDF_matrix)
         query_TF_IDF_norm = query_TF_IDF / math.sqrt(np.dot(query_TF_IDF.flatten(), query_TF_IDF.flatten()))
 
-        print 'query tf-idf: ', query_TF_IDF.shape
-        # raw_input('stop')
-
 
         # ##########
         #
@@ -280,13 +306,9 @@ if __name__ == "__main__":
             ##14/05/05  normalize the VW, and then calculate distance.
 
             # VW_tmp_norm = VW_tmp / VW_tmp.sum()
-            if bool_using_tf_idf:
-                L2_distance_between_image[0, i] = np.dot((TF_IDF_eye.flatten() - query_TF_IDF_norm.flatten()),(TF_IDF_eye.flatten() - query_TF_IDF_norm.flatten()))
-                # L2_distance_between_image[0, i] = np.dot(TF_IDF_eye.flatten(),query_TF_IDF.flatten()) / (math.sqrt(np.dot(TF_IDF_eye.flatten(), TF_IDF_eye.flatten())) * math.sqrt(np.dot(query_TF_IDF.flatten(), query_TF_IDF.flatten())))
-            else:
-                L2_distance_between_image[0, i] = np.dot((TF_IDF_eye.flatten() - query_TF_IDF.flatten()),(TF_IDF_eye.flatten() - query_TF_IDF.flatten()))
-                # L2_distance_between_image[0, i] = np.dot((np.float64(query_image_VW - database_VW_matrix[i,:])), np.transpose(np.float64(query_image_VW - database_VW_matrix[i,:])))
 
+            L2_distance_between_image[0, i] = np.dot((TF_IDF_eye.flatten() - query_TF_IDF_norm.flatten()),(TF_IDF_eye.flatten() - query_TF_IDF_norm.flatten()))
+                # L2_distance_between_image[0, i] = np.dot(TF_IDF_eye.flatten(),query_TF_IDF.flatten()) / (math.sqrt(np.dot(TF_IDF_eye.flatten(), TF_IDF_eye.flatten())) * math.sqrt(np.dot(query_TF_IDF.flatten(), query_TF_IDF.flatten())))
             # L2_distance_between_image[0, i] = np.dot((np.multiply(np.float64(query_image_VW - VW_tmp), TF_IDF_eye)),
             #                                       np.transpose(np.float64(query_image_VW - VW_tmp)))
         print len(np.where(L2_distance_between_image == 0)[1])
@@ -300,7 +322,6 @@ if __name__ == "__main__":
         ranked_result_name_dir = []
         # raw_input('stop here')
         for i in range(first_retrieval_num):
-
             ranked_result_name_dir.append((result_img_dir[distance_ranking[0][i]].split('.')[0]).split('/')[-1])
             tmp_img_matching_list_file.write(result_img_dir[distance_ranking[0][i]])
             tmp_img_matching_list_file.write('\n')
@@ -365,22 +386,13 @@ if __name__ == "__main__":
                 if (raw_matches[j][0].distance / raw_matches[j][1].distance) <= float(pow(nnThreshold,2)) \
                         and raw_matches[j][0].queryIdx < len(kpts_query) and raw_matches[j][0].trainIdx < len(kpts_tmp):
                     good_match.append(raw_matches[j][0])
-            # cv2.rectangle(tmp_SV_img,(0,0),(tmp_SV_img.shape[1],tmp_SV_img.shape[0]),(0,255,0),thickness=20)
 
             if len(good_match) >= minGoodMatch:
-                # if query_i == 32:
-                # print len(kpts_query)
-                # print len(kpts_tmp)
-                # m_trainIdx = [m.trainIdx for m in good_match]
-                # print list(set(m_trainIdx))
-                # raw_input("Press Enter to continue...")
                 src_pts = np.reshape(np.float32([ kpts_query[m.queryIdx].pt for m in good_match ]),(-1,1,2))
                 dst_pts = np.reshape(np.float32([ kpts_tmp[m.trainIdx].pt for m in good_match ]),(-1,1,2))
 
-                homograph_start = clock()
                 M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
-                homograph_end = clock()
-                # print 'Homograph time used: ', homograph_end - homograph_start
+
                 matchesMask = mask.ravel().tolist()
 
                 h,w = img.shape[0],img.shape[1]
@@ -390,7 +402,6 @@ if __name__ == "__main__":
 
                 ## 06/18 We need to change this part. Check the number of inliers
 
-                # cv2.polylines(tmp_SV_img,[np.int32(dst)],True,(0,0,255),5, 1)
                 if np.array(matchesMask).sum() >= 10 :
                     ## too early
                     tmp_SV_result_name.append(ranked_result_name_dir[result_img_i])
@@ -426,48 +437,40 @@ if __name__ == "__main__":
                 matchesMask = None
         print 'number of Verified images: ', len(SV_IDF_score)
         SV_got_list.append(len(SV_IDF_score))
+
         ## Now wo do the 2nd reranking.
 
         ## here's the problem
         ## first_ranking is alright
         # without_SV_Idx = list(first_ranking - tmp_SV_result_index)
-
-        without_SV_Idx = list(first_ranking)
+        without_SV_Idx = list(first_ranking[num_for_SV:])
+        #### improve version
+        SV_failed_Idx = list(first_ranking[0:num_for_SV])
         if len(tmp_SV_result_index) > 0:
             for element_x in tmp_SV_result_index:
-                without_SV_Idx.remove(element_x)
-        print 'without_SV_Idx: ', without_SV_Idx
-        print len(without_SV_Idx)
-
-        ## this below return a 1-D array
+                SV_failed_Idx.remove(element_x)
+        ####
         ranking_SV_Idx = []
         SV_reranking_Idx_list = []
-        print 'tmp_SV_result_index: ', tmp_SV_result_index
         # raw_input("Press Enter to continue...")
         if len(SV_IDF_score) > 0:
-            ## SV_reranking_Idx_list is empty
-            ## here should be decreasing order?
             ## 2014/06/25 night
             SV_IDF_ranking = np.argsort(SV_IDF_score)[::-1]
             for ranking_SV_i in range(SV_IDF_ranking.shape[0]):
-                # print result_img_dir[tmp_SV_result_index[SV_IDF_ranking[ranking_SV_i]]]
                 ranking_SV_Idx.append(tmp_SV_result_index[SV_IDF_ranking[ranking_SV_i]])
-            # print 'SV_reranking_Idx_list nothing: ', SV_reranking_Idx_list
-            # raw_input('1')
-            ## push SV result into SV_reranking_Idx_list
             SV_reranking_Idx_list = list(ranking_SV_Idx)
-            # print 'SV_reranking_Idx_list 2 :', SV_reranking_Idx_list
-            # raw_input('2')
-            ## push rest images into SV_reranking_Idx_list
+            SV_reranking_Idx_list.extend(SV_failed_Idx)
             SV_reranking_Idx_list.extend(without_SV_Idx)
-            # print 'SV_reranking_Idx_list 3: ', SV_reranking_Idx_list
-            # raw_input('3')
         else:
             ## be careful about list(set())
-            SV_reranking_Idx_list = list(without_SV_Idx)
+            SV_reranking_Idx_list.extend(SV_failed_Idx)
+            SV_reranking_Idx_list_ = list(without_SV_Idx)
+        ####
+        print 'verified image list: ', ranking_SV_Idx
+        print len(ranking_SV_Idx)
         print 'SV_reranking_Idx_list: ', SV_reranking_Idx_list
         print len(SV_reranking_Idx_list)
-        # raw_input("Press Enter to continue...")
+
         #### write record of SV result.
         print
         print '...number of spatially verified images: ', len(tmp_SV_result_name), '...'
@@ -485,90 +488,97 @@ if __name__ == "__main__":
         SV_verified_file.close()
 
         SV_reranking_file = open(SV_reranking_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_SV_reranking.txt','w')
-
         for SV_reranking_i in range(first_retrieval_num):
             SV_reranking_file.write(result_img_dir[SV_reranking_Idx_list[SV_reranking_i]])
             SV_reranking_file.write('\n')
         SV_reranking_file.close()
 
+        #### Generate a string series for describing ranking
+        ranking_score_appeared = list(set(SV_IDF_score))
 
-        ## decrease dimension for DQE  14/06/29
+        #### sort in acending sequence
+        ranking_score_appeared.sort()
 
+        ranking_SV_score = []
+        ranking_SV_Idx_ranked = []
+        SV_IDF_ranking = np.argsort(SV_IDF_score)[::-1]
 
+        for ranking_SV_i in range(SV_IDF_ranking.shape[0]):
+            ranking_SV_score.append(SV_IDF_score[SV_IDF_ranking[ranking_SV_i]])
+            ranking_SV_Idx_ranked.append(SV_reranking_Idx_list[SV_IDF_ranking[ranking_SV_i]])
+        ####
 
-        ## Adding SVM for DQE.
-
-        ## 07/16 decrease dimension
-        # raw_input('stop here!')
-        DQE_positive = query_TF_IDF_norm.tolist()
-        # DQE_positive = query_TF_IDF_norm[:,np.where(query_image_VW > 0)[1]].tolist()
-        if len(ranking_SV_Idx)>0:
-            DQE_positive.extend(TF_IDF_norm_matrix[ranking_SV_Idx, :].tolist())
-            # DQE_positive.extend(TF_IDF_norm_matrix[ranking_SV_Idx,:][:,np.where(query_image_VW > 0)[1]].tolist())
-        # DQE_negative = TF_IDF_norm_matrix[first_ranking[-200:], :][:,np.where(query_image_VW > 0)[1]].tolist()
-        DQE_negative = TF_IDF_norm_matrix[first_ranking[-200:], :].tolist()
-        DQE_data = list(DQE_positive)
-        DQE_data.extend(DQE_negative)
-
-        print len(DQE_positive)
-        print len(DQE_negative)
-        unbalance_ratio = len(DQE_positive)/np.float64(len(DQE_negative))
-        DQE_label = [1]*len(DQE_positive) +  [0]*len(DQE_negative)
-
-        #### Tricks here
-
-        # clf = linear_model.LogisticRegression(penalty='l2', dual=False, tol=0.0001,
-        #                                            C=1.0, fit_intercept=True, intercept_scaling=1, class_weight='auto', random_state=None)
-
-        # clf = svm.SVC(kernel='linear', C =1.0)
-        clf = svm.LinearSVC(C = 1.0)
+        SV_for_ranking_SVM_file = open(Ranking_SVM_file_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_Ranking_SVM_file.dat','w')
 
 
-        # clf = svm.SVC(kernel='linear', C =1.0, class_weight={1: unbalance_ratio})
-        # clf = svm.SVC(kernel='rbf',C = 1.0,gamma = 1.0)
-        # print clf.class_weight
-        SVM_train_start = clock()
-        # logistic.fit(DQE_data, DQE_label)
-        clf.fit(DQE_data, DQE_label)
-        SVM_train_end = clock()
+        #### retrieve the norm-VW of each image verified.
+        # SV_for_ranking_SVM_file.write('## This is a test for ranking SVM input.\n')
 
-        print 'train time: ', SVM_train_end - SVM_train_start
-        # print 'support vector used: ', clf.n_support_[0]
-        # num_support_vector_list.append(clf.n_support_[0])
-        print
-        print num_support_vector_list
-        print len(num_support_vector_list)
+        #### 1. Good examples.
+        for ranking_SVM_i in range(SV_IDF_ranking.shape[0]):
+            #### First, output the ranking grade for this image.
+            SV_for_ranking_SVM_file.write(str(ranking_score_appeared.index(SV_IDF_score[ranking_SVM_i]) + 1))
+            SV_for_ranking_SVM_file.write(' qid:1')
+            #### ... then, output the norm VW.
+            for ranking_SVM_VW_j in range(cluster_number):
+                # print TF_IDF_norm_matrix[ranking_SV_Idx_ranked[ranking_SVM_i],ranking_SVM_VW_j]
+                if 0 != TF_IDF_norm_matrix[ranking_SV_Idx_ranked[ranking_SVM_i],ranking_SVM_VW_j]:
+                    SV_for_ranking_SVM_file.write(' ' + str(ranking_SVM_VW_j+1) + ':')
+                    SV_for_ranking_SVM_file.write(str(TF_IDF_norm_matrix[ranking_SV_Idx_ranked[ranking_SVM_i],ranking_SVM_VW_j]))
+            SV_for_ranking_SVM_file.write('\n')
 
-        DQE_train_list.append(SVM_train_end - SVM_train_start)
+        #### 2. Bad examples.
+        for ranking_SVM_i in range(200):
+            SV_for_ranking_SVM_file.write(str(0))
+            SV_for_ranking_SVM_file.write(' qid:1')
+            for ranking_SVM_VW_j in range(cluster_number):
+                # print TF_IDF_norm_matrix[ranking_SV_Idx_ranked[ranking_SVM_i],ranking_SVM_VW_j]
+                if 0 != TF_IDF_norm_matrix[first_ranking[-ranking_SVM_i-1],ranking_SVM_VW_j]:
+                    SV_for_ranking_SVM_file.write(' ' + str(ranking_SVM_VW_j+1) + ':')
+                    SV_for_ranking_SVM_file.write(str(TF_IDF_norm_matrix[first_ranking[-ranking_SVM_i-1],ranking_SVM_VW_j]))
+            SV_for_ranking_SVM_file.write('\n')
 
-        SVM_predict_start = clock()
-        # DQE_decision_function =  logistic.decision_function(TF_IDF_norm_matrix)
+        SV_for_ranking_SVM_file.close()
 
-        # DQE_decision_function =  clf.decision_function(TF_IDF_norm_matrix[:,np.where(query_image_VW > 0)[1]])
-        DQE_decision_function =  clf.decision_function(TF_IDF_norm_matrix)
+        #### 2014/09/16 ####
+        #### using ranking-svm exe from outside. use subprocess.
+        train_dat_dir = Ranking_SVM_file_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_Ranking_SVM_file.dat'
+        #### training
+        train_returnCode  = subprocess.call(Ranking_SVM_exe_dir + 'svm_rank_learn.exe' + ' -c 0.1 '+ train_dat_dir + ' ' + Ranking_SVM_exe_dir +'model.dat')
+        # print train_returnCode
 
-        DQE_reranking_Idx_list = np.argsort(DQE_decision_function.flatten())[::-1]
-        print len(SV_reranking_Idx_list)
-        print len(DQE_reranking_Idx_list)
-        DQE_decision_function = DQE_decision_function.flatten()
-        print DQE_decision_function[DQE_reranking_Idx_list]
-        # print clf.predict(query_TF_IDF_norm)
-        print clf.predict(query_TF_IDF_norm)
-
-        # print logistic.predict(query_TF_IDF_norm)
-        SVM_predict_end = clock()
-        print 'predict time used: ', SVM_predict_end - SVM_predict_start
-        DQE_predict_time_list.append(SVM_predict_end - SVM_predict_start)
-        # print clf.predict(TF_IDF_norm_matrix)
-        # raw_input('......')
-        DQE_reranking_file = open(DQE_reranking_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_DQE_reranking.txt','w')
-
-        for DQE_reranking_i in range(first_retrieval_num):
-            DQE_reranking_file.write(result_img_dir[DQE_reranking_Idx_list[DQE_reranking_i]])
-            DQE_reranking_file.write('\n')
-        DQE_reranking_file.close()
+        #### testing
+        test_returnCode = subprocess.call(Ranking_SVM_exe_dir + 'svm_rank_classify.exe' + ' '+ Ranking_SVM_exe_dir + 'dataset_TF_IDF_norm.dat ' + Ranking_SVM_exe_dir + 'model.dat ' +Ranking_SVM_exe_dir + 'prediction.dat')
+        # print test_returnCode
 
 
+        #### read result from prediction.dat
+        prediction_file = open(Ranking_SVM_exe_dir + 'prediction.dat', 'r')
+        prediction_score = []
+
+        for line in prediction_file:
+            prediction_score.append(float(line))
+        prediction_file.close()
+        prediction_score = np.array(prediction_score)
+
+        #### descending order on score
+        Ranking_SVM_rerank = np.argsort(prediction_score)[::-1]
+        # print prediction_score
+        # print Ranking_SVM_rerank
+
+
+        # raw_input('waiting for command...')
+
+        #### Final output of reranking
+        Ranking_SVM_reranking_file = open(Ranking_SVM_reranking_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_Ranking_SVM.txt','w')
+        for reranking_i in range(first_retrieval_num):
+            Ranking_SVM_reranking_file.write(result_img_dir[Ranking_SVM_rerank[reranking_i]])
+            Ranking_SVM_reranking_file.write('\n')
+        Ranking_SVM_reranking_file.close()
+
+        # raw_input('output ready...')
+        #### 2014/09/16 ####
+        print '...query ', str(query_i + 1), ' finished...'
 
 
     # raw_input("Press Enter to continue...")
@@ -581,26 +591,4 @@ if __name__ == "__main__":
     print SV_got_list
     print 'average SV image got: ',np.average(np.array(SV_got_list))
 
-    print 'DQE train time used average: ', np.average(np.array(DQE_train_list))
-    print 'DQE predict time used average: ', np.average(np.array(DQE_predict_time_list))
-    # print num_support_vector_list
-    # print 'number of support vectors: ', np.average(np.array(num_support_vector_list))
-    # support_vector_file = open(top_dir + 'support_vector_file.txt', 'w')
-    # support_vector_file.write(str(np.average(np.array(SV_got_list)) + 200))
-    # support_vector_file.write(',')
-    # support_vector_file.write(str(np.average(np.array(num_support_vector_list))))
-    # support_vector_file.write(',')
-    # support_vector_file.write(str(np.average(np.array(DQE_train_list))))
-    # support_vector_file.write(',')
-    # support_vector_file.write(str(np.average(np.array(DQE_predict_time_list))))
-    # support_vector_file.write('\n\n')
-    # for i in range(len(num_support_vector_list)):
-    #     support_vector_file.write(str(SV_got_list[i] + 200))
-    #     support_vector_file.write(',')
-    #     support_vector_file.write(str(num_support_vector_list[i]))
-    #     support_vector_file.write(',')
-    #     support_vector_file.write(str(DQE_train_list[i]))
-    #     support_vector_file.write(',')
-    #     support_vector_file.write(str(DQE_predict_time_list[i]))
-    #     support_vector_file.write('\n')
-    # support_vector_file.close()
+

@@ -66,8 +66,10 @@ print len(target_img_name_list)
 
 
 # csv_file = open('C:/Cassandra/test_results/140629/test03_SVM/positive_or_not_DQE.csv','r')
-csv_file = open(top_dir + 'positive_or_not_DQE.csv','r')
+csv_file = open(top_dir + 'positive_or_not_Ranking_SVM.csv','r')
 # csv_file = open(top_dir + 'positive_or_not_SV.csv','r')
+# csv_file = open(top_dir + 'positive_or_not_RV.csv','r')
+# csv_file = open(top_dir + 'positive_or_not_DQE.csv','r')
 # csv_file = open(top_dir + 'positive_or_not.csv','r')
 line_push = []
 for line in csv_file:
