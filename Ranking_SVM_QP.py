@@ -226,12 +226,11 @@ def trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('rbf', 1
 
 
 # testing your trained svm model given test set
-def testSVM(svm, test_x, test_y):
+def testSVM(svm, test_x):
     ####
     prediction = []
     ####
     test_x = np.mat(test_x)
-    test_y = np.mat(test_y)
     numTestSamples = test_x.shape[0]
 
     ## support vectors?
@@ -239,15 +238,14 @@ def testSVM(svm, test_x, test_y):
     supportVectors      = svm.train_x[supportVectorsIndex]
     supportVectorLabels = svm.train_y[supportVectorsIndex]
     supportVectorAlphas = svm.alphas[supportVectorsIndex]
-    matchCount = 0
+
     for i in xrange(numTestSamples):
         kernelValue = calcKernelValue(supportVectors, test_x[i, :], svm.kernelOpt)
         ## Here is how they do the prediction.
-        predict = kernelValue.T * np.multiply(supportVectorLabels, supportVectorAlphas) + svm.b
+
+        predict = kernelValue.T * np.multiply(supportVectorLabels, supportVectorAlphas)
+        # predict = kernelValue.T * np.multiply(supportVectorLabels, supportVectorAlphas) + svm.b
         prediction.append((predict.A.flatten())[0])
-        if np.sign(predict) == np.sign(test_y[i]):
-            matchCount += 1
-    accuracy = float(matchCount) / numTestSamples
     return prediction
 
 
@@ -327,9 +325,10 @@ if __name__ == "__main__":
                     train_y.append(-1)
                     train_y.append(+1)
 
-    train_x = np.mat(train_x)
-    train_y = np.mat(train_y).T
-    train_C = np.mat(train_C).T
+
+
+
+
 
     ##################
 
@@ -339,7 +338,18 @@ if __name__ == "__main__":
     C = 0.6
     toler = 0.001
     maxIter = 50
+    train_x = np.mat(train_x)
+    train_y = np.mat(train_y).T
+    train_C = C * np.mat(train_C).T
     svmClassifier = trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('linear', 0))
+
+    # print train_C
+    print train_y.shape
+    print svmClassifier.b.A.flatten()[0]
+    print svmClassifier.alphas.A
+    print np.nonzero(svmClassifier.alphas.A.flatten())[0]
+    prediction = testSVM(svmClassifier, data_x)
+    print prediction
     # svmClassifier = trainSVM(train_x, train_y, C, toler, maxIter, kernelOption = ('linear', 0))
     #
     # ## step 3: testing
