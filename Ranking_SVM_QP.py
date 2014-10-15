@@ -41,7 +41,7 @@ class SVMStruct:
         self.train_y = labels  # corresponding label
 
         ## we need to change this...
-        self.C = C             # slack variable
+        self.C = C             # slack variable series
         #########################################
 
         self.toler = toler     # termination condition for iteration
@@ -97,16 +97,7 @@ def selectAlpha_j(svm, alpha_i, error_i):
 def innerLoop(svm, alpha_i):
     error_i = calcError(svm, alpha_i)
 
-    print alpha_i
-    print svm.alphas.shape
-    ohmygod = np.ones(svm.alphas.shape, np.float64)
-    print np.dot(ohmygod.flatten(), ohmygod.flatten())
-    print np.dot(np.asarray(svm.train_y).flatten(), ohmygod.flatten())
-    print type(svm.alphas)
-    print svm.train_y[0]
-    print type(svm.train_y[0,0])
-    raw_input('hahaha')
-
+    print 'Error: ', error_i
     ### check and pick up the alpha who violates the KKT condition
     ## satisfy KKT condition
     # 1) yi*f(i) >= 1 and alpha == 0 (outside the boundary)
@@ -117,7 +108,8 @@ def innerLoop(svm, alpha_i):
     # 1) if y[i]*E_i < 0, so yi*f(i) < 1, if alpha < C, violate!(alpha = C will be correct)
     # 2) if y[i]*E_i > 0, so yi*f(i) > 1, if alpha > 0, violate!(alpha = 0 will be correct)
     # 3) if y[i]*E_i = 0, so yi*f(i) = 1, it is on the boundary, needless optimized
-    if (svm.train_y[alpha_i] * error_i < -svm.toler) and (svm.alphas[alpha_i] < svm.C) or\
+
+    if (svm.train_y[alpha_i] * error_i < -svm.toler) and (svm.alphas[alpha_i] < svm.C[alpha_i]) or\
         (svm.train_y[alpha_i] * error_i > svm.toler) and (svm.alphas[alpha_i] > 0):
 
         # step 1: select alpha j
@@ -129,10 +121,10 @@ def innerLoop(svm, alpha_i):
         # step 2: calculate the boundary L and H for alpha j
         if svm.train_y[alpha_i] != svm.train_y[alpha_j]:
             L = max(0, svm.alphas[alpha_j] - svm.alphas[alpha_i])
-            H = min(svm.C, svm.C + svm.alphas[alpha_j] - svm.alphas[alpha_i])
+            H = min(svm.C[alpha_j], svm.C[alpha_j] + svm.alphas[alpha_j] - svm.alphas[alpha_i])
         else:
-            L = max(0, svm.alphas[alpha_j] + svm.alphas[alpha_i] - svm.C)
-            H = min(svm.C, svm.alphas[alpha_j] + svm.alphas[alpha_i])
+            L = max(0, svm.alphas[alpha_j] + svm.alphas[alpha_i] - svm.C[alpha_i])
+            H = min(svm.C[alpha_j], svm.alphas[alpha_j] + svm.alphas[alpha_i])
         if L == H:
             return 0
 
@@ -169,9 +161,9 @@ def innerLoop(svm, alpha_i):
                                                     * svm.kernelMat[alpha_i, alpha_j] \
                              - svm.train_y[alpha_j] * (svm.alphas[alpha_j] - alpha_j_old) \
                                                     * svm.kernelMat[alpha_j, alpha_j]
-        if (0 < svm.alphas[alpha_i]) and (svm.alphas[alpha_i] < svm.C):
+        if (0 < svm.alphas[alpha_i]) and (svm.alphas[alpha_i] < svm.C[alpha_i]):
             svm.b = b1
-        elif (0 < svm.alphas[alpha_j]) and (svm.alphas[alpha_j] < svm.C):
+        elif (0 < svm.alphas[alpha_j]) and (svm.alphas[alpha_j] < svm.C[alpha_j]):
             svm.b = b2
         else:
             svm.b = (b1 + b2) / 2.0
@@ -186,12 +178,13 @@ def innerLoop(svm, alpha_i):
 
 
 # the main training procedure
-def trainSVM(train_x, train_y, C, toler, maxIter, kernelOption = ('rbf', 1.0)):
+def trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('rbf', 1.0)):
     # calculate training time
     startTime = time.time()
 
     # init data struct for svm
-    svm = SVMStruct(np.mat(train_x), np.mat(train_y), C, toler, kernelOption)
+    svm = SVMStruct(np.mat(train_x), np.mat(train_y), np.mat(train_C), toler, kernelOption)
+
     # start training
     entireSet = True
     alphaPairsChanged = 0
@@ -215,7 +208,7 @@ def trainSVM(train_x, train_y, C, toler, maxIter, kernelOption = ('rbf', 1.0)):
             iterCount += 1
         # update alphas over examples where alpha is not 0 & not C (not on boundary)
         else:
-            nonBoundAlphasList = np.nonzero((svm.alphas.A > 0) * (svm.alphas.A < svm.C))[0]
+            nonBoundAlphasList = np.nonzero((svm.alphas.A > 0) * (svm.alphas.A < svm.C.A))[0]
             for i in nonBoundAlphasList:
                 alphaPairsChanged += innerLoop(svm, i)
             print '---iter:%d non boundary, alpha pairs changed:%d' % (iterCount, alphaPairsChanged)
@@ -228,14 +221,20 @@ def trainSVM(train_x, train_y, C, toler, maxIter, kernelOption = ('rbf', 1.0)):
             entireSet = True
 
     print 'Congratulations, training complete! Took %fs!' % (time.time() - startTime)
+    print 'Number of iterations: %d' %iterCount
     return svm
 
 
 # testing your trained svm model given test set
 def testSVM(svm, test_x, test_y):
+    ####
+    prediction = []
+    ####
     test_x = np.mat(test_x)
     test_y = np.mat(test_y)
     numTestSamples = test_x.shape[0]
+
+    ## support vectors?
     supportVectorsIndex = np.nonzero(svm.alphas.A > 0)[0]
     supportVectors      = svm.train_x[supportVectorsIndex]
     supportVectorLabels = svm.train_y[supportVectorsIndex]
@@ -243,11 +242,13 @@ def testSVM(svm, test_x, test_y):
     matchCount = 0
     for i in xrange(numTestSamples):
         kernelValue = calcKernelValue(supportVectors, test_x[i, :], svm.kernelOpt)
+        ## Here is how they do the prediction.
         predict = kernelValue.T * np.multiply(supportVectorLabels, supportVectorAlphas) + svm.b
+        prediction.append((predict.A.flatten())[0])
         if np.sign(predict) == np.sign(test_y[i]):
             matchCount += 1
     accuracy = float(matchCount) / numTestSamples
-    return accuracy
+    return prediction
 
 
 # show your trained svm model only available with 2-D data
@@ -293,32 +294,60 @@ if __name__ == "__main__":
         dataSet.append([float(lineArr[0]), float(lineArr[1])])
         labels.append(float(lineArr[2]))
     fileIn.close()
+    #####################
     dataSet = np.mat(dataSet)
     labels = np.mat(labels).T
+    ###########################
+
     train_x = dataSet[0:81, :]
     train_y = labels[0:81, :]
     test_x = dataSet[80:101, :]
     test_y = labels[80:101, :]
+    ##################
+    data_x = np.array(([1,1,0,0.2,0], [0,0,1,0.1,1], [0,1,0,0.4,0], [0,0,1,0.3,0]), np.float32)
+    data_y = np.array([3,2,1,1], np.float32)
+    train_x = []
+    train_y = []
+    train_C = []
 
+    for i in range(data_x.shape[0]):
+        for j in range(i+1,data_x.shape[0]):
+            if data_y[i] == data_y[j]:
+                continue
+            else:
+                train_C.append(abs(data_y[i]-data_y[j]))
+                train_C.append(abs(data_y[j]-data_y[i]))
+                train_x.append(data_x[i,:] - data_x[j,:])
+                train_x.append(data_x[j,:] - data_x[i,:])
 
-    # print dataSet
-    # print type(dataSet)
-    # print train_x
-    # print type(train_x)
-    # raw_input('hhh')
+                if data_y[i] > data_y[j]:
+                    train_y.append(+1)
+                    train_y.append(-1)
+                else:
+                    train_y.append(-1)
+                    train_y.append(+1)
 
+    train_x = np.mat(train_x)
+    train_y = np.mat(train_y).T
+    train_C = np.mat(train_C).T
+
+    ##################
+
+    #
     ## step 2: training...
     print "step 2: training..."
     C = 0.6
     toler = 0.001
     maxIter = 50
-    svmClassifier = trainSVM(train_x, train_y, C, toler, maxIter, kernelOption = ('linear', 0))
-
-    ## step 3: testing
-    print "step 3: testing..."
-    accuracy = testSVM(svmClassifier, test_x, test_y)
-
-    ## step 4: show the result
-    print "step 4: show the result..."
-    print 'The classify accuracy is: %.3f%%' % (accuracy * 100)
-    showSVM(svmClassifier)
+    svmClassifier = trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('linear', 0))
+    # svmClassifier = trainSVM(train_x, train_y, C, toler, maxIter, kernelOption = ('linear', 0))
+    #
+    # ## step 3: testing
+    # print "step 3: testing..."
+    # # accuracy = testSVM(svmClassifier, test_x, test_y)
+    # prediction = testSVM(svmClassifier, test_x, test_y)
+    # print prediction
+    # # ## step 4: show the result
+    # # print "step 4: show the result..."
+    # # print 'The classify accuracy is: %.3f%%' % (accuracy * 100)
+    # # showSVM(svmClassifier)
