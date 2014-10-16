@@ -97,7 +97,7 @@ def selectAlpha_j(svm, alpha_i, error_i):
 def innerLoop(svm, alpha_i):
     error_i = calcError(svm, alpha_i)
 
-    print 'Error: ', error_i
+    # print 'Error: ', error_i
     ### check and pick up the alpha who violates the KKT condition
     ## satisfy KKT condition
     # 1) yi*f(i) >= 1 and alpha == 0 (outside the boundary)
@@ -178,13 +178,15 @@ def innerLoop(svm, alpha_i):
 
 
 # the main training procedure
-def trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('rbf', 1.0)):
+def trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('linear', 1.0)):
+    print 'Start training...'
     # calculate training time
     startTime = time.time()
 
     # init data struct for svm
     svm = SVMStruct(np.mat(train_x), np.mat(train_y), np.mat(train_C), toler, kernelOption)
 
+    print 'SVM construction finished...'
     # start training
     entireSet = True
     alphaPairsChanged = 0
@@ -220,13 +222,15 @@ def trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('rbf', 1
         elif alphaPairsChanged == 0:
             entireSet = True
 
-    print 'Congratulations, training complete! Took %fs!' % (time.time() - startTime)
+    print 'Training complete! Took %fs!' % (time.time() - startTime)
     print 'Number of iterations: %d' %iterCount
     return svm
 
 
 # testing your trained svm model given test set
 def testSVM(svm, test_x):
+    # calculate training time
+    startTime = time.time()
     ####
     prediction = []
     ####
@@ -246,6 +250,7 @@ def testSVM(svm, test_x):
         predict = kernelValue.T * np.multiply(supportVectorLabels, supportVectorAlphas)
         # predict = kernelValue.T * np.multiply(supportVectorLabels, supportVectorAlphas) + svm.b
         prediction.append((predict.A.flatten())[0])
+    print 'Prediction complete! Took %fs!' % (time.time() - startTime)
     return prediction
 
 
@@ -278,7 +283,33 @@ def showSVM(svm):
     plt.plot([min_x, max_x], [y_min_x, y_max_x], '-g')
     plt.show()
 
+def train_data_preparation(data_x, data_y, C):
+    print 'Preparing training data for SVM...'
+    train_x = []
+    train_y = []
+    train_C = []
+    for i in range(data_x.shape[0]):
+        for j in range(i+1,data_x.shape[0]):
+            if data_y[i] == data_y[j]:
+                continue
+            else:
+                train_C.append(abs(data_y[i]-data_y[j]))
+                train_C.append(abs(data_y[j]-data_y[i]))
+                train_x.append(data_x[i,:] - data_x[j,:])
+                train_x.append(data_x[j,:] - data_x[i,:])
 
+                if data_y[i] > data_y[j]:
+                    train_y.append(+1)
+                    train_y.append(-1)
+                else:
+                    train_y.append(-1)
+                    train_y.append(+1)
+    train_x = np.mat(train_x)
+    train_y = np.mat(train_y).T
+    train_C = C * np.mat(train_C).T
+
+    print 'Number of training examples into SVM: ', train_x.shape[0]
+    return train_x, train_y, train_C
 
 if __name__ == "__main__":
     ################## test svm #####################
@@ -308,22 +339,22 @@ if __name__ == "__main__":
     train_y = []
     train_C = []
 
-    for i in range(data_x.shape[0]):
-        for j in range(i+1,data_x.shape[0]):
-            if data_y[i] == data_y[j]:
-                continue
-            else:
-                train_C.append(abs(data_y[i]-data_y[j]))
-                train_C.append(abs(data_y[j]-data_y[i]))
-                train_x.append(data_x[i,:] - data_x[j,:])
-                train_x.append(data_x[j,:] - data_x[i,:])
-
-                if data_y[i] > data_y[j]:
-                    train_y.append(+1)
-                    train_y.append(-1)
-                else:
-                    train_y.append(-1)
-                    train_y.append(+1)
+    # for i in range(data_x.shape[0]):
+    #     for j in range(i+1,data_x.shape[0]):
+    #         if data_y[i] == data_y[j]:
+    #             continue
+    #         else:
+    #             train_C.append(abs(data_y[i]-data_y[j]))
+    #             train_C.append(abs(data_y[j]-data_y[i]))
+    #             train_x.append(data_x[i,:] - data_x[j,:])
+    #             train_x.append(data_x[j,:] - data_x[i,:])
+    #
+    #             if data_y[i] > data_y[j]:
+    #                 train_y.append(+1)
+    #                 train_y.append(-1)
+    #             else:
+    #                 train_y.append(-1)
+    #                 train_y.append(+1)
 
 
 
@@ -338,9 +369,10 @@ if __name__ == "__main__":
     C = 0.6
     toler = 0.001
     maxIter = 50
-    train_x = np.mat(train_x)
-    train_y = np.mat(train_y).T
-    train_C = C * np.mat(train_C).T
+    # train_x = np.mat(train_x)
+    # train_y = np.mat(train_y).T
+    # train_C = C * np.mat(train_C).T
+    train_x, train_y, train_C = train_data_preparation(data_x, data_y, C)
     svmClassifier = trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('linear', 0))
 
     # print train_C
@@ -350,6 +382,8 @@ if __name__ == "__main__":
     print np.nonzero(svmClassifier.alphas.A.flatten())[0]
     prediction = testSVM(svmClassifier, data_x)
     print prediction
+
+
     # svmClassifier = trainSVM(train_x, train_y, C, toler, maxIter, kernelOption = ('linear', 0))
     #
     # ## step 3: testing
