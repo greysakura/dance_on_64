@@ -3,7 +3,13 @@ __author__ = 'LIMU_North'
 import numpy as np
 import time
 import matplotlib.pyplot as plt
+import scipy
 
+def calcKernelVectorValue(svm, k):
+    return np.dot(svm.train_x, svm.train_x[k,:].T)
+
+def calcKernelPointValue(svm, i, j):
+    return np.dot(svm.train_x[i,:], svm.train_x[j,:].T)
 
 # calulate kernel value
 def calcKernelValue(matrix_x, sample_x, kernelOption):
@@ -27,10 +33,15 @@ def calcKernelValue(matrix_x, sample_x, kernelOption):
 
 # calculate kernel matrix given train set and kernel type
 def calcKernelMatrix(train_x, kernelOption):
+    print 'Starting kernel matrix calc.'
+    startTime = time.time()
     numSamples = train_x.shape[0]
-    kernelMatrix = np.mat(np.zeros((numSamples, numSamples)))
-    for i in xrange(numSamples):
-        kernelMatrix[:, i] = calcKernelValue(train_x, train_x[i, :], kernelOption)
+    # kernelMatrix = np.mat(np.zeros((numSamples, numSamples)))
+    kernelMatrix = np.dot(train_x,train_x.T)
+    # for i in xrange(numSamples):
+    #     kernelMatrix[:, i] = calcKernelValue(train_x, train_x[i, :], kernelOption)
+    endTime = time.time()
+    print 'kernel matrix calc completed. Time used: ', endTime - startTime, ' seconds...'
     return kernelMatrix
 
 
@@ -57,6 +68,7 @@ class SVMStruct:
 def calcError(svm, alpha_k):
     ## .T: transpose
     output_k = float(np.multiply(svm.alphas, svm.train_y).T * svm.kernelMat[:, alpha_k] + svm.b)
+    # output_k = float(np.multiply(svm.alphas, svm.train_y).T * calcKernelVectorValue(svm, alpha_k) + svm.b)
     error_k = output_k - float(svm.train_y[alpha_k])
     return error_k
 
@@ -95,6 +107,8 @@ def selectAlpha_j(svm, alpha_i, error_i):
 
 # the inner loop for optimizing alpha i and alpha j
 def innerLoop(svm, alpha_i):
+    timeStartLoop = time.time()
+    # print 'innerloop: ', alpha_i
     error_i = calcError(svm, alpha_i)
 
     # print 'Error: ', error_i
@@ -126,12 +140,21 @@ def innerLoop(svm, alpha_i):
             L = max(0, svm.alphas[alpha_j] + svm.alphas[alpha_i] - svm.C[alpha_i])
             H = min(svm.C[alpha_j], svm.alphas[alpha_j] + svm.alphas[alpha_i])
         if L == H:
+            timeEndLoop = time.time()
+            # print 'Loop time: ', timeEndLoop - timeStartLoop, ' seconds...'
             return 0
 
         # step 3: calculate eta (the similarity of sample i and j)
+        ##################################
         eta = 2.0 * svm.kernelMat[alpha_i, alpha_j] - svm.kernelMat[alpha_i, alpha_i] \
                   - svm.kernelMat[alpha_j, alpha_j]
+        ##################################
+        # eta = 2.0 * calcKernelPointValue(svm, alpha_i,alpha_j) - calcKernelPointValue(svm, alpha_i, alpha_i)\
+        #       - calcKernelPointValue(svm, alpha_j, alpha_j)
+        ##################################
         if eta >= 0:
+            timeEndLoop = time.time()
+            # print 'Loop time: ', timeEndLoop - timeStartLoop, ' seconds...'
             return 0
 
         # step 4: update alpha j
@@ -146,6 +169,8 @@ def innerLoop(svm, alpha_i):
         # step 6: if alpha j not moving enough, just return
         if abs(alpha_j_old - svm.alphas[alpha_j]) < 0.00001:
             updateError(svm, alpha_j)
+            timeEndLoop = time.time()
+            # print 'Loop time: ', timeEndLoop - timeStartLoop, ' seconds...'
             return 0
 
         # step 7: update alpha i after optimizing aipha j
@@ -157,10 +182,22 @@ def innerLoop(svm, alpha_i):
                                                     * svm.kernelMat[alpha_i, alpha_i] \
                              - svm.train_y[alpha_j] * (svm.alphas[alpha_j] - alpha_j_old) \
                                                     * svm.kernelMat[alpha_i, alpha_j]
+        ############################################
+        # b1 = svm.b - error_i - svm.train_y[alpha_i] * (svm.alphas[alpha_i] - alpha_i_old) \
+        #                                             * calcKernelPointValue(svm, alpha_i, alpha_i) \
+        #                      - svm.train_y[alpha_j] * (svm.alphas[alpha_j] - alpha_j_old) \
+        #                                             * calcKernelPointValue(svm, alpha_i, alpha_j)
+        ############################################
         b2 = svm.b - error_j - svm.train_y[alpha_i] * (svm.alphas[alpha_i] - alpha_i_old) \
                                                     * svm.kernelMat[alpha_i, alpha_j] \
                              - svm.train_y[alpha_j] * (svm.alphas[alpha_j] - alpha_j_old) \
                                                     * svm.kernelMat[alpha_j, alpha_j]
+        ############################################
+        # b2 = svm.b - error_j - svm.train_y[alpha_i] * (svm.alphas[alpha_i] - alpha_i_old) \
+        #                                             * calcKernelPointValue(svm, alpha_i, alpha_j) \
+        #                      - svm.train_y[alpha_j] * (svm.alphas[alpha_j] - alpha_j_old) \
+        #                                             * calcKernelPointValue(svm, alpha_j, alpha_j)
+        ############################################
         if (0 < svm.alphas[alpha_i]) and (svm.alphas[alpha_i] < svm.C[alpha_i]):
             svm.b = b1
         elif (0 < svm.alphas[alpha_j]) and (svm.alphas[alpha_j] < svm.C[alpha_j]):
@@ -172,8 +209,12 @@ def innerLoop(svm, alpha_i):
         updateError(svm, alpha_j)
         updateError(svm, alpha_i)
 
+        timeEndLoop = time.time()
+        # print 'Loop time: ', timeEndLoop - timeStartLoop, ' seconds...'
         return 1
     else:
+        timeEndLoop = time.time()
+        # print 'Loop time: ', timeEndLoop - timeStartLoop, ' seconds...'
         return 0
 
 
@@ -196,6 +237,8 @@ def trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('linear'
     #   Condition 2: no alpha changed after going through all samples,
     #                in other words, all alpha (samples) fit KKT condition
     while (iterCount < maxIter) and ((alphaPairsChanged > 0) or entireSet):
+        print 'iterCount: ', iterCount
+        iterStart = time.time()
         alphaPairsChanged = 0
 
         # update alphas over all training examples
@@ -221,6 +264,8 @@ def trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('linear'
             entireSet = False
         elif alphaPairsChanged == 0:
             entireSet = True
+        iterEnd = time.time()
+        print 'Iteration ', iterCount, ', time used: ', iterEnd - iterStart, ' seconds...'
 
     print 'Training complete! Took %fs!' % (time.time() - startTime)
     print 'Number of iterations: %d' %iterCount
@@ -254,34 +299,34 @@ def testSVM(svm, test_x):
     return prediction
 
 
-# show your trained svm model only available with 2-D data
-def showSVM(svm):
-    if svm.train_x.shape[1] != 2:
-        print "Sorry! I can not draw because the dimension of your data is not 2!"
-        return 1
-
-    # draw all samples
-    for i in xrange(svm.numSamples):
-        if svm.train_y[i] == -1:
-            plt.plot(svm.train_x[i, 0], svm.train_x[i, 1], 'or')
-        elif svm.train_y[i] == 1:
-            plt.plot(svm.train_x[i, 0], svm.train_x[i, 1], 'ob')
-
-    # mark support vectors
-    supportVectorsIndex = np.nonzero(svm.alphas.A > 0)[0]
-    for i in supportVectorsIndex:
-        plt.plot(svm.train_x[i, 0], svm.train_x[i, 1], 'oy')
-
-    # draw the classify line
-    w = np.zeros((2, 1))
-    for i in supportVectorsIndex:
-        w += np.multiply(svm.alphas[i] * svm.train_y[i], svm.train_x[i, :].T)
-    min_x = min(svm.train_x[:, 0])[0, 0]
-    max_x = max(svm.train_x[:, 0])[0, 0]
-    y_min_x = float(-svm.b - w[0] * min_x) / w[1]
-    y_max_x = float(-svm.b - w[0] * max_x) / w[1]
-    plt.plot([min_x, max_x], [y_min_x, y_max_x], '-g')
-    plt.show()
+# # show your trained svm model only available with 2-D data
+# def showSVM(svm):
+#     if svm.train_x.shape[1] != 2:
+#         print "Sorry! I can not draw because the dimension of your data is not 2!"
+#         return 1
+#
+#     # draw all samples
+#     for i in xrange(svm.numSamples):
+#         if svm.train_y[i] == -1:
+#             plt.plot(svm.train_x[i, 0], svm.train_x[i, 1], 'or')
+#         elif svm.train_y[i] == 1:
+#             plt.plot(svm.train_x[i, 0], svm.train_x[i, 1], 'ob')
+#
+#     # mark support vectors
+#     supportVectorsIndex = np.nonzero(svm.alphas.A > 0)[0]
+#     for i in supportVectorsIndex:
+#         plt.plot(svm.train_x[i, 0], svm.train_x[i, 1], 'oy')
+#
+#     # draw the classify line
+#     w = np.zeros((2, 1))
+#     for i in supportVectorsIndex:
+#         w += np.multiply(svm.alphas[i] * svm.train_y[i], svm.train_x[i, :].T)
+#     min_x = min(svm.train_x[:, 0])[0, 0]
+#     max_x = max(svm.train_x[:, 0])[0, 0]
+#     y_min_x = float(-svm.b - w[0] * min_x) / w[1]
+#     y_max_x = float(-svm.b - w[0] * max_x) / w[1]
+#     plt.plot([min_x, max_x], [y_min_x, y_max_x], '-g')
+#     plt.show()
 
 def train_data_preparation(data_x, data_y, C):
     print 'Preparing training data for SVM...'
@@ -306,8 +351,9 @@ def train_data_preparation(data_x, data_y, C):
                     train_y.append(+1)
     train_x = np.mat(train_x)
     train_y = np.mat(train_y).T
+    train_C = np.array(train_C)
+    train_C = train_C/train_C.sum()
     train_C = C * np.mat(train_C).T
-
     print 'Number of training examples into SVM: ', train_x.shape[0]
     return train_x, train_y, train_C
 
@@ -356,11 +402,6 @@ if __name__ == "__main__":
     #                 train_y.append(-1)
     #                 train_y.append(+1)
 
-
-
-
-
-
     ##################
 
     #
@@ -382,6 +423,14 @@ if __name__ == "__main__":
     print np.nonzero(svmClassifier.alphas.A.flatten())[0]
     prediction = testSVM(svmClassifier, data_x)
     print prediction
+
+    I = np.array([0,3,1,0])
+    J = np.array([0,3,1,2])
+    V = np.array([4,5,7,9])
+    # A = sparse.coo_matrix((V,(I,J)),shape=(4,4))
+    # print A
+
+
 
 
     # svmClassifier = trainSVM(train_x, train_y, C, toler, maxIter, kernelOption = ('linear', 0))

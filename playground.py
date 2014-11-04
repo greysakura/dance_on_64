@@ -4,15 +4,22 @@ import math
 import numpy as np
 import subprocess
 
-work_dir = 'C:/Users/LIMU_North/Downloads/svm_rank_windows/'
+# work_dir = 'C:/Users/LIMU_North/Downloads/svm_rank_windows/'
+#
+# train_returnCode  = subprocess.call(work_dir + 'svm_rank_learn.exe' + ' -c 3 '+ work_dir + 'train.dat ' + work_dir + 'model.dat')
+#
+# print train_returnCode
+#
+# test_returnCode = subprocess.call(work_dir + 'svm_rank_classify.exe' + ' '+ work_dir + 'train.dat ' + work_dir + 'model.dat ' +work_dir + 'prediction.dat')
+#
+# print test_returnCode
 
-train_returnCode  = subprocess.call(work_dir + 'svm_rank_learn.exe' + ' -c 3 '+ work_dir + 'train.dat ' + work_dir + 'model.dat')
 
-print train_returnCode
+AAA = [(0, 'a'), (1, 'b'), (2, 'c'), (3, 'd'), (4, 'e'), (5, 'f'),  (6, 'g'), (7, 'h'), (8, 'i'), (9, 'j')]
 
-test_returnCode = subprocess.call(work_dir + 'svm_rank_classify.exe' + ' '+ work_dir + 'train.dat ' + work_dir + 'model.dat ' +work_dir + 'prediction.dat')
+AAA.append((10,'z'))
+print filter(lambda a: a[0] > 3, AAA)
 
-print test_returnCode
 
 
 

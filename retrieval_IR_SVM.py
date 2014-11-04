@@ -74,8 +74,8 @@ if __name__ == "__main__":
     num_for_SV = 200
     nnThreshold = 0.8
     minGoodMatch = 10
-
-    low_ranking_selected = 200
+    numGoodImageMax = 30
+    low_ranking_selected = 30
 
     ## store images' dirs
     query_img_dir_list = []
@@ -133,12 +133,9 @@ if __name__ == "__main__":
     # # raw_input('stop!!!!!!!!!!!')
 
     TF_IDF_norm_matrix = np.load(top_dir + 'TF_IDF_norm_matrix.npy')
-
-
     read_tf_idf_end = clock()
 
     print '...TF-IDF reading time: ', read_tf_idf_end - read_tf_idf_start, 'seconds...'
-    print
 
     ## read IDF_matrix
     print '...reading IDF matrix...'
@@ -154,7 +151,6 @@ if __name__ == "__main__":
         IDF_matrix = np.load(top_dir + 'IDF_matrix.npy')
 
     print '...IDF matrix load finished...'
-    print
 
     result_img_dir =[]
     result_img_kpts = []
@@ -169,7 +165,6 @@ if __name__ == "__main__":
     index_file.close()
     image_count = len(result_img_dir)
     print '...database image dirs loaded...'
-    print
 
     ## pre-load all database VWs into memory
     print '...reading all database image VWs into memory...'
@@ -191,7 +186,6 @@ if __name__ == "__main__":
 
 
     print '...database image VWs loaded...'
-    print
 
     ## load IDF_matrix
     IDF_matrix = np.load(top_dir + 'IDF_matrix.npy')
@@ -342,8 +336,7 @@ if __name__ == "__main__":
         tmp_SV_result_index = []
         ## Re-write the logic. We have the 1st ranking list. Now we take maybe top 200 images into SV.
         SV_IDF_score = []
-
-
+        numMatchingPointSV = []
 
         tmp_SV_time_start = clock()
 
@@ -437,6 +430,7 @@ if __name__ == "__main__":
                     # for appeared_VW_i in range(len(tmp_VW_appeared)):
                     #     tmp_IDF_score += IDF_matrix[0,tmp_VW_appeared[appeared_VW_i]] * tmp_norm_VW[appeared_VW_i]
                     SV_IDF_score.append(tmp_IDF_score)
+                    numMatchingPointSV.append(np.array(matchesMask).sum())
                 else:
                     # print 'Not enough inliers in RANSAC... Abandoned...'
                     matchesMask = None
@@ -484,7 +478,7 @@ if __name__ == "__main__":
         print '...number of spatially verified images: ', len(tmp_SV_result_name), '...'
         print
         tmp_SV_time_end = clock()
-        print '...time used for SV for query number %d: %d minutes %f seconds...' %(query_i,np.int32((tmp_SV_time_end - tmp_SV_time_start)/60), (tmp_SV_time_end - tmp_SV_time_start)%60)
+        print '...time used for SV for query number %d: %d minutes %f seconds...' %(query_i + 1,np.int32((tmp_SV_time_end - tmp_SV_time_start)/60), (tmp_SV_time_end - tmp_SV_time_start)%60)
         SV_time_list.append(tmp_SV_time_end - tmp_SV_time_start)
         SV_verified_file = open(SV_result_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_SV_result.txt','w')
         SV_verified_file.write(str(len(tmp_SV_result_name)))
@@ -510,20 +504,29 @@ if __name__ == "__main__":
         ranking_SV_score = []
         ranking_SV_Idx_ranked = []
         SV_IDF_ranking = np.argsort(SV_IDF_score)[::-1]
+        if SV_IDF_ranking.shape[0] < numGoodImageMax:
+            numGoodImageTaken = SV_IDF_ranking.shape[0]
+        else:
+            numGoodImageTaken = numGoodImageMax
 
-        for ranking_SV_i in range(SV_IDF_ranking.shape[0]):
+
+        for ranking_SV_i in range(numGoodImageTaken):
+            # ranking_SV_score.append(numMatchingPointSV[SV_IDF_ranking[ranking_SV_i]])
             ranking_SV_score.append(SV_IDF_score[SV_IDF_ranking[ranking_SV_i]])
             ranking_SV_Idx_ranked.append(SV_reranking_Idx_list[SV_IDF_ranking[ranking_SV_i]])
         ####
-
+        print 'ranking_SV_score: ', ranking_SV_score
         ############################  IR-SVM part ################################
         print 'Starting IR-SVM part...'
 
         data_x = TF_IDF_norm_matrix[ranking_SV_Idx_ranked + first_ranking[-low_ranking_selected:]]
-        data_y = np.array(sorted(SV_IDF_score, reverse = True) + [0.0]*low_ranking_selected)
+        # data_y = np.array(sorted(SV_IDF_score, reverse = True) + [0.0]*low_ranking_selected)
+        data_y = np.array(ranking_SV_score + [0.0]*low_ranking_selected)
+        # #### 14/10/24 A pre-normalize
+        # data_y = data_y/data_y.sum()
 
         #######################   Training  #################
-        C = 0.6
+        C = 100
         toler = 0.001
         maxIter = 50
         train_x, train_y, train_C = train_data_preparation(data_x, data_y, C)
@@ -533,6 +536,10 @@ if __name__ == "__main__":
 
         IR_SVM_ranking = np.argsort(np.array(prediction))[::-1]
         print IR_SVM_ranking
+        train_x = None
+        train_y = None
+        train_C = None
+        svmClassifier = None
 
         #### Final output of reranking
         IR_SVM_file = open(IR_SVM_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_IR_SVM.txt','w')
