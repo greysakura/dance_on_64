@@ -1,0 +1,8 @@
+2014-11-06 14:49:10,986 - INFO: Jackdaws love my big sphinx of quartz.
+2014-11-06 14:49:10,986 - INFO: Jackdaws love my big sphinx of quartz.
+2014-11-06 14:49:10,986 - DEBUG: Quick zephyrs blow, vexing daft Jim.
+2014-11-06 14:49:10,986 - INFO: How quickly daft jumping zebras vex.
+2014-11-06 14:49:10,986 - WARNING: Jail zesty vixen who grabbed pay from quack.
+2014-11-06 14:49:10,986 - ERROR: The five boxing wizards jump quickly.
+2014-11-06 14:49:10,986 - INFO: how 10
+2014-11-06 14:49:10,986 - INFO: ---------------- test over ------------------

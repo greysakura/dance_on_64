@@ -1,5 +1,5 @@
 __author__ = 'LIMU_North'
-
+#-*- coding:utf-8 -*-
 import cv2
 import numpy as np
 import os
@@ -8,6 +8,7 @@ import subprocess
 from Ranking_SVM_QP import *
 from sklearn import svm, linear_model
 from time import clock
+import logging
 
 
 
@@ -74,8 +75,39 @@ if __name__ == "__main__":
     num_for_SV = 200
     nnThreshold = 0.8
     minGoodMatch = 10
-    numGoodImageMax = 30
-    low_ranking_selected = 30
+
+    #### For Ranking-SVM
+    scoringMethod = 'IDF_Scoring'
+    C = 10000
+    toler = 0.0001
+    maxIter = 100
+    low_cut = 0.05
+    numGoodImageMax = 50
+    low_ranking_selected = 50
+
+    #### create log
+    logging.basicConfig(filename = os.path.join(os.getcwd(), 'retrieval_log.txt'),  level = logging.INFO, filemode = 'w',
+                        format = '%(asctime)s - %(levelname)s: %(message)s')
+
+    ## 定义一个Handler打印INFO及以上级别的日志到sys.stderr
+    console = logging.StreamHandler()
+    console.setLevel(logging.INFO)
+
+    ## 设置日志打印格式
+    formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
+    console.setFormatter(formatter)
+    ## 将定义好的console日志handler添加到root logger
+    logging.getLogger('').addHandler(console)
+
+    ## 输出基本信息
+    logging.info('Scoring Method selected: ' + scoringMethod)
+    logging.info('C = %d', C)
+    logging.info('toler = %f', toler)
+    logging.info('maxIter = %d', maxIter)
+    logging.info('low_cut = %f', low_cut)
+    logging.info('numGoodImageMax = %d', numGoodImageMax)
+    logging.info('low_ranking_selected = %d', low_ranking_selected)
+    logging.info('---------- Load data ----------')
 
     ## store images' dirs
     query_img_dir_list = []
@@ -217,8 +249,14 @@ if __name__ == "__main__":
     DQE_predict_time_list = []
 
     DQE_train_list = []
+
+    numDataIntoSVM = []
+
+    logging.info('---------- Retrieval starts ----------')
+
     ##change 14/05/01
     for query_i in range(len(query_img_dir_list)):
+        logging.info('--- starting query %d ---' , (query_i+1))
         print '...starting query ', str(query_i+1), '...'
         tmp_img_matching_list_file = open(TF_IDF_ranking_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_TF_IDF_ranking.txt','w')
         tmp_img_matching_img_list = []
@@ -319,6 +357,9 @@ if __name__ == "__main__":
         print distance_ranking[0]
         first_ranking = list(distance_ranking[0])
         # first_ranking = list(distance_ranking[0][::-1])
+
+        logging.info('first_ranking: ' + str(first_ranking).strip('[]'))
+        logging.info('first ranking finished.')
         print 'first_ranking: ', first_ranking
         # raw_input('stop')
         ranked_result_name_dir = []
@@ -438,6 +479,7 @@ if __name__ == "__main__":
                 # print "Not enough matches are found - %d/%d" % (len(good_match),minGoodMatch)
                 matchesMask = None
         print 'number of Verified images: ', len(SV_IDF_score)
+        logging.info('number of Verified images: %d', len(SV_IDF_score))
         SV_got_list.append(len(SV_IDF_score))
 
         ## Now wo do the 2nd reranking.
@@ -509,16 +551,18 @@ if __name__ == "__main__":
         else:
             numGoodImageTaken = numGoodImageMax
 
-
         for ranking_SV_i in range(numGoodImageTaken):
-            # ranking_SV_score.append(numMatchingPointSV[SV_IDF_ranking[ranking_SV_i]])
-            ranking_SV_score.append(SV_IDF_score[SV_IDF_ranking[ranking_SV_i]])
+            if scoringMethod == 'IDF_Scoring':
+                ranking_SV_score.append(SV_IDF_score[SV_IDF_ranking[ranking_SV_i]])
+            elif scoringMethod == 'numMatchingPoints':
+                ranking_SV_score.append(numMatchingPointSV[SV_IDF_ranking[ranking_SV_i]])
+            else:
+                logging.error('Unknown method for SV scoring!')
+                raise NameError('Unknown method for SV scoring!')
             ranking_SV_Idx_ranked.append(SV_reranking_Idx_list[SV_IDF_ranking[ranking_SV_i]])
-        ####
-        print 'ranking_SV_score: ', ranking_SV_score
-        ############################  IR-SVM part ################################
-        print 'Starting IR-SVM part...'
 
+        ############################  IR-SVM part ################################
+        logging.info('---Starting IR-SVM part----')
         data_x = TF_IDF_norm_matrix[ranking_SV_Idx_ranked + first_ranking[-low_ranking_selected:]]
         # data_y = np.array(sorted(SV_IDF_score, reverse = True) + [0.0]*low_ranking_selected)
         data_y = np.array(ranking_SV_score + [0.0]*low_ranking_selected)
@@ -526,13 +570,12 @@ if __name__ == "__main__":
         # data_y = data_y/data_y.sum()
 
         #######################   Training  #################
-        C = 100
-        toler = 0.001
-        maxIter = 50
-        train_x, train_y, train_C = train_data_preparation(data_x, data_y, C)
+        train_x, train_y, train_C = train_data_preparation(data_x, data_y, C, low_cut)
         svmClassifier = trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('linear', 0))
         prediction = testSVM(svmClassifier, TF_IDF_norm_matrix)
-        print prediction
+
+        #### store the number of data put into SVM
+        numDataIntoSVM.append(train_C.shape[0])
 
         IR_SVM_ranking = np.argsort(np.array(prediction))[::-1]
         print IR_SVM_ranking
@@ -548,8 +591,9 @@ if __name__ == "__main__":
             IR_SVM_file.write('\n')
         IR_SVM_file.close()
         #### 2014/09/16 ####
+        logging.info('...query ' + str(query_i + 1) + ' finished...')
+        logging.info('')
         print '...query ', str(query_i + 1), ' finished...'
-
 
     # raw_input("Press Enter to continue...")
     retrieval_time_used_end = clock()
@@ -561,4 +605,10 @@ if __name__ == "__main__":
     print SV_got_list
     print 'average SV image got: ',np.average(np.array(SV_got_list))
 
+    print 'number of data into SVM: ', numDataIntoSVM
+    print 'average number of data into SVM: ', np.average(np.array(numDataIntoSVM))
+
+    logging.info('---------- Retrieval test ends ----------')
+    ## shut up log
+    logging.shutdown()
 

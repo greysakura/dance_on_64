@@ -3,10 +3,17 @@ __author__ = 'LIMU_North'
 import numpy as np
 import pylab as pl
 import os
+import logging
 
 top_dir = 'C:/Cassandra/python_oxford/'
 evaluation_dir = top_dir + 'evaluation/'
 query_goto_dir = 'C:/Cassandra/query_object/'
+
+logging.basicConfig(filename = os.path.join(os.getcwd(), 'mAP_log.txt'),  level = logging.INFO, filemode = 'w',
+                    format = '%(asctime)s - %(levelname)s: %(message)s')
+
+logging.info('---------- mAP of test -----------')
+logging.info('Method selected: IR-SVM')
 
 ######### 2014/06/25
 
@@ -80,10 +87,14 @@ csv_file.close()
 mAP_list = []
 
 for i in range(all_mat.shape[1]):
+    logging.info('--- Query number %d ---', (i+1))
+    logging.info('Query name: ' + str(target_img_name_list[i]))
     print target_img_name_list[i]
     tmp_0_or_1 = all_mat[:,i]
     print tmp_0_or_1[0:20]
     tmp_mAP, tmp_recall, tmp_precision =  check_list_AP(tmp_0_or_1)
+    logging.info('tmp precision: ' + str(tmp_precision).strip('[]'))
+    logging.info('AP: ' + str(tmp_mAP).strip('[]'))
     print 'P: ', tmp_precision
     print 'AP: ', tmp_mAP
     mAP_list.append(tmp_mAP)
@@ -105,14 +116,13 @@ for i in range(all_mat.shape[1]):
 mAP_mat = np.array(mAP_list)
 # print
 print 'test mAP: ', mAP_mat.sum()/mAP_mat.shape[0]
+test_mAP = mAP_mat.sum()/mAP_mat.shape[0]
+logging.info('---------------------------')
+logging.info('test mAP: ' + str(test_mAP))
+logging.shutdown()
 # print
 input_list = [1,0,0,1,0,1]
 input_list = np.array(input_list)
-print np.where(input_list == 1)[0].shape[0]
-
-
-
-
 
 
 # precision, recall, area = check_list_AP(input_list, None)

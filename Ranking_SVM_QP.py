@@ -328,34 +328,80 @@ def testSVM(svm, test_x):
 #     plt.plot([min_x, max_x], [y_min_x, y_max_x], '-g')
 #     plt.show()
 
-def train_data_preparation(data_x, data_y, C):
+# def train_data_preparation(data_x, data_y, C):
+#     print 'Preparing training data for SVM...'
+#     train_x = []
+#     train_y = []
+#     train_C = []
+#     for i in range(data_x.shape[0]):
+#         for j in range(i+1,data_x.shape[0]):
+#             if data_y[i] == data_y[j]:
+#                 continue
+#             else:
+#                 train_C.append(abs(data_y[i]-data_y[j]))
+#                 train_C.append(abs(data_y[j]-data_y[i]))
+#                 train_x.append(data_x[i,:] - data_x[j,:])
+#                 train_x.append(data_x[j,:] - data_x[i,:])
+#
+#                 if data_y[i] > data_y[j]:
+#                     train_y.append(+1)
+#                     train_y.append(-1)
+#                 else:
+#                     train_y.append(-1)
+#                     train_y.append(+1)
+#     train_x = np.mat(train_x)
+#     train_y = np.mat(train_y).T
+#     train_C = np.array(train_C)
+#     train_C = train_C/train_C.sum()
+#     train_C = C * np.mat(train_C).T
+#     print 'Number of training examples into SVM: ', train_x.shape[0]
+#     return train_x, train_y, train_C
+
+def train_data_preparation(data_x, data_y, C, low_cut = 0.1):
     print 'Preparing training data for SVM...'
     train_x = []
     train_y = []
     train_C = []
+    tmp_index = []
+    diff_max = 0
     for i in range(data_x.shape[0]):
         for j in range(i+1,data_x.shape[0]):
             if data_y[i] == data_y[j]:
                 continue
             else:
-                train_C.append(abs(data_y[i]-data_y[j]))
-                train_C.append(abs(data_y[j]-data_y[i]))
-                train_x.append(data_x[i,:] - data_x[j,:])
-                train_x.append(data_x[j,:] - data_x[i,:])
+               tmp_index.append(((data_y[i] - data_y[j]), i,j))
+               if diff_max < abs(data_y[i]-data_y[j]):
+                    diff_max = abs(data_y[i] - data_y[j])
 
-                if data_y[i] > data_y[j]:
-                    train_y.append(+1)
-                    train_y.append(-1)
-                else:
-                    train_y.append(-1)
-                    train_y.append(+1)
+    ##  delete element under diff_max/10
+    new_index = filter(lambda a: a[0] > (diff_max * low_cut), tmp_index)
+
+    for i in range(len(new_index)):
+          train_x.append(data_x[new_index[i][1],:]-data_x[new_index[i][2],:])
+          train_x.append(data_x[new_index[i][2],:]-data_x[new_index[i][1],:])
+          if (data_y[new_index[i][1]]-data_y[new_index[i][2]])>0:
+               train_y.append(1)
+               train_y.append(-1)
+               train_C.append(data_y[new_index[i][1]]-data_y[new_index[i][2]])
+               train_C.append(data_y[new_index[i][1]]-data_y[new_index[i][2]])
+          else:
+               train_y.append(-1)
+               train_y.append(1)
+               train_C.append(-(data_y[new_index[i][1]]-data_y[new_index[i][2]]))
+               train_C.append(-(data_y[new_index[i][1]]-data_y[new_index[i][2]]))
+
     train_x = np.mat(train_x)
     train_y = np.mat(train_y).T
     train_C = np.array(train_C)
     train_C = train_C/train_C.sum()
     train_C = C * np.mat(train_C).T
+    # print 'train_C: ', train_C
+    # print 'train_y: ', train_y
+    # print 'train_x: ', train_x
+    # raw_input('asdfasdfasdfsadfasdf')
     print 'Number of training examples into SVM: ', train_x.shape[0]
     return train_x, train_y, train_C
+
 
 if __name__ == "__main__":
     ################## test svm #####################
@@ -385,24 +431,6 @@ if __name__ == "__main__":
     train_y = []
     train_C = []
 
-    # for i in range(data_x.shape[0]):
-    #     for j in range(i+1,data_x.shape[0]):
-    #         if data_y[i] == data_y[j]:
-    #             continue
-    #         else:
-    #             train_C.append(abs(data_y[i]-data_y[j]))
-    #             train_C.append(abs(data_y[j]-data_y[i]))
-    #             train_x.append(data_x[i,:] - data_x[j,:])
-    #             train_x.append(data_x[j,:] - data_x[i,:])
-    #
-    #             if data_y[i] > data_y[j]:
-    #                 train_y.append(+1)
-    #                 train_y.append(-1)
-    #             else:
-    #                 train_y.append(-1)
-    #                 train_y.append(+1)
-
-    ##################
 
     #
     ## step 2: training...
@@ -418,7 +446,7 @@ if __name__ == "__main__":
 
     # print train_C
     print train_y.shape
-    print svmClassifier.b.A.flatten()[0]
+    print svmClassifier.b
     print svmClassifier.alphas.A
     print np.nonzero(svmClassifier.alphas.A.flatten())[0]
     prediction = testSVM(svmClassifier, data_x)
@@ -444,3 +472,5 @@ if __name__ == "__main__":
     # # print "step 4: show the result..."
     # # print 'The classify accuracy is: %.3f%%' % (accuracy * 100)
     # # showSVM(svmClassifier)
+
+    print train_C.shape[0]
