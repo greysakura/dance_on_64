@@ -493,20 +493,27 @@ if __name__ == "__main__":
 
 
         ## decrease dimension for DQE  14/06/29
-
-
-
         ## Adding SVM for DQE.
 
         ## 07/16 decrease dimension
         # raw_input('stop here!')
+
+        #### 14/11/07 test on 50/50
+        numGoodImageMax = 200
+        low_ranking_selected = 200
+
+
+        #### put query into positive
         DQE_positive = query_TF_IDF_norm.tolist()
         # DQE_positive = query_TF_IDF_norm[:,np.where(query_image_VW > 0)[1]].tolist()
         if len(ranking_SV_Idx)>0:
-            DQE_positive.extend(TF_IDF_norm_matrix[ranking_SV_Idx, :].tolist())
-            # DQE_positive.extend(TF_IDF_norm_matrix[ranking_SV_Idx,:][:,np.where(query_image_VW > 0)[1]].tolist())
+            if len(ranking_SV_Idx) < numGoodImageMax:
+                DQE_positive.extend(TF_IDF_norm_matrix[SV_reranking_Idx_list[:len(ranking_SV_Idx)], :].tolist())
+            else:
+                DQE_positive.extend(TF_IDF_norm_matrix[SV_reranking_Idx_list[:numGoodImageMax], :].tolist())
+
         # DQE_negative = TF_IDF_norm_matrix[first_ranking[-200:], :][:,np.where(query_image_VW > 0)[1]].tolist()
-        DQE_negative = TF_IDF_norm_matrix[first_ranking[-200:], :].tolist()
+        DQE_negative = TF_IDF_norm_matrix[first_ranking[-low_ranking_selected:], :].tolist()
         DQE_data = list(DQE_positive)
         DQE_data.extend(DQE_negative)
 
@@ -522,8 +529,6 @@ if __name__ == "__main__":
 
         # clf = svm.SVC(kernel='linear', C =1.0)
         clf = svm.LinearSVC(C = 1.0)
-
-
         # clf = svm.SVC(kernel='linear', C =1.0, class_weight={1: unbalance_ratio})
         # clf = svm.SVC(kernel='rbf',C = 1.0,gamma = 1.0)
         # print clf.class_weight
@@ -535,9 +540,6 @@ if __name__ == "__main__":
         print 'train time: ', SVM_train_end - SVM_train_start
         # print 'support vector used: ', clf.n_support_[0]
         # num_support_vector_list.append(clf.n_support_[0])
-        print
-        print num_support_vector_list
-        print len(num_support_vector_list)
 
         DQE_train_list.append(SVM_train_end - SVM_train_start)
 
@@ -548,8 +550,7 @@ if __name__ == "__main__":
         DQE_decision_function =  clf.decision_function(TF_IDF_norm_matrix)
 
         DQE_reranking_Idx_list = np.argsort(DQE_decision_function.flatten())[::-1]
-        print len(SV_reranking_Idx_list)
-        print len(DQE_reranking_Idx_list)
+        print 'DQE_reranking_Idx_list: ', DQE_reranking_Idx_list
         DQE_decision_function = DQE_decision_function.flatten()
         print DQE_decision_function[DQE_reranking_Idx_list]
         # print clf.predict(query_TF_IDF_norm)
@@ -604,3 +605,10 @@ if __name__ == "__main__":
     #     support_vector_file.write(str(DQE_predict_time_list[i]))
     #     support_vector_file.write('\n')
     # support_vector_file.close()
+
+    ## extra SV result output 2014/11/19
+    SV_result_num_file = open(top_dir + 'SV_result_num'+'_DQE.csv','w')
+    for SV_i in range(len(SV_got_list)):
+        SV_result_num_file.write(str(SV_got_list[SV_i])+'\n')
+    SV_result_num_file.close()
+

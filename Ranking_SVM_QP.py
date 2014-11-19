@@ -377,18 +377,19 @@ def train_data_preparation(data_x, data_y, C, low_cut = 0.1):
     new_index = filter(lambda a: a[0] > (diff_max * low_cut), tmp_index)
 
     for i in range(len(new_index)):
-          train_x.append(data_x[new_index[i][1],:]-data_x[new_index[i][2],:])
-          train_x.append(data_x[new_index[i][2],:]-data_x[new_index[i][1],:])
-          if (data_y[new_index[i][1]]-data_y[new_index[i][2]])>0:
+        train_x.append(data_x[new_index[i][1],:]-data_x[new_index[i][2],:])
+        train_x.append(data_x[new_index[i][2],:]-data_x[new_index[i][1],:])
+        if (data_y[new_index[i][1]]-data_y[new_index[i][2]])>0:
                train_y.append(1)
                train_y.append(-1)
                train_C.append(data_y[new_index[i][1]]-data_y[new_index[i][2]])
                train_C.append(data_y[new_index[i][1]]-data_y[new_index[i][2]])
-          else:
+        else:
                train_y.append(-1)
                train_y.append(1)
                train_C.append(-(data_y[new_index[i][1]]-data_y[new_index[i][2]]))
                train_C.append(-(data_y[new_index[i][1]]-data_y[new_index[i][2]]))
+
 
     train_x = np.mat(train_x)
     train_y = np.mat(train_y).T
@@ -442,6 +443,7 @@ if __name__ == "__main__":
     # train_y = np.mat(train_y).T
     # train_C = C * np.mat(train_C).T
     train_x, train_y, train_C = train_data_preparation(data_x, data_y, C)
+
     svmClassifier = trainSVM(train_x, train_y, train_C, toler, maxIter, kernelOption = ('linear', 0))
 
     # print train_C

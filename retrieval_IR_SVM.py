@@ -516,9 +516,7 @@ if __name__ == "__main__":
         print len(SV_reranking_Idx_list)
 
         #### write record of SV result.
-        print
         print '...number of spatially verified images: ', len(tmp_SV_result_name), '...'
-        print
         tmp_SV_time_end = clock()
         print '...time used for SV for query number %d: %d minutes %f seconds...' %(query_i + 1,np.int32((tmp_SV_time_end - tmp_SV_time_start)/60), (tmp_SV_time_end - tmp_SV_time_start)%60)
         SV_time_list.append(tmp_SV_time_end - tmp_SV_time_start)
@@ -550,7 +548,7 @@ if __name__ == "__main__":
             numGoodImageTaken = SV_IDF_ranking.shape[0]
         else:
             numGoodImageTaken = numGoodImageMax
-
+        logging.info('Matching points: ' + str(sorted(numMatchingPointSV, reverse= True)).strip('[]'))
         for ranking_SV_i in range(numGoodImageTaken):
             if scoringMethod == 'IDF_Scoring':
                 ranking_SV_score.append(SV_IDF_score[SV_IDF_ranking[ranking_SV_i]])

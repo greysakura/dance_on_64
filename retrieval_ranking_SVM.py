@@ -514,8 +514,15 @@ if __name__ == "__main__":
         #### retrieve the norm-VW of each image verified.
         # SV_for_ranking_SVM_file.write('## This is a test for ranking SVM input.\n')
 
+        #### 14/11/07 test on 50/50
+        numPositivesMax = 50
+        numNegatives = 200
+
+        positiveTaken = min(numPositivesMax, SV_IDF_ranking.shape[0])
+
         #### 1. Good examples.
-        for ranking_SVM_i in range(SV_IDF_ranking.shape[0]):
+        for ranking_SVM_i in range(positiveTaken):
+        # for ranking_SVM_i in range(SV_IDF_ranking.shape[0]):
             #### First, output the ranking grade for this image.
             SV_for_ranking_SVM_file.write(str(ranking_score_appeared.index(SV_IDF_score[ranking_SVM_i]) + 1))
             SV_for_ranking_SVM_file.write(' qid:1')
@@ -528,7 +535,7 @@ if __name__ == "__main__":
             SV_for_ranking_SVM_file.write('\n')
 
         #### 2. Bad examples.
-        for ranking_SVM_i in range(200):
+        for ranking_SVM_i in range(numNegatives):
             SV_for_ranking_SVM_file.write(str(0))
             SV_for_ranking_SVM_file.write(' qid:1')
             for ranking_SVM_VW_j in range(cluster_number):
@@ -544,7 +551,7 @@ if __name__ == "__main__":
         #### using ranking-svm exe from outside. use subprocess.
         train_dat_dir = Ranking_SVM_file_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_Ranking_SVM_file.dat'
         #### training
-        train_returnCode  = subprocess.call(Ranking_SVM_exe_dir + 'svm_rank_learn.exe' + ' -c 0.1 '+ train_dat_dir + ' ' + Ranking_SVM_exe_dir +'model.dat')
+        train_returnCode  = subprocess.call(Ranking_SVM_exe_dir + 'svm_rank_learn.exe' + ' -c 0.0025 '+ train_dat_dir + ' ' + Ranking_SVM_exe_dir +'model.dat')
         # print train_returnCode
 
         #### testing
@@ -591,4 +598,9 @@ if __name__ == "__main__":
     print SV_got_list
     print 'average SV image got: ',np.average(np.array(SV_got_list))
 
+    ## extra SV result output 2014/11/19
+    SV_result_num_file = open(top_dir + 'SV_result_num'+'_Ranking_SVM.csv','w')
+    for SV_i in range(len(SV_got_list)):
+        SV_result_num_file.write(str(SV_got_list[SV_i])+'\n')
+    SV_result_num_file.close()
 
