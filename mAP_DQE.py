@@ -5,8 +5,8 @@ import cv2
 import numpy as np
 import sys
 from time import clock
-
-
+import os
+from computeInversion import count_inversion
 
 if __name__ == "__main__":
     top_dir = 'C:/Cassandra/python_oxford/'
@@ -34,6 +34,16 @@ if __name__ == "__main__":
     ## zeros and ones
 
     positive_or_not = np.zeros((len(target_img_dir_list),top_retrieval_num), np.float64)
+
+    ## good ok junk bad
+    matGoodOkJunkBad = np.zeros((len(target_img_dir_list),top_retrieval_num), int)
+
+    ## Only good and bad
+    mainListGoodBad = []
+
+    # print target_img_name_list
+    # raw_input('sdfasdfsdf')
+
     ## read result txt for each query
     for query_i in range(len(target_img_dir_list)):
         tmp_good_dir = ground_truth_dir = top_dir + 'ground_truth_file/' + (target_img_dir_list[query_i].split('.')[0])[:-5] + 'good.txt'
@@ -63,6 +73,9 @@ if __name__ == "__main__":
         ## count the positives
         positive_total.append(len(tmp_good)+ len(tmp_ok))
         tmp_result_file = open(DQE_reranking_dir + target_img_dir_list[query_i].split('.')[0] + '_DQE_reranking.txt', 'r')
+
+        tmpGoodBadList = []
+
         for line_i in range(top_retrieval_num):
             line = tmp_result_file.readline()
 
@@ -74,18 +87,29 @@ if __name__ == "__main__":
                     positive_or_not[query_i,line_i] = 1.0
                     is_negative = False
                     good_count_tmp += 1
+                    matGoodOkJunkBad[query_i,line_i] = 2
+                    ##
+                    tmpGoodBadList.append(1)
             for i in range(len(tmp_ok)):
                 if tmp_ok[i].find((line.split('/')[-1]).split('.')[0]) == 0:
                     positive_or_not[query_i,line_i] = 1.0
                     is_negative = False
                     ok_count_tmp += 1
+                    matGoodOkJunkBad[query_i,line_i] = 1
+                    tmpGoodBadList.append(0)
             for i in range(len(tmp_junk)):
                 if tmp_junk[i].find((line.split('/')[-1]).split('.')[0]) == 0:
                     is_negative = False
                     junk_count_tmp += 1
+                    matGoodOkJunkBad[query_i,line_i] = 0
             if is_negative:
                 positive_or_not[query_i,line_i] = -1.0
                 negative_count_tmp += 1
+                matGoodOkJunkBad[query_i,line_i] = -1
+
+        ##
+        mainListGoodBad.append(tmpGoodBadList)
+        ##
         total_image_retrieved.append(len(tmp_result))
         good_count.append(good_count_tmp)
         ok_count.append(ok_count_tmp)
@@ -193,3 +217,34 @@ if __name__ == "__main__":
                 positive_or_not_file.write(',')
         positive_or_not_file.write('\n')
     positive_or_not_file.close()
+
+    imageLevelFile = open(top_dir + 'imageLevel_DQE.csv', 'w')
+    for i in range(matGoodOkJunkBad.shape[0]):
+        for j in range(matGoodOkJunkBad.shape[1]):
+            imageLevelFile.write(str(matGoodOkJunkBad[i,j]))
+            if j < (matGoodOkJunkBad.shape[1]-1):
+                imageLevelFile.write(',')
+        imageLevelFile.write('\n')
+    imageLevelFile.close()
+
+    ### for mainList
+    good_ok_file = open(top_dir + 'good_ok_DQE.txt','w')
+    #### inversion output.
+    inversion_file = open(top_dir + 'inversion_DQE.csv','w')
+
+    for i in range(len(mainListGoodBad)):
+        for j in range(len(mainListGoodBad[i])):
+            good_ok_file.write(str(mainListGoodBad[i][j]))
+            if j < (len(mainListGoodBad[i])-1):
+                good_ok_file.write(',')
+        good_ok_file.write('\n')
+
+        tmpInversion = count_inversion(mainListGoodBad[i])
+        inversion_file.write(str(tmpInversion) + '\n')
+    good_ok_file.close()
+    inversion_file.close()
+
+
+
+
+

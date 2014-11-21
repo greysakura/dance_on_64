@@ -515,7 +515,7 @@ if __name__ == "__main__":
         # SV_for_ranking_SVM_file.write('## This is a test for ranking SVM input.\n')
 
         #### 14/11/07 test on 50/50
-        numPositivesMax = 50
+        numPositivesMax = 200
         numNegatives = 200
 
         positiveTaken = min(numPositivesMax, SV_IDF_ranking.shape[0])

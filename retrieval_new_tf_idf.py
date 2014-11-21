@@ -186,6 +186,9 @@ if __name__ == "__main__":
     DQE_predict_time_list = []
 
     DQE_train_list = []
+    ####
+    SV_score_rank_list = []
+
     ##change 14/05/01
     for query_i in range(len(query_img_dir_list)):
         # tmp_img_matching_list_file = open(query_img_dir_list[query_i][:-3] + 'txt', 'w')
@@ -490,7 +493,6 @@ if __name__ == "__main__":
             SV_reranking_file.write(result_img_dir[SV_reranking_Idx_list[SV_reranking_i]])
             SV_reranking_file.write('\n')
         SV_reranking_file.close()
-
 
         ## decrease dimension for DQE  14/06/29
         ## Adding SVM for DQE.

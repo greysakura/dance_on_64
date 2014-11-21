@@ -124,6 +124,17 @@ logging.shutdown()
 input_list = [1,0,0,1,0,1]
 input_list = np.array(input_list)
 
+#### mAP list output:
+# file_mAP = open(top_dir + 'mAP_list_DQE.csv', 'w')
+# file_mAP = open(top_dir + 'mAP_list_TF_IDF.csv', 'w')
+# file_mAP = open(top_dir + 'mAP_list_SV.csv', 'w')
+file_mAP = open(top_dir + 'mAP_list_Ranking_SVM.csv', 'w')
+for i in range(len(mAP_list)):
+    file_mAP.write(str(mAP_list[i]))
+    file_mAP.write('\n')
+file_mAP.close()
+
+print mAP_list
 
 # precision, recall, area = check_list_AP(input_list, None)
 # print area
