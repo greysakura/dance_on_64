@@ -57,103 +57,106 @@ def check_list_AP(AP_input):
 
 
 
+if __name__ == "__main__":
 
+    target_img_name_list = []
+    ## list inside a list
+    target_img_matching_img_list = []
+    # target_name = ['all_souls', 'ashmolean', 'balliol', 'bodleian', 'christ_church', 'cornmarket', 'hertford', 'keble', 'magdalen', 'pitt_rivers', 'radcliffe_camera']
+    target_img_list = open(query_goto_dir + 'target_img_list.txt', 'r')
+    for line in target_img_list:
+        target_img_name_list.append((line.split('.')[0]).split('/')[-1])
+        # print line[:-1]
+    target_img_list.close()
+    print len(target_img_name_list)
 
-target_img_name_list = []
-## list inside a list
-target_img_matching_img_list = []
-# target_name = ['all_souls', 'ashmolean', 'balliol', 'bodleian', 'christ_church', 'cornmarket', 'hertford', 'keble', 'magdalen', 'pitt_rivers', 'radcliffe_camera']
-target_img_list = open(query_goto_dir + 'target_img_list.txt', 'r')
-for line in target_img_list:
-    target_img_name_list.append((line.split('.')[0]).split('/')[-1])
-    # print line[:-1]
-target_img_list.close()
-print len(target_img_name_list)
+    tmpMethod = 'Ranking_SVM'
 
+    csv_file = open(top_dir + 'positive_or_not_' + tmpMethod + '.csv','r')
+    # csv_file = open(top_dir + 'positive_or_not_IR_SVM.csv','r')
+    # csv_file = open('C:/Cassandra/test_results/140629/test03_SVM/positive_or_not_DQE.csv','r')
+    # csv_file = open(top_dir + 'positive_or_not_Ranking_SVM.csv','r')
+    # csv_file = open(top_dir + 'positive_or_not_SV.csv','r')
+    # csv_file = open(top_dir + 'positive_or_not_RV.csv','r')
+    # csv_file = open(top_dir + 'positive_or_not_DQE.csv','r')
+    # csv_file = open(top_dir + 'positive_or_not.csv','r')
+    line_push = []
+    for line in csv_file:
+        line_push.append(np.int32(line.split(',')))
+    all_mat = np.array(line_push)
+    print all_mat.shape
+    csv_file.close()
+    mAP_list = []
 
-# csv_file = open(top_dir + 'positive_or_not_IR_SVM.csv','r')
-# csv_file = open('C:/Cassandra/test_results/140629/test03_SVM/positive_or_not_DQE.csv','r')
-csv_file = open(top_dir + 'positive_or_not_Ranking_SVM.csv','r')
-# csv_file = open(top_dir + 'positive_or_not_SV.csv','r')
-# csv_file = open(top_dir + 'positive_or_not_RV.csv','r')
-# csv_file = open(top_dir + 'positive_or_not_DQE.csv','r')
-# csv_file = open(top_dir + 'positive_or_not.csv','r')
-line_push = []
-for line in csv_file:
-    line_push.append(np.int32(line.split(',')))
-all_mat = np.array(line_push)
-print all_mat.shape
-csv_file.close()
-mAP_list = []
+    for i in range(all_mat.shape[1]):
+        logging.info('--- Query number %d ---', (i+1))
+        logging.info('Query name: ' + str(target_img_name_list[i]))
+        print target_img_name_list[i]
+        tmp_0_or_1 = all_mat[:,i]
+        print tmp_0_or_1[0:20]
+        tmp_mAP, tmp_recall, tmp_precision =  check_list_AP(tmp_0_or_1)
+        logging.info('tmp precision: ' + str(tmp_precision).strip('[]'))
+        logging.info('AP: ' + str(tmp_mAP).strip('[]'))
+        print 'P: ', tmp_precision
+        print 'AP: ', tmp_mAP
+        mAP_list.append(tmp_mAP)
+        pl.clf()
+        pl.plot(tmp_recall, tmp_precision,'b-o', label='Precision-Recall curve')
+        pl.xlabel('Recall')
+        pl.ylabel('Precision')
+        pl.ylim([0.0, 1.05])
+        pl.xlim([0.0, 1.0])
+        # pl.title('%s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
+        # pl.title('tf-idf weighting, %s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
+        # pl.title('tf-idf weighting+SV+linear-SVM, %s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
+        pl.legend(loc="upper right", numpoints = 1)
+        pl.savefig(evaluation_dir + target_img_name_list[i] + '.jpg')
+        # pl.show()
+        # pass
 
-for i in range(all_mat.shape[1]):
-    logging.info('--- Query number %d ---', (i+1))
-    logging.info('Query name: ' + str(target_img_name_list[i]))
-    print target_img_name_list[i]
-    tmp_0_or_1 = all_mat[:,i]
-    print tmp_0_or_1[0:20]
-    tmp_mAP, tmp_recall, tmp_precision =  check_list_AP(tmp_0_or_1)
-    logging.info('tmp precision: ' + str(tmp_precision).strip('[]'))
-    logging.info('AP: ' + str(tmp_mAP).strip('[]'))
-    print 'P: ', tmp_precision
-    print 'AP: ', tmp_mAP
-    mAP_list.append(tmp_mAP)
-    pl.clf()
-    pl.plot(tmp_recall, tmp_precision,'b-o', label='Logistic regression: Precision-Recall curve')
-    pl.xlabel('Recall')
-    pl.ylabel('Precision')
-    pl.ylim([0.0, 1.05])
-    pl.xlim([0.0, 1.0])
-    # pl.title('%s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
-    # pl.title('tf-idf weighting, %s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
-    # pl.title('tf-idf weighting+SV+linear-SVM, %s: AUC=%0.2f' % (target_img_name_list[i],tmp_mAP))
-    pl.legend(loc="upper right", numpoints = 1)
-    pl.savefig(evaluation_dir + target_img_name_list[i] + '.jpg')
+    # print range(1,11,1)
+    mAP_mat = np.array(mAP_list)
+    # print
+    print 'test mAP: ', mAP_mat.sum()/mAP_mat.shape[0]
+    test_mAP = mAP_mat.sum()/mAP_mat.shape[0]
+    logging.info('---------------------------')
+    logging.info('test mAP: ' + str(test_mAP))
+    logging.shutdown()
+    # print
+    input_list = [1,0,0,1,0,1]
+    input_list = np.array(input_list)
+
+    #### mAP list output:
+    # file_mAP = open(top_dir + 'mAP_list_DQE.csv', 'w')
+    # file_mAP = open(top_dir + 'mAP_list_TF_IDF.csv', 'w')
+    # file_mAP = open(top_dir + 'mAP_list_SV.csv', 'w')
+    file_mAP = open(top_dir + 'mAP_list_' + tmpMethod + '.csv', 'w')
+    # file_mAP = open(top_dir + 'mAP_list_Ranking_SVM.csv', 'w')
+    for i in range(len(mAP_list)):
+        file_mAP.write(str(mAP_list[i]))
+        file_mAP.write('\n')
+    file_mAP.close()
+
+    print mAP_list
+
+    # precision, recall, area = check_list_AP(input_list, None)
+    # print area
+    #
+    # pl.clf()
+    # pl.plot(recall, precision, label='Precision-Recall curve')
+    # pl.xlabel('Recall')
+    # pl.ylabel('Precision')
+    # pl.ylim([0.0, 1.05])
+    # pl.xlim([0.0, 1.0])
+    # pl.title('Precision-Recall example: AUC=%0.2f' % area)
+    # pl.legend(loc="lower left")
     # pl.show()
-    # pass
-
-# print range(1,11,1)
-mAP_mat = np.array(mAP_list)
-# print
-print 'test mAP: ', mAP_mat.sum()/mAP_mat.shape[0]
-test_mAP = mAP_mat.sum()/mAP_mat.shape[0]
-logging.info('---------------------------')
-logging.info('test mAP: ' + str(test_mAP))
-logging.shutdown()
-# print
-input_list = [1,0,0,1,0,1]
-input_list = np.array(input_list)
-
-#### mAP list output:
-# file_mAP = open(top_dir + 'mAP_list_DQE.csv', 'w')
-# file_mAP = open(top_dir + 'mAP_list_TF_IDF.csv', 'w')
-# file_mAP = open(top_dir + 'mAP_list_SV.csv', 'w')
-file_mAP = open(top_dir + 'mAP_list_Ranking_SVM.csv', 'w')
-for i in range(len(mAP_list)):
-    file_mAP.write(str(mAP_list[i]))
-    file_mAP.write('\n')
-file_mAP.close()
-
-print mAP_list
-
-# precision, recall, area = check_list_AP(input_list, None)
-# print area
-#
-# pl.clf()
-# pl.plot(recall, precision, label='Precision-Recall curve')
-# pl.xlabel('Recall')
-# pl.ylabel('Precision')
-# pl.ylim([0.0, 1.05])
-# pl.xlim([0.0, 1.0])
-# pl.title('Precision-Recall example: AUC=%0.2f' % area)
-# pl.legend(loc="lower left")
-# pl.show()
-# pl.clf()
-# pl.plot(recall, precision, label='Precision-Recall curve')
-# pl.xlabel('Recall')
-# pl.ylabel('Precision')
-# pl.ylim([0.0, 1.05])
-# pl.xlim([0.0, 1.0])
-# pl.title('Precision-Recall example: AUC=%0.2f' % area)
-# pl.legend(loc="lower left")
-# pl.show()
+    # pl.clf()
+    # pl.plot(recall, precision, label='Precision-Recall curve')
+    # pl.xlabel('Recall')
+    # pl.ylabel('Precision')
+    # pl.ylim([0.0, 1.05])
+    # pl.xlim([0.0, 1.0])
+    # pl.title('Precision-Recall example: AUC=%0.2f' % area)
+    # pl.legend(loc="lower left")
+    # pl.show()

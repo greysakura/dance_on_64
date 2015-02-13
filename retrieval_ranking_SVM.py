@@ -506,10 +506,6 @@ if __name__ == "__main__":
         for ranking_SV_i in range(SV_IDF_ranking.shape[0]):
             ranking_SV_score.append(SV_IDF_score[SV_IDF_ranking[ranking_SV_i]])
             ranking_SV_Idx_ranked.append(SV_reranking_Idx_list[SV_IDF_ranking[ranking_SV_i]])
-        ####
-
-        SV_for_ranking_SVM_file = open(Ranking_SVM_file_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_Ranking_SVM_file.dat','w')
-
 
         #### retrieve the norm-VW of each image verified.
         # SV_for_ranking_SVM_file.write('## This is a test for ranking SVM input.\n')
@@ -519,6 +515,21 @@ if __name__ == "__main__":
         numNegatives = 200
 
         positiveTaken = min(numPositivesMax, SV_IDF_ranking.shape[0])
+
+        rankNumber = len(ranking_score_appeared)
+        print 'rank number: ', rankNumber
+
+        SV_for_ranking_SVM_file = open(Ranking_SVM_file_dir + ((query_img_dir_list[query_i].split('/'))[-1]).split('.')[0] + '_Ranking_SVM_file.dat','w')
+        #### 2014/11/26  Add original query into data.
+        SV_for_ranking_SVM_file.write(str(rankNumber+1))
+        SV_for_ranking_SVM_file.write(' qid:1')
+        for ranking_SVM_VW_j in range(cluster_number):
+            tmp_original_query = np.array(query_TF_IDF_norm)
+            # print TF_IDF_norm_matrix[ranking_SV_Idx_ranked[ranking_SVM_i],ranking_SVM_VW_j]
+            if 0 != tmp_original_query[0,ranking_SVM_VW_j]:
+                SV_for_ranking_SVM_file.write(' ' + str(ranking_SVM_VW_j+1) + ':')
+                SV_for_ranking_SVM_file.write(str(tmp_original_query[0,ranking_SVM_VW_j]))
+        SV_for_ranking_SVM_file.write('\n')
 
         #### 1. Good examples.
         for ranking_SVM_i in range(positiveTaken):
@@ -546,6 +557,8 @@ if __name__ == "__main__":
             SV_for_ranking_SVM_file.write('\n')
 
         SV_for_ranking_SVM_file.close()
+        print 'Ranking svm data file output finished...'
+
 
         #### 2014/09/16 ####
         #### using ranking-svm exe from outside. use subprocess.
