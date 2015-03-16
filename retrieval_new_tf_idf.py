@@ -165,8 +165,6 @@ if __name__ == "__main__":
         np.save(top_dir + 'database_VW_matrix.npy', database_VW_matrix)
     else:
         database_VW_matrix = np.load(top_dir + 'total_VW.npy')
-
-
     print '...database image VWs loaded...'
     print
 
@@ -177,8 +175,6 @@ if __name__ == "__main__":
 
     ## 07/15 record on how many support vector used.
     num_support_vector_list = []
-
-
     ## 14/06/14
     SV_time_list = []
     SV_got_list = []
